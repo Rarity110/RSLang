@@ -1,0 +1,13 @@
+.header {
+
+  &Toolbar {
+    justify-content: space-between;
+
+    &:global.MuiToolbar-root {
+      padding: 0;
+    }
+  }
+
+  &Title {
+  }
+}
