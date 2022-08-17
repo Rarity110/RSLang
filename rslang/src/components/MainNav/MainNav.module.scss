@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  gap: var(--spacing);
+
+  &ItemActive {
+    text-decoration: none;
+    text-shadow: 0 0 0 currentColor;
+    cursor: default;
+  }
+
+  &ItemInactive {
+  }
+}

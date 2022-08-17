@@ -1,0 +1,20 @@
+:root {
+  --spacing: 8px;
+  --spacing-x2: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+.page {
+  min-height: 100vh;
+}
