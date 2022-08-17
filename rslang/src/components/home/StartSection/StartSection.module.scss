@@ -1,0 +1,45 @@
+.about {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-x2);
+
+  &Text {
+    flex-basis: 480px;
+    flex-shrink: 0;
+  }
+
+  &Title:global.MuiTypography-root {
+    margin-bottom: var(--spacing-x2);
+    letter-spacing: 0.02em;
+  }
+
+  &Lead:global.MuiTypography-root {
+    margin-bottom: var(--spacing);
+    font-weight: 600;
+  }
+
+  &ImgWrap {
+  }
+
+  &Img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .about {
+    flex-direction: column;
+
+    &Text {
+      max-width: 570px;
+      order: 2;
+      text-align: center;
+    }
+
+    &ImgWrap {
+      margin-bottom: var(--spacing);
+      max-width: 400px;
+      order: 1;
+    }
+  }
+}

@@ -1,14 +1,18 @@
 import React from 'react';
-import { Box, Container } from '@mui/material';
+import { Container } from '@mui/material';
 import Header from '../components/Header/Header';
+import StartSection from '../components/home/StartSection/StartSection';
 
 const HomePage = () => {
   return (
     <>
       <Header />
       <Container>
-        <Box mt={4}>Главная страница</Box>
+        <StartSection />
+        {/*<AdvantageApp />*/}
+        {/*<AboutDevTeam />*/}
       </Container>
+      {/*<Footer />*/}
     </>
   );
 };
