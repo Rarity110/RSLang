@@ -1,17 +1,17 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import Header from '../components/Header/Header';
 import StartSection from '../components/home/StartSection/StartSection';
+import AboutApp from '../components/home/AboutApp/AboutApp';
 
 const HomePage = () => {
   return (
     <>
       <Header />
-      <Container>
-        <StartSection />
-        {/*<AdvantageApp />*/}
-        {/*<AboutDevTeam />*/}
-      </Container>
+
+      <StartSection />
+      <AboutApp />
+
+      {/*<AboutDevTeam />*/}
       {/*<Footer />*/}
     </>
   );

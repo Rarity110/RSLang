@@ -1,27 +1,29 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import classes from './StartSection.module.scss';
 import img from '../../../assets/images/home-base.png';
 
 const StartSection = () => {
   return (
-    <Box className={classes.about}>
-      <Box className={classes.aboutText}>
-        <Typography variant="h2" className={classes.aboutTitle} color="primary">
-          RSLang
-        </Typography>
-        <Typography className={classes.aboutLead}>
-          Хочешь обогатить словарный запас английского языка?
-        </Typography>
-        <Typography className={classes.aboutTitle}>
-          Наше приложение поможет с&nbsp;лёгкостью запоминать новые слова. Изучай английский язык
-          с&nbsp;RSLang!
-        </Typography>
+    <Container>
+      <Box className={classes.start} pb={8} mt={1}>
+        <Box className={classes.startText}>
+          <Typography variant="h2" className={classes.startTitle} color="primary">
+            RSLang
+          </Typography>
+          <Typography className={classes.startLead}>
+            Хочешь обогатить словарный запас английского языка?
+          </Typography>
+          <Typography>
+            Наше приложение поможет с&nbsp;лёгкостью запоминать новые слова. Изучай английский язык
+            с&nbsp;RSLang!
+          </Typography>
+        </Box>
+        <Box className={classes.startImgWrap}>
+          <img src={img} alt="" className={classes.startImg} />
+        </Box>
       </Box>
-      <Box className={classes.aboutImgWrap}>
-        <img src={img} alt="" className={classes.aboutImg} />
-      </Box>
-    </Box>
+    </Container>
   );
 };
 

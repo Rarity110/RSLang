@@ -1,4 +1,4 @@
-.about {
+.start {
   display: flex;
   align-items: center;
   gap: var(--spacing-x2);
@@ -27,11 +27,12 @@
 }
 
 @media (max-width: 1023px) {
-  .about {
+  .start {
     flex-direction: column;
 
     &Text {
       max-width: 570px;
+      flex-basis: auto;
       order: 2;
       text-align: center;
     }
