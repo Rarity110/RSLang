@@ -5,7 +5,7 @@ import classes from './AboutApp.module.scss';
 
 const AboutApp = () => {
   return (
-    <Box className={classes.about} py={2}>
+    <Box className={classes.about} py={2} mb={8}>
       <Container>
         <Typography variant="h4" color="primary" className={classes.aboutTitle}>
           О приложении

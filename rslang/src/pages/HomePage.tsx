@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../components/Header/Header';
 import StartSection from '../components/home/StartSection/StartSection';
 import AboutApp from '../components/home/AboutApp/AboutApp';
+import AboutDevTeam from '../components/home/AboutDevTeam/AboutDevTeam';
 
 const HomePage = () => {
   return (
@@ -10,8 +11,7 @@ const HomePage = () => {
 
       <StartSection />
       <AboutApp />
-
-      {/*<AboutDevTeam />*/}
+      <AboutDevTeam />
       {/*<Footer />*/}
     </>
   );

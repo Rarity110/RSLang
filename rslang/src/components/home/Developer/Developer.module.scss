@@ -1,0 +1,80 @@
+.dev {
+  margin-top: var(--spacing-x4);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-x2);
+
+  &Avatar {
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+    background-color: var(--color-paper-alt);
+    border-radius: 50%;
+    overflow: hidden;
+
+    &Img {
+      max-width: 100%;
+    }
+  }
+
+  &Header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing);
+  }
+
+  &Body {
+    flex-grow: 1;
+  }
+
+  &Github {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--spacing) / 2);
+    opacity: 0.75;
+    transition: opacity 0.25s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &Roles {
+    margin-bottom: var(--spacing);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing);
+
+    :global .MuiChip-root {
+      margin-top: var(--spacing);
+    }
+  }
+
+  &Text:global.MuiTypography-root {
+    margin-top: var(--spacing);
+  }
+}
+
+@media (max-width: 599px) {
+  .dev {
+    flex-direction: column;
+    gap: var(--spacing);
+
+    &Header {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &Body {
+      text-align: center;
+    }
+
+    &Roles {
+      justify-content: center;
+
+      :global .MuiChip-root {
+        min-width: 140px;
+      }
+    }
+  }
+}
