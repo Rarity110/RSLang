@@ -8,7 +8,7 @@ import Footer from '../components/Footer/Footer';
 const HomePage = () => {
   return (
     <>
-      <Header />
+      <Header withoutShadow withoutLogo />
 
       <StartSection />
       <AboutApp />

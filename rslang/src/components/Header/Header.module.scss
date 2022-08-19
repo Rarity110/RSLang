@@ -1,13 +1,29 @@
 .header {
+  backdrop-filter: blur(8px);
+
+  &:global.MuiAppBar-root {
+    background-color: transparentize(#ffffff, 0.07);
+  }
 
   &Toolbar {
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: var(--spacing-x4);
 
     &:global.MuiToolbar-root {
       padding: 0;
     }
   }
 
-  &Title {
+  &Logo:global.MuiTypography-root {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  &UserBox {
+    margin-left: auto;
+  }
+
+  &LoginLink {
+    text-decoration: none;
   }
 }

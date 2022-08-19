@@ -1,13 +1,25 @@
 .nav {
   display: flex;
-  gap: var(--spacing);
+  gap: var(--spacing-x3);
 
   &ItemActive {
+    color: var(--color-text-base);
     text-decoration: none;
     text-shadow: 0 0 0 currentColor;
+    border-bottom: 2px solid var(--color-primary-main);
     cursor: default;
   }
 
   &ItemInactive {
+    color: var(--color-text-second);
+    text-decoration: none;
+    text-shadow: 0 0 0 currentColor;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom-color 0.25s ease-in-out, color 0.25s ease-in-out;
+
+    &:hover {
+      color: var(--color-primary-dark);
+      border-bottom-color: var(--color-primary-main);
+    }
   }
 }
