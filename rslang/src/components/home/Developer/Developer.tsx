@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Link, Typography } from '@mui/material';
-import GitHubIcon from '@mui/icons-material/GitHub';
+import { Box, Typography } from '@mui/material';
+import GithubLink from '../../GithubLink/GithubLink';
 import classes from './Developer.module.scss';
 
 interface DeveloperProps {
@@ -20,15 +20,7 @@ const Developer = ({ name, img, description, githubName, rolesNode }: DeveloperP
       <Box className={classes.devBody}>
         <Box className={classes.devHeader}>
           <Typography variant="h6">{name}</Typography>
-          <Link
-            href={`https://github.com/${githubName}`}
-            typography="body2"
-            underline="hover"
-            className={classes.devGithub}
-            target="_blank">
-            <GitHubIcon fontSize="small" />
-            {githubName}
-          </Link>
+          <GithubLink login={githubName} isOpenNewWindow={true} />
         </Box>
         <Box className={classes.devRoles}>{rolesNode}</Box>
         <Typography className={classes.devText}>{description}</Typography>

@@ -27,18 +27,6 @@
     flex-grow: 1;
   }
 
-  &Github {
-    display: inline-flex;
-    align-items: center;
-    gap: calc(var(--spacing) / 2);
-    opacity: 0.75;
-    transition: opacity 0.25s ease-in-out;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
   &Roles {
     margin-bottom: var(--spacing);
     display: flex;
