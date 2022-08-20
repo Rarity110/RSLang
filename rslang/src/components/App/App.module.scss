@@ -1,6 +1,16 @@
 :root {
   --spacing: 8px;
   --spacing-x2: 16px;
+  --spacing-x3: 24px;
+  --spacing-x4: 32px;
+
+  --color-paper: #ffffff;
+  --color-paper-alt: #f3f6f9;
+  --color-primary-main: #1976d2;
+  --color-primary-dark: #1565c0;
+
+  --color-text-base: #000000;
+  --color-text-second: rgba(0, 0, 0, 0.6);
 }
 
 * {

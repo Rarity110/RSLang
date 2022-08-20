@@ -1,0 +1,53 @@
+.about {
+  position: relative;
+  background-color: var(--color-paper-alt);
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background-color: inherit;
+    z-index: -1;
+  }
+
+  &:before {
+    top: 0;
+    transform: skewY(2deg);
+    transform-origin: 100% 0;
+  }
+
+  &:after {
+    bottom: 0;
+    transform: skewY(-2deg);
+    transform-origin: 100%;
+  }
+
+  &Title:global.MuiTypography-root {
+    margin-bottom: var(--spacing-x2);
+    text-align: center;
+  }
+
+  &Card {
+    min-height: 100%;
+
+    &Img {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 1919px) {
+  .about {
+    &:before {
+      transform: skewY(3deg);
+    }
+
+    &:after {
+      transform: skewY(-3deg);
+    }
+  }
+}
