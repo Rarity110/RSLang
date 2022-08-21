@@ -4,12 +4,16 @@ import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/materi
 import LoginIcon from '@mui/icons-material/Login';
 import MainNav from '../MainNav/MainNav';
 import classes from './Header.module.scss';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { deleteLoginFromLocalStorage, getLogin } from '../auth-form/localStorageFunctions';
 
 interface HeaderProps {
-  isAuthorized?: boolean;
+  isAuthorized: boolean;
   withoutLogo?: boolean;
   withoutShadow?: boolean;
 }
+
+const loginName = getLogin();
 
 const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
   return (
@@ -27,7 +31,7 @@ const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
           <Box className={classes.headerUserBox}>
             {/* TODO: Исправить ссылку на авторизацию */}
             {!isAuthorized && (
-              <Link to="/" className={classes.headerLoginLink}>
+              <Link to="/auth-form" className={classes.headerLoginLink}>
                 <Button variant="outlined" component="span" startIcon={<LoginIcon />}>
                   Войти
                 </Button>
@@ -36,9 +40,18 @@ const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
 
             {/* TODO: Выводить информацию по авторизованному пользователю и кнопку выхода? */}
             {isAuthorized && (
-              <Typography variant="body2" color="text.disabled">
-                Вы авторизованы
-              </Typography>
+              <>
+                <Typography variant="body2" color="text.disabled">
+                  Вы авторизованы как {loginName}
+                  <Button
+                    onClick={deleteLoginFromLocalStorage}
+                    variant="outlined"
+                    component="span"
+                    startIcon={<ExitToAppIcon />}>
+                    Выйти
+                  </Button>
+                </Typography>
+              </>
             )}
           </Box>
         </Toolbar>

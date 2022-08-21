@@ -29,11 +29,14 @@
         ],
         "linebreak-style": [
             "error",
-            "unix"
+            "windows"
         ],
         "quotes": [
             "error",
             "single"
+        ],
+        "prettier/prettier": ["error", {
+            "endOfLine": "auto"}
         ],
         "semi": [
             "error",
