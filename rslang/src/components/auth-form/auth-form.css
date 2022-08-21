@@ -1,0 +1,42 @@
+.auth-form {
+    width: 35rem;
+    height: 35rem;
+    padding: 20px;
+    display: flex;
+    border: 0.1rem solid #1976d2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 10%;
+    left: calc(50% - 35rem/2);
+}
+
+.auth-form__subtitle {
+    color: rgb(180, 184, 193);
+}
+
+.auth-form__form {
+    max-width: 360px;
+}
+
+.btn-close-form {
+    position: relative;
+    top: -35vh;
+    left: 18vw;
+    border: 2px solid rgb(180, 184, 193);
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    color: rgb(180, 184, 193);
+    cursor: pointer;
+    font-size: 1.2rem;
+    background-color: #fff;
+}
+
+.btn-close-form:hover {
+    color: #fff;
+    background-color: rgb(13, 85, 255);
+    border: #fff;
+}
