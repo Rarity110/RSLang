@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
+import classes from './PaginationInGroup.module.scss';
 
 interface IProp {
   group: number;
@@ -9,8 +10,8 @@ interface IProp {
 
 export class PagionationInGroup extends Component<IProp> {
   state = {
-    page: 0,
-    group: 1
+    group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
+    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
   };
 
   componentDidMount() {
@@ -27,7 +28,8 @@ export class PagionationInGroup extends Component<IProp> {
     const { group } = this.props;
     this.setState({
       group: group,
-      page: 0
+      // page: 0
+      page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
     });
   }
 
@@ -35,13 +37,15 @@ export class PagionationInGroup extends Component<IProp> {
     this.setState({
       page: value - 1
     });
+    const pageActive = (value - 1).toString();
+    localStorage.setItem('page', pageActive);
   };
 
   render() {
     const { page, group } = this.state;
     return (
       <div>
-        <Stack spacing={2}>
+        <Stack spacing={2} className={classes.pagionationInGroup}>
           <Pagination count={30} page={page + 1} onChange={this.updatePage} />
         </Stack>
         <WordCards group={group} page={page} />;

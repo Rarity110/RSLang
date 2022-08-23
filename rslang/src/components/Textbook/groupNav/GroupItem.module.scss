@@ -1,9 +1,29 @@
 .groups {
-    &__group{
-        background-color: blanchedalmond;
+    &Group {
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.87);
+        -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        margin-left: 1%;
+        margin-right: 1%;
+        padding: 1px 2px 1px 1px;
+        
+        &active {
+            margin-left: 1%;
+            margin-right: 1%;
+            background-color: aqua;
+            border: 2px solid  rgba(0, 0, 0, 0.5);
+        }
+
+        &Abbr {
+            font-size: 16px;
+        }
+
+        &Name{
+            font-size: 8px;
+        }
     }
+
+    
 }
 
-.active {
-    background-color: aqua;
-}

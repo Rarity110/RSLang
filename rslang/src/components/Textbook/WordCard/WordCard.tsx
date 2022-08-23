@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
-// import { IWordCard } from '../wordCards/consts';
-// import { WordTypography } from './WordTypography';
-
-interface IID {
-  id: string;
-}
+import classes from './WordCard.module.scss';
+import { IID } from '../consts';
 
 export class WordCard extends Component<IID> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
@@ -23,12 +14,12 @@ export class WordCard extends Component<IID> {
     audio: null,
     audioMeaning: null,
     audioExample: null,
-    textMeaning: null,
-    textExample: null,
-    transcription: null,
-    textExampleTranslate: null,
-    textMeaningTranslate: null,
-    wordTranslate: null
+    textMeaning: '',
+    textExample: '',
+    transcription: '',
+    textExampleTranslate: '',
+    textMeaningTranslate: '',
+    wordTranslate: ''
   };
 
   componentDidMount() {
@@ -37,9 +28,7 @@ export class WordCard extends Component<IID> {
 
   updateCard() {
     const id = this.state.id;
-    console.log(id);
     this.reactLearnWordsAPI.getWord(id).then((card) => {
-      console.log(card);
       this.setState({
         id: card.id,
         word: card.word,
@@ -62,7 +51,7 @@ export class WordCard extends Component<IID> {
       id,
       word,
       image,
-      audio,
+      // audio,
       audioMeaning,
       audioExample,
       textMeaning,
@@ -73,22 +62,14 @@ export class WordCard extends Component<IID> {
       wordTranslate
     } = this.state;
 
-    // const CardPart = function (value: string) {
-    //   return (
-    //     <Typography gutterBottom variant="h5" component="div">
-    //       {value}
-    //     </Typography>
-    //   );
-    // };
-
     return (
-      <Card sx={{ maxWidth: 345 }} key={id}>
+      <Card className={classes.wordCard} key={id}>
         <CardMedia
           component="img"
           alt={word}
           height="140"
           src={`http://localhost:8081/${image}`}
-          // src={`https://rarity-rslang.herokuapp.com/${image}`}
+          className={classes.wordCardCardImg}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

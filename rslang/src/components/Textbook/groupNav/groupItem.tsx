@@ -7,15 +7,15 @@ export class GroupItem extends Component<IPropGroupItem> {
   render() {
     const { num, abbr, name } = this.props.propsGroup;
     const groupActive = this.props.groupActive;
-    let classname = undefined;
+    let classname = classes.groupsGroup;
     if (groupActive === num) {
-      classname = classes.active;
+      classname += classes.active;
     }
     return (
-      <Button className={classes.groups__group}>
+      <Button>
         <Grid className={classname} onClick={() => this.props.onChangeGroupFunc(num)}>
-          <div>{abbr}</div>
-          <div>{name}</div>
+          <div className={classes.groupsGroupAbbr}>{abbr}</div>
+          <div className={classes.groupsGroupName}>{name}</div>
         </Grid>
       </Button>
     );

@@ -1,10 +1,11 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 
-export const WordTypography = () => {
+// TODO
+export const WordTypography = (value: string) => {
   return (
-    <Typography gutterBottom variant="h5" component="div">
-      Hello
+    <Typography variant="body2" color="text.secondary">
+      {value}
     </Typography>
   );
 };

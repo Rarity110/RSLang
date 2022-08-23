@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import { IWordCard } from './consts';
+import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
+import { IWordCard, IState } from '../consts';
 
-interface ICards {
-  group: number;
-  page: number;
-}
-
-export class WordCards extends Component<ICards> {
+export class WordCards extends Component<IState> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
   state = {
-    group: 1,
-    page: 1,
+    group: 0,
+    page: 0,
     cards: [] as IWordCard[]
   };
 
@@ -21,7 +16,7 @@ export class WordCards extends Component<ICards> {
     this.updateCards();
   }
 
-  componentDidUpdate(prevProps: ICards) {
+  componentDidUpdate(prevProps: IState) {
     if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
       this.updateCards();
     }
@@ -39,111 +34,17 @@ export class WordCards extends Component<ICards> {
       });
     });
   }
-  // constructor(props: ICards) {
-  //   super(props);
-  //   const { group, page } = this.props;
-  //   this.getWordsOnPage(group, page);
-  // }
-
-  // getWordsOnPage(group: number, page: number) {
-  //   // console.log(group);
-  //   // console.log(page);
-  //   this.reactLearnWordsAPI.getWords(group, page).then((words) => {
-  //     this.setState({
-  //       cards: words,
-  //       page: page,
-  //       group: group
-  //     });
-  //   });
-  // }
 
   render() {
-    // const { page } = this.state;
     const cards = this.state.cards;
     return (
-      <ImageList sx={{ width: 1500, height: 450 }}>
+      <Grid container rowSpacing={4} columnSpacing={{ xs: 0, sm: 4, md: 6 }} mt={1}>
         {cards.map((item: IWordCard) => (
-          <ImageListItem key={item.image}>
+          <Grid item xs={12} sm={6} lg={4} key={item.image}>
             <WordCard id={item.id} />
-            {/* <img
-              src={`${item.image}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.word}
-              loading="lazy"
-            /> */}
-            {/* <ImageListItemBar
-              title={item.word}
-              subtitle={item.textExample}
-              // actionIcon={
-              //   <IconButton
-              //     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-              //     aria-label={`info about ${item.title}`}>
-              //     <InfoIcon />
-              //   </IconButton>
-              // }
-            /> */}
-          </ImageListItem>
+          </Grid>
         ))}
-      </ImageList>
+      </Grid>
     );
   }
 }
-
-// export function WordCards(group: number, page: number) {
-
-//   return (
-//     <ImageList sx={{ width: '50%', height: 450 }}>
-//       const api = new ReactLearnWordsAPI();
-//     api.getWords(group, page)
-//       .then((words) => {
-//         words.map((item: IWordCard) => (
-//           <ImageListItem key={item.image}>
-//             <img
-//               src={`${item.image}?w=248&fit=crop&auto=format`}
-//               srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-//               alt={item.word}
-//               loading="lazy"
-//             />
-//             <ImageListItemBar
-//               title={item.word}
-//               subtitle={item.textExample}
-//               // actionIcon={
-//               //   <IconButton
-//               //     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-//               //     aria-label={`info about ${item.title}`}>
-//               //     <InfoIcon />
-//               //   </IconButton>
-//               // }
-//             />
-//           </ImageListItem>
-//       ))}
-//     </ImageList>
-//   );
-//   }
-
-//   return (
-//     <ImageList sx={{ width: '50%', height: 450 }}>
-//       {/* {words.map((item: IWordCard) => (
-//         <ImageListItem key={item.image}>
-//           <img
-//             src={`${item.image}?w=248&fit=crop&auto=format`}
-//             srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-//             alt={item.word}
-//             loading="lazy"
-//           />
-//           <ImageListItemBar
-//             title={item.word}
-//             subtitle={item.textExample}
-//             // actionIcon={
-//             //   <IconButton
-//             //     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-//             //     aria-label={`info about ${item.title}`}>
-//             //     <InfoIcon />
-//             //   </IconButton>
-//             // }
-//           />
-//         </ImageListItem>
-//       ))} */}
-//     </ImageList>
-//   );
-// }
