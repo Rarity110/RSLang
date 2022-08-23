@@ -1,10 +1,10 @@
 .aboutDev {
-  &Title:global.MuiTypography-root {
+  &Title {
     margin-bottom: var(--spacing-x2);
     text-align: center;
   }
 
-  &Divider:global.MuiDivider-root {
+  &Divider {
     margin-top: var(--spacing-x4);
   }
 }

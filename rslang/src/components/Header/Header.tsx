@@ -29,7 +29,6 @@ const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
           <MainNav />
 
           <Box className={classes.headerUserBox}>
-            {/* TODO: Исправить ссылку на авторизацию */}
             {!isAuthorized && (
               <Link to="/auth-form" className={classes.headerLoginLink}>
                 <Button variant="outlined" component="span" startIcon={<LoginIcon />}>
@@ -38,19 +37,19 @@ const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
               </Link>
             )}
 
-            {/* TODO: Выводить информацию по авторизованному пользователю и кнопку выхода? */}
             {isAuthorized && (
               <>
-                <Typography variant="body2" color="text.disabled">
-                  Вы авторизованы как {loginName}
-                  <Button
-                    onClick={deleteLoginFromLocalStorage}
-                    variant="outlined"
-                    component="span"
-                    startIcon={<ExitToAppIcon />}>
-                    Выйти
-                  </Button>
+                <Typography variant="body2" color="text.secondary">
+                  Вы авторизованы как
+                  <b> {loginName} </b>
                 </Typography>
+                <Button
+                  onClick={deleteLoginFromLocalStorage}
+                  variant="outlined"
+                  component="span"
+                  startIcon={<ExitToAppIcon />}>
+                  Выйти
+                </Button>
               </>
             )}
           </Box>

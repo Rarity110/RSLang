@@ -29,7 +29,7 @@
     gap: var(--spacing-x2);
   }
 
-  &List:global.MuiList-padding {
+  &List {
     padding: var(--spacing-x2);
   }
 }
