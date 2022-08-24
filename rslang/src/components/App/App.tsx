@@ -5,6 +5,7 @@ import AuthorizedPage from '../../pages/AuthorizedPage';
 import HomePage from '../../pages/HomePage';
 import StatisticsPage from '../../pages/StatisticsPage';
 import classes from './App.module.scss';
+import { TextbookPage } from '../../pages/TextbookPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className={classes.page}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/textbook" element={<TextbookPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/auth-form" element={<AuthorizedPage />} />
         </Routes>
