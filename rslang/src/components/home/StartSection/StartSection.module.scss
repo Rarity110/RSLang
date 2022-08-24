@@ -8,12 +8,12 @@
     flex-shrink: 0;
   }
 
-  &Title:global.MuiTypography-root {
+  &Title {
     margin-bottom: var(--spacing-x4);
     letter-spacing: 0.02em;
   }
 
-  &Lead:global.MuiTypography-root {
+  &Lead {
     margin-bottom: var(--spacing);
     font-weight: 600;
   }
