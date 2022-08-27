@@ -29,12 +29,7 @@ export interface IStateCard {
   textExampleTranslate: string;
   textMeaningTranslate: string;
   wordTranslate: string;
-  isPlaying: boolean;
-}
-
-export interface IIsPlaying {
-  card: IWordCard;
-  isPlaying: boolean;
+  func: TCallback;
 }
 
 export interface IState {
@@ -42,6 +37,17 @@ export interface IState {
   page: number;
 }
 
+type TCallback = (audioList: HTMLAudioElement[]) => void;
+
 export interface IID {
   id: string;
+  func: TCallback;
+}
+
+export interface IAudio {
+  id: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  func: TCallback;
 }

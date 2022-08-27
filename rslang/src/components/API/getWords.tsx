@@ -1,24 +1,7 @@
-// interface IWord {
-//   id: 'string';
-//   group: 0;
-//   page: 0;
-//   word: 'string';
-//   image: 'string';
-//   audio: 'string';
-//   audioMeaning: 'string';
-//   audioExample: 'string';
-//   textMeaning: 'string';
-//   textExample: 'string';
-//   transcription: 'string';
-//   wordTranslate: 'string';
-//   textMeaningTranslate: 'string';
-//   textExampleTranslate: 'string';
-// }
+// const URLBASE = 'https://rarity-rslang.herokuapp.com';
+export const URLBASE = 'http://localhost:8081';
 
 export class ReactLearnWordsAPI {
-  // _urlBase = 'https://rarity-rslang.herokuapp.com';
-  _urlBase = 'http://localhost:8081';
-
   async getResourse(url: string, methodName: string) {
     const res = await fetch(url, {
       method: methodName
@@ -30,13 +13,13 @@ export class ReactLearnWordsAPI {
   }
 
   async getWords(group: number, page: number) {
-    const url = `${this._urlBase}/words?group=${group}&page=${page}`;
+    const url = `${URLBASE}/words?group=${group}&page=${page}`;
     const res = await this.getResourse(url, 'GET');
     return res;
   }
 
   async getWord(id: string) {
-    const url = `${this._urlBase}/words/${id}`;
+    const url = `${URLBASE}/words/${id}`;
     const res = await this.getResourse(url, 'GET');
     return res;
   }

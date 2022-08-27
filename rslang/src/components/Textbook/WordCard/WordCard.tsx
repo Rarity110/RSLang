@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { ReactLearnWordsAPI } from '../../API/getWords';
+import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
 import { IID, IStateCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
@@ -25,17 +25,12 @@ export class WordCard extends Component<IID> {
         transcription: card.transcription,
         textExampleTranslate: card.textExampleTranslate,
         textMeaningTranslate: card.textMeaningTranslate,
-        wordTranslate: card.wordTranslate,
-        isPlaying: false
+        wordTranslate: card.wordTranslate
       });
     });
-    // await this.updateCard();
-    // this.setState({
-    //   isPlaying: false
-    // });
   }
 
-  async updateCard() {
+  updateCard() {
     const id = this.props.id;
     this.reactLearnWordsAPI.getWord(id).then((card) => {
       this.setState({
@@ -68,50 +63,48 @@ export class WordCard extends Component<IID> {
       transcription,
       textExampleTranslate,
       textMeaningTranslate,
-      wordTranslate,
-      isPlaying
+      wordTranslate
     } = this.state;
     if (!id) {
       return <div>Loaded...</div>;
     }
     const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
-    const audioSrc = `http://localhost:8081/${audio}`;
-    const audioMeaningSrc = `http://localhost:8081/${audioMeaning}`;
-    const audioExampleSrc = `http://localhost:8081/${audioExample}`;
-    // console.log(audioSrc, audioMeaningSrc, audioExampleSrc);
+    const audioSrc = `${URLBASE}/${audio}`;
+    const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
+    const audioExampleSrc = `${URLBASE}/${audioExample}`;
     return (
       <Card className={classes.wordCard} key={id}>
         <CardMedia
           component="img"
           alt={word}
           height="140"
-          src={`http://localhost:8081/${image}`}
+          src={`${URLBASE}/${image}`}
           className={classes.wordCardCardImg}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" height={'70px'}>
             {wordAndTranscriptionAndTranslate}
-            <AudioCard
-              audio={audioSrc}
-              audioMeaning={audioMeaningSrc}
-              audioExample={audioExampleSrc}
-              isPlaying={isPlaying}
-            />
           </Typography>
-          <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
-          <Typography variant="body2" color="text.secondary">
-            {textMeaningTranslate}
-          </Typography>
-          <div dangerouslySetInnerHTML={{ __html: textExample }} />
-          <Typography variant="body2" color="text.secondary">
-            {textExampleTranslate}
-          </Typography>
+          <AudioCard
+            id={id}
+            audio={audioSrc}
+            audioMeaning={audioMeaningSrc}
+            audioExample={audioExampleSrc}
+            func={this.props.func}
+          />
+          <div className={classes.text}>
+            <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
+            <Typography variant="body2" color="text.secondary" height={'60px'}>
+              {textMeaningTranslate}
+            </Typography>
+          </div>
+          <div className={classes.text}>
+            <div dangerouslySetInnerHTML={{ __html: textExample }} />
+            <Typography variant="body2" color="text.secondary" height={'50px'}>
+              {textExampleTranslate}
+            </Typography>
+          </div>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small">Audio</Button>
-          <Button size="small">{audioMeaning}</Button>
-          <Button size="small">{audioExample}</Button>
-        </CardActions> */}
       </Card>
     );
   }

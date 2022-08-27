@@ -14,6 +14,7 @@ export class WordCards extends Component<IState> {
 
   componentDidMount() {
     this.updateCards();
+    this.toggleAudio = this.toggleAudio.bind(this);
   }
 
   componentDidUpdate(prevProps: IState) {
@@ -35,15 +36,47 @@ export class WordCards extends Component<IState> {
     });
   }
 
+  audioList = [] as HTMLAudioElement[];
+
+  createAudio(audioList: HTMLAudioElement[]) {
+    this.audioList = audioList;
+    this.audioList[0].play();
+    this.audioList[0].addEventListener('ended', () => this.audioList[1].play());
+    this.audioList[1].addEventListener('ended', () => this.audioList[2].play());
+    this.audioList[2].addEventListener('ended', () => (this.audioList = []));
+  }
+
+  toggleAudio(audioList: HTMLAudioElement[]) {
+    if (this.audioList.length === 0) {
+      this.createAudio(audioList);
+    } else {
+      this.audioList.forEach((audio) => {
+        audio.pause();
+      });
+      const oldList = [...this.audioList];
+      if (oldList[0].src === audioList[0].src) {
+        this.audioList = [];
+      } else {
+        this.createAudio(audioList);
+      }
+    }
+  }
+
   render() {
     const cards = this.state.cards;
+    if (!cards.length) {
+      return;
+    }
+    const elements = cards.map((item: IWordCard) => {
+      return (
+        <Grid item xs={12} sm={6} lg={4} key={item.image}>
+          <WordCard id={item.id} func={this.toggleAudio} />
+        </Grid>
+      );
+    });
     return (
       <Grid container rowSpacing={4} columnSpacing={{ xs: 0, sm: 4, md: 6 }} mt={1}>
-        {cards.map((item: IWordCard) => (
-          <Grid item xs={12} sm={6} lg={4} key={item.image}>
-            <WordCard id={item.id} />
-          </Grid>
-        ))}
+        {elements}
       </Grid>
     );
   }
