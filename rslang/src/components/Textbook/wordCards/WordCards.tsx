@@ -47,16 +47,15 @@ export class WordCards extends Component<IState> {
   }
 
   toggleAudio(audioList: HTMLAudioElement[]) {
+    const oldList = [...this.audioList];
     if (this.audioList.length === 0) {
       this.createAudio(audioList);
     } else {
       this.audioList.forEach((audio) => {
-        audio.pause();
+        audio.load();
       });
-      const oldList = [...this.audioList];
-      if (oldList[0].src === audioList[0].src) {
-        this.audioList = [];
-      } else {
+      this.audioList = [];
+      if (oldList[0].src !== audioList[0].src) {
         this.createAudio(audioList);
       }
     }
