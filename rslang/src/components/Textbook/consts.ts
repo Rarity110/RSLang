@@ -16,7 +16,7 @@ export interface IWordCard {
 }
 
 // TODO refactor duble
-export interface IState {
+export interface IStateCard {
   id: string;
   word: string;
   image: string;

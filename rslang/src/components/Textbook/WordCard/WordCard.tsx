@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID, IState } from '../consts';
+import { IID, IStateCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
 
 export class WordCard extends Component<IID> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
-  state = {} as IState;
+  state = {} as IStateCard;
 
   componentDidMount() {
     const id = this.props.id;
