@@ -9,5 +9,4 @@ export const getWord = async () => {
     // body: JSON.stringify(user)
   });
   const content = await wordResponse.json();
-  // console.log(content);
 };

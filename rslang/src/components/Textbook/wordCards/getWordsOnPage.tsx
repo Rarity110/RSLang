@@ -5,7 +5,6 @@ import { IWordCard } from './consts';
 //   const api = new ReactLearnWordsAPI();
 //   const words = api.getWords(group, page);
 //   words.then((card) => {
-//     console.log(card);
 //     return card;
 //   });
 // };
