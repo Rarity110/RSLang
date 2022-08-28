@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
-import { ReactLearnWordsAPI } from '../../API/getWords';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID } from '../consts';
+import { IID, IStateCard } from '../consts';
+import { AudioCard } from './AudioCard/AudioCard';
 
 export class WordCard extends Component<IID> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
-  state = {
-    id: this.props.id,
-    word: '',
-    image: '',
-    audio: null,
-    audioMeaning: null,
-    audioExample: null,
-    textMeaning: '',
-    textExample: '',
-    transcription: '',
-    textExampleTranslate: '',
-    textMeaningTranslate: '',
-    wordTranslate: ''
-  };
+  state = {} as IStateCard;
 
   componentDidMount() {
-    this.updateCard();
+    const id = this.props.id;
+    this.reactLearnWordsAPI.getWord(id).then((card) => {
+      this.setState({
+        id: card.id,
+        word: card.word,
+        image: card.image as string,
+        audio: card.audio,
+        audioMeaning: card.audioMeaning,
+        audioExample: card.audioExample,
+        textMeaning: card.textMeaning,
+        textExample: card.textExample,
+        transcription: card.transcription,
+        textExampleTranslate: card.textExampleTranslate,
+        textMeaningTranslate: card.textMeaningTranslate,
+        wordTranslate: card.wordTranslate
+      });
+    });
   }
 
   updateCard() {
-    const id = this.state.id;
+    const id = this.props.id;
     this.reactLearnWordsAPI.getWord(id).then((card) => {
       this.setState({
         id: card.id,
@@ -51,7 +55,7 @@ export class WordCard extends Component<IID> {
       id,
       word,
       image,
-      // audio,
+      audio,
       audioMeaning,
       audioExample,
       textMeaning,
@@ -61,50 +65,46 @@ export class WordCard extends Component<IID> {
       textMeaningTranslate,
       wordTranslate
     } = this.state;
-
+    if (!id) {
+      return <div>Loaded...</div>;
+    }
+    const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
+    const audioSrc = `${URLBASE}/${audio}`;
+    const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
+    const audioExampleSrc = `${URLBASE}/${audioExample}`;
     return (
       <Card className={classes.wordCard} key={id}>
         <CardMedia
           component="img"
           alt={word}
           height="140"
-          src={`http://localhost:8081/${image}`}
+          src={`${URLBASE}/${image}`}
           className={classes.wordCardCardImg}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {word}
+          <Typography gutterBottom variant="h5" component="div" height={'70px'}>
+            {wordAndTranscriptionAndTranslate}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {transcription}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {wordTranslate}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Значение
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {textMeaning}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {textMeaningTranslate}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Пример
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {textExample}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {textExampleTranslate}
-          </Typography>
+          <AudioCard
+            id={id}
+            audio={audioSrc}
+            audioMeaning={audioMeaningSrc}
+            audioExample={audioExampleSrc}
+            func={this.props.func}
+          />
+          <div className={classes.text}>
+            <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
+            <Typography variant="body2" color="text.secondary" height={'60px'}>
+              {textMeaningTranslate}
+            </Typography>
+          </div>
+          <div className={classes.text}>
+            <div dangerouslySetInnerHTML={{ __html: textExample }} />
+            <Typography variant="body2" color="text.secondary" height={'50px'}>
+              {textExampleTranslate}
+            </Typography>
+          </div>
         </CardContent>
-        <CardActions>
-          <Button size="small">Audio</Button>
-          <Button size="small">{audioMeaning}</Button>
-          <Button size="small">{audioExample}</Button>
-        </CardActions>
       </Card>
     );
   }
