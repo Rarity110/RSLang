@@ -1,6 +1,8 @@
 .wordCard {
     position: relative;
     background-color: var(--color-paper-alt);
+    min-height: 500px;
+    padding-top: 10px;
   
     &:before,
     &:after {
@@ -38,6 +40,15 @@
         margin: 0 auto;
       }
     }
+  }
+
+  .text {
+    min-height: 70px;
+  }
+
+  .sound {
+    display: flex;
+    flex-direction: row;
   }
   
 //   @media (max-width: 1919px) {
