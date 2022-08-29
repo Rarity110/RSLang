@@ -6,7 +6,7 @@ interface IFormContext {
   logout: () => void;
 }
 
-interface IAuthorize {
+export interface IAuthorize {
   isAuthorized: boolean;
 }
 const emptyObj = {} as IAuthorize;

@@ -1,29 +1,40 @@
 .groups {
-    &Group {
-        background-color: #fff;
-        color: rgba(0, 0, 0, 0.87);
-        -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        margin-left: 1%;
-        margin-right: 1%;
-        padding: 1px 2px 1px 1px;
-        
-        &active {
-            margin-left: 1%;
-            margin-right: 1%;
-            background-color: aqua;
-            border: 2px solid  rgba(0, 0, 0, 0.5);
-        }
 
-        &Abbr {
-            font-size: 16px;
+    &Group {
+        width: 12%;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        height: 45px;
+        text-align: center;
+        
+        &Active {
+            border: 2px solid rgba(25, 118, 210, 0.5);
+            height: 55px;
+            border-bottom: none;
+            width: 20%;
+            font-weight: bold;
+
+            &:hover{
+                border-bottom: none;
+            }
         }
 
         &Name{
-            font-size: 8px;
+            line-height: 18px;
         }
     }
+}
 
+
+@media (max-width: 600px) {
+    .groups {
+
+        &Group {
     
+            &Name{
+                font-size: 10px;
+            }
+        }
+    }
 }
 

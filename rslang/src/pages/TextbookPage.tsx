@@ -1,14 +1,19 @@
-import React, { useContext } from 'react';
+import React, { Component, useContext } from 'react';
 import Header from '../components/Header/Header';
 import { App } from '../components/Textbook/App/App';
 import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
 
-export const TextbookPage = (): JSX.Element => {
-  const { isAuthorized } = useContext(AuthorizeContext);
-  return (
-    <>
-      <Header {...{ isAuthorized }} withoutShadow withoutLogo />
-      <App />
-    </>
-  );
-};
+// const { isAuthorized } = useContext(AuthorizeContext);
+export class TextbookPage extends Component {
+  static contextType = AuthorizeContext;
+  context!: React.ContextType<typeof AuthorizeContext>;
+  render() {
+    const isAuthorized = this.context.isAuthorized;
+    return (
+      <>
+        <Header {...{ isAuthorized }} />
+        <App />
+      </>
+    );
+  }
+}

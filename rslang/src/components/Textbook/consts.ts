@@ -35,6 +35,7 @@ export interface IStateCard {
 export interface IState {
   group: number;
   page: number;
+  color: string;
 }
 
 type TCallback = (audioList: HTMLAudioElement[]) => void;
@@ -42,6 +43,7 @@ type TCallback = (audioList: HTMLAudioElement[]) => void;
 export interface IID {
   id: string;
   func: TCallback;
+  color: string;
 }
 
 export interface IAudio {

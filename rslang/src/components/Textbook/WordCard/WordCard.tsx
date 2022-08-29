@@ -73,7 +73,10 @@ export class WordCard extends Component<IID> {
     const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
     const audioExampleSrc = `${URLBASE}/${audioExample}`;
     return (
-      <Card className={classes.wordCard} key={id}>
+      <Card
+        className={classes.wordCard}
+        key={id}
+        style={{ border: `2px solid ${this.props.color}` }}>
         <CardMedia
           component="img"
           alt={word}

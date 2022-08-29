@@ -69,7 +69,7 @@ export class WordCards extends Component<IState> {
     const elements = cards.map((item: IWordCard) => {
       return (
         <Grid item xs={12} sm={6} lg={4} key={item.image}>
-          <WordCard id={item.id} func={this.toggleAudio} />
+          <WordCard id={item.id} func={this.toggleAudio} color={this.props.color} />
         </Grid>
       );
     });
