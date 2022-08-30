@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
 import {
   groupsName,
   groupsNameAuthorized,
@@ -12,54 +12,19 @@ import { PagionationInGroup } from '../PaginationInGroup/PaginationInGroup';
 import classes from './App.module.scss';
 import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
 import { ReactLearnWordsAPI } from '../../API/getWords';
-import { IWordCard } from '../consts';
-
-interface IUsersWords {
-  countPages: number;
-  words: IWordCard[];
-}
+import { AllUsersWordsConsumer } from '../contextUserCard';
 
 export class App extends Component {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
   static contextType = AuthorizeContext;
   context!: React.ContextType<typeof AuthorizeContext>;
   state = {
-    group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
-    allUsersWords: []
+    group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0
   };
 
   componentDidMount() {
     this.setState({
       group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0
-    });
-    this.getCountAllUserWords();
-  }
-
-  async getUserWordsByPage(numberPage: number, allUsersWords: IWordCard[], wordsAtPages: number) {
-    const result = await this.reactLearnWordsAPI.getUserWordsByPage(numberPage, wordsAtPages);
-    if (result) {
-      result.words.forEach((el: IWordCard) => allUsersWords.push(el));
-    }
-  }
-
-  async getCountAllUserWords() {
-    const wordsAtPages = 100;
-    const allUsersWords: IWordCard[] = [];
-    await this.reactLearnWordsAPI.getUserWordsByPage(0, wordsAtPages).then((value) => {
-      if (value) {
-        const countPages = Math.ceil(value.countPages / wordsAtPages);
-        if (countPages === 1) {
-          value.words.forEach((el: IWordCard) => allUsersWords.push(el));
-        } else {
-          for (let i = 0; i < countPages; i++) {
-            this.getUserWordsByPage(i, allUsersWords, wordsAtPages);
-            console.log(allUsersWords);
-          }
-        }
-      }
-      this.setState({
-        allUsersWords: allUsersWords
-      });
     });
   }
 
@@ -73,7 +38,6 @@ export class App extends Component {
   };
 
   render() {
-    console.log(this.state.allUsersWords);
     const groups: IGroup[] = !this.context.isAuthorized ? groupsName : groupsNameAuthorized;
     let color = '';
     for (let i = 0; i < groups.length; i++) {
@@ -94,7 +58,15 @@ export class App extends Component {
         <div key="groups" className={classes.textbookMainGroups}>
           {elements}
         </div>
-        <PagionationInGroup group={this.state.group} color={color} />
+        <AllUsersWordsConsumer>
+          {(allUserWords) => (
+            <PagionationInGroup
+              group={this.state.group}
+              color={color}
+              allUsersWords={allUserWords}
+            />
+          )}
+        </AllUsersWordsConsumer>
       </Container>
     );
   }

@@ -29,11 +29,17 @@ export class WordCards extends Component<IState> {
       page: page,
       group: group
     });
-    this.reactLearnWordsAPI.getWords(group, page).then((words) => {
+    if (group === 6) {
       this.setState({
-        cards: words
+        cards: this.props.allUserWords
       });
-    });
+    } else {
+      this.reactLearnWordsAPI.getWords(group, page).then((words) => {
+        this.setState({
+          cards: words
+        });
+      });
+    }
   }
 
   audioList = [] as HTMLAudioElement[];
@@ -69,7 +75,11 @@ export class WordCards extends Component<IState> {
     const elements = cards.map((item: IWordCard) => {
       return (
         <Grid item xs={12} sm={6} lg={4} key={item.image}>
-          <WordCard id={item.id} func={this.toggleAudio} color={this.props.color} />
+          <WordCard
+            id={item._id ? item._id : item.id}
+            func={this.toggleAudio}
+            color={this.props.color}
+          />
         </Grid>
       );
     });

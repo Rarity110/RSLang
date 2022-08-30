@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID, IStateCard, TCallback } from '../consts';
+import { IID, IWordCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
 import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+import { AllUsersWordsConsumer } from '../contextUserCard';
 
 export class WordCard extends Component<IID> {
   static contextType = AuthorizeContext;
   context!: React.ContextType<typeof AuthorizeContext>;
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
-  state = {} as IStateCard;
+  state = {} as IWordCard;
 
   componentDidMount() {
     const id = this.props.id;
@@ -32,7 +33,6 @@ export class WordCard extends Component<IID> {
         wordTranslate: card.wordTranslate
       });
     });
-    this.togleDifficult = this.togleDifficult.bind(this);
     this.updateDifficulty(id);
   }
 
@@ -66,9 +66,9 @@ export class WordCard extends Component<IID> {
     // });
   }
 
-  togleDifficult(idword: string) {
-    this.reactLearnWordsAPI.postUserWord(idword);
-  }
+  // togleDifficult(idword: string, allWords: IWordCard[]) {
+  //   this.reactLearnWordsAPI.postUserWord(idword);
+  // }
 
   render() {
     const {
@@ -127,7 +127,9 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
-          <Difficult func={this.togleDifficult} idword={id} />
+          <AllUsersWordsConsumer>
+            {(allUserWords) => <Difficult allUsersWords={allUserWords} wordCard={this.state} />}
+          </AllUsersWordsConsumer>
         </CardContent>
       </Card>
     );
