@@ -30,6 +30,7 @@ export interface IStateCard {
   textMeaningTranslate: string;
   wordTranslate: string;
   func: TCallback;
+  difficulty: string;
 }
 
 export interface IState {
@@ -38,7 +39,7 @@ export interface IState {
   color: string;
 }
 
-type TCallback = (audioList: HTMLAudioElement[]) => void;
+export type TCallback = (audioList: HTMLAudioElement[]) => void;
 
 export interface IID {
   id: string;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID, IStateCard } from '../consts';
+import { IID, IStateCard, TCallback } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
 import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
@@ -32,6 +32,8 @@ export class WordCard extends Component<IID> {
         wordTranslate: card.wordTranslate
       });
     });
+    this.togleDifficult = this.togleDifficult.bind(this);
+    this.updateDifficulty(id);
   }
 
   updateCard() {
@@ -54,6 +56,20 @@ export class WordCard extends Component<IID> {
     });
   }
 
+  updateDifficulty(idword: string) {
+    // this.reactLearnWordsAPI.getUserWord(idword).then((card) => {
+    //   if (card.status === 200) {
+    //     this.setState({
+    //       difficulty: card.data.difficulty
+    //     });
+    //   }
+    // });
+  }
+
+  togleDifficult(idword: string) {
+    this.reactLearnWordsAPI.postUserWord(idword);
+  }
+
   render() {
     const {
       id,
@@ -70,7 +86,7 @@ export class WordCard extends Component<IID> {
       wordTranslate
     } = this.state;
     if (!id) {
-      return <div>Loaded...</div>;
+      return <div></div>;
     }
     const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
     const audioSrc = `${URLBASE}/${audio}`;
@@ -111,7 +127,7 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
-          <Difficult />
+          <Difficult func={this.togleDifficult} idword={id} />
         </CardContent>
       </Card>
     );

@@ -11,17 +11,55 @@ import { GroupItem } from '../groupNav/groupItem';
 import { PagionationInGroup } from '../PaginationInGroup/PaginationInGroup';
 import classes from './App.module.scss';
 import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+import { ReactLearnWordsAPI } from '../../API/getWords';
+import { IWordCard } from '../consts';
+
+interface IUsersWords {
+  countPages: number;
+  words: IWordCard[];
+}
 
 export class App extends Component {
+  reactLearnWordsAPI = new ReactLearnWordsAPI();
   static contextType = AuthorizeContext;
   context!: React.ContextType<typeof AuthorizeContext>;
   state = {
-    group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0
+    group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
+    allUsersWords: []
   };
 
   componentDidMount() {
     this.setState({
       group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0
+    });
+    this.getCountAllUserWords();
+  }
+
+  async getUserWordsByPage(numberPage: number, allUsersWords: IWordCard[], wordsAtPages: number) {
+    const result = await this.reactLearnWordsAPI.getUserWordsByPage(numberPage, wordsAtPages);
+    if (result) {
+      result.words.forEach((el: IWordCard) => allUsersWords.push(el));
+    }
+  }
+
+  async getCountAllUserWords() {
+    const wordsAtPages = 100;
+    const allUsersWords: IWordCard[] = [];
+    await this.reactLearnWordsAPI.getUserWordsByPage(0, wordsAtPages).then((value) => {
+      if (value) {
+        const countPages = Math.ceil(value.countPages / wordsAtPages);
+        if (countPages === 1) {
+          value.words.forEach((el: IWordCard) => allUsersWords.push(el));
+        } else {
+          for (let i = 0; i < countPages; i++) {
+            this.getUserWordsByPage(i, allUsersWords, wordsAtPages);
+            console.log(allUsersWords);
+          }
+        }
+      }
+      this.setState({
+        allUsersWords: allUsersWords
+      });
     });
   }
 
@@ -35,6 +73,7 @@ export class App extends Component {
   };
 
   render() {
+    console.log(this.state.allUsersWords);
     const groups: IGroup[] = !this.context.isAuthorized ? groupsName : groupsNameAuthorized;
     let color = '';
     for (let i = 0; i < groups.length; i++) {
@@ -42,7 +81,6 @@ export class App extends Component {
         color = groups[i].color;
       }
     }
-    console.log(color);
     const elements = groups.map((prop: IGroup) => {
       const props: IPropGroupItem = {
         propsGroup: prop,
@@ -61,4 +99,3 @@ export class App extends Component {
     );
   }
 }
-// className={classes.textbookMainGroups}
