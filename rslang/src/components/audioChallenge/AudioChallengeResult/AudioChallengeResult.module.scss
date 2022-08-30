@@ -1,0 +1,49 @@
+.result {
+  padding: var(--spacing-x4) 0;
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &Panel {
+    position: relative;
+    height: 100%;
+    min-height: 160px;
+    max-height: 50vh;
+    padding: 0 var(--spacing-x2) var(--spacing-x2);
+    overflow: auto;
+
+    &Header {
+      margin: 0 calc(-1 * var(--spacing-x2)) var(--spacing-x2);
+      padding: var(--spacing-x2) var(--spacing-x3);
+      position: sticky;
+      top: 0;
+      background: var(--color-paper-alt);
+      z-index: 2;
+    }
+  }
+
+  &Empty {
+    position: absolute;
+    top: calc(50% + 24px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 0.5;
+    pointer-events: none;
+
+    &Icon {
+      opacity: 0.2;
+      font-size: 68px;
+    }
+  }
+}
+
+@media (max-width: 899px) {
+  .result {
+    &Panel {
+      max-height: none;
+    }
+  }
+}

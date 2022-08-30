@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AudioChallengeWord } from '../../../types/audioChallenge';
 import AudioChallengeStep from '../AudioChallengeStep/AudioChallengeStep';
+import AudioChallengeResult from '../AudioChallengeResult/AudioChallengeResult';
 
 interface AudioChallengeGameProps {
   words: AudioChallengeWord[];
@@ -33,9 +34,7 @@ const AudioChallengeGame = ({ words }: AudioChallengeGameProps) => {
         />
       )}
 
-      {/*{currentIndex >= endIndex && (*/}
-      {/*  <AudioChallengeStepResult word={resultWords} />*/}
-      {/*)}*/}
+      {currentIndex >= endIndex && <AudioChallengeResult words={resultWords} />}
     </>
   );
 };
