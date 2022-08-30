@@ -1,0 +1,152 @@
+.step {
+  --bg-size-d3: 50%;
+  --bg-size-d5: 51%;
+  --bg-size-d6: 52%;
+  --bg-color-start: rgba(0, 0, 0, 0.035);
+  --bg-color-end: rgba(255, 255, 255, 0);
+
+  padding: var(--spacing-x4) 0;
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  &:after {
+    content: "";
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(3.5deg, var(--bg-color-start) var(--bg-size-d3), var(--bg-color-end) var(--bg-size-d3)),
+    linear-gradient(-5deg, var(--bg-color-start) var(--bg-size-d5), var(--bg-color-end) var(--bg-size-d5)),
+    linear-gradient(6deg, var(--bg-color-start) var(--bg-size-d6), var(--bg-color-end) var(--bg-size-d6));
+    pointer-events: none;
+    filter: invert(42%) sepia(76%) saturate(535%) hue-rotate(169deg) brightness(99%) contrast(87%);
+    transition: filter 0.25s ease-in-out;
+    z-index: -1;
+  }
+
+  &ResultCorrect:after {
+    //--bg-color-start: red
+    filter: invert(56%) sepia(70%) saturate(371%) hue-rotate(73deg) brightness(92%) contrast(91%);
+  }
+
+  &ResultIncorrect:after {
+    filter: invert(66%) sepia(75%) saturate(6128%) hue-rotate(334deg) brightness(105%) contrast(88%);
+  }
+
+  &Audio {
+    $h-element: 144px;
+
+    height: 256px;
+    text-align: center;
+
+    &Btn {
+      width: $h-element;
+      height: $h-element;
+      font-size: 96px;
+    }
+
+    &Img {
+      height: $h-element;
+      width: $h-element;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    &WordAdditional {
+      margin-right: -48px;
+      gap: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &Options {
+    margin-bottom: var(--spacing-x2);
+    min-width: 100%;
+    display: flex;
+    gap: var(--spacing-x3);
+    justify-content: center;
+    align-items: center;
+  }
+
+  &Option {
+    flex-basis: 20%;
+
+    &Prefix {
+      $size: 16px;
+
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      width: $size;
+      height: $size;
+      line-height: $size;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.07);
+      border-radius: 4px;
+      opacity: 1;
+      transition: opacity 0.25s ease-in-out;
+    }
+
+    &:global(.Mui-disabled) > &Prefix {
+      opacity: 0;
+    }
+
+    &Correct:global.Mui-disabled {
+      color: var(--color-success);
+      text-shadow: 0 0 0 currentColor;
+    }
+
+    &Incorrect:global.Mui-disabled {
+      color: var(--color-danger);
+    }
+  }
+
+  &ResultText {
+    height: 40px;
+    display: flex;
+    gap: var(--spacing);
+    white-space: nowrap;
+  }
+
+  &Skip {
+    min-width: 20%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .step {
+    --bg-size-d3: 55%;
+    --bg-size-d5: 56%;
+    --bg-size-d6: 57%;
+
+    &Options {
+      flex-direction: column;
+    }
+
+    &Option {
+      min-width: 50%;
+    }
+
+    &Skip {
+      min-width: 50%;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .step {
+    &Option {
+      width: 100%;
+    }
+
+    &Skip {
+      width: 100%;
+    }
+  }
+}
