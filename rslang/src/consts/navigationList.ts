@@ -19,6 +19,11 @@ const navigationList: NavigationItem[] = [
     id: 3,
     title: 'Статистика',
     link: '/statistics'
+  },
+  {
+    id: 4,
+    title: 'Спринт',
+    link: '/sprint-game'
   }
 ];
 
