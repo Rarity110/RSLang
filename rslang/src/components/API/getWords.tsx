@@ -3,7 +3,7 @@
 export const URLBASE = 'http://localhost:8081';
 const userID = '630c74f3ff834f4fe0142bb7';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MTg4ODgwNSwiZXhwIjoxNjYxOTAzMjA1fQ.h-ZyaPZrWieQzbpRqjMu9SEQwWxj6jO7LbCUXxIC-D4';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MTkyOTM5NiwiZXhwIjoxNjYxOTQzNzk2fQ.BzX29I-WGOhy1ggFmoyS0PwkPKFB6gwF-gbYGBjhtY0';
 
 export class ReactLearnWordsAPI {
   async getResourse(url: string, methodName: string) {
@@ -28,7 +28,7 @@ export class ReactLearnWordsAPI {
     return res;
   }
 
-  async postUserWord(idword: string) {
+  async postUserWord(idword: string, difficulty: string) {
     try {
       const url = `${URLBASE}/users/${userID}/words/${idword}`;
       const response = await fetch(url, {
@@ -38,7 +38,7 @@ export class ReactLearnWordsAPI {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          difficulty: 'hard',
+          difficulty: difficulty,
           optional: {total: 0, wrong: 0}
         })
       });
@@ -80,5 +80,36 @@ export class ReactLearnWordsAPI {
       return {countPages: data[0].totalCount[0].count, words: data[0].paginatedResults};
     }
   }
+
+  // слово перестало быть изученным либо сложным
+  async deleteUserWord(idword: string) {
+    const url = `${URLBASE}/users/${userID}/words/${idword}`;
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const status = res.status;
+    return { status };
+  }
+
+  // слово было сложным стало изученным и наоборот
+  async putUserWord(idword: string, difficulty: string) {
+    const url = `${URLBASE}/users/${userID}/words/${idword}`;
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        difficulty: difficulty,
+        optional: {total: 0, wrong: 0}
+      })
+    });
+    const status = res.status;
+    return { status };
+  }
+
 
 }

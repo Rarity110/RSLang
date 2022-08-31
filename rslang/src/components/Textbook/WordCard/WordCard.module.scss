@@ -1,7 +1,7 @@
 .wordCard {
     position: relative;
     background-color: var(--color-paper-alt);
-    min-height: 500px;
+    min-height: 600px;
     padding-top: 10px;
   
     &:before,
@@ -43,23 +43,10 @@
   }
 
   .text {
-    min-height: 70px;
+    min-height: 100px;
   }
 
   .sound {
     display: flex;
     flex-direction: row;
   }
-  
-//   @media (max-width: 1919px) {
-//     .about {
-//       &:before {
-//         transform: skewY(3deg);
-//       }
-  
-//       &:after {
-//         transform: skewY(-3deg);
-//       }
-//     }
-//   }
-  

@@ -9,6 +9,7 @@ export type TCallbackAsync = (id: string, allWords: IWordCard[]) => void;
 interface IDifficult {
   allUsersWords: IWordCard[];
   wordCard: IWordCard;
+  // difficulty: string;
 }
 
 export class Difficult extends Component<IDifficult> {
@@ -19,9 +20,20 @@ export class Difficult extends Component<IDifficult> {
   state = {
     allUsersWords: this.props.allUsersWords,
     wordCard: this.props.wordCard
+    // difficulty: this.props.wordCard.difficulty | undefined
   };
 
   componentDidMount() {
+    this.updateDifficult();
+  }
+
+  componentDidUpdate(prevProps: IDifficult) {
+    if (this.props.wordCard !== prevProps.wordCard) {
+      this.updateDifficult();
+    }
+  }
+
+  updateDifficult() {
     const allUsersWords = this.props.allUsersWords;
     const wordCard = this.props.allUsersWords.filter(
       (wordCard) =>
@@ -32,7 +44,8 @@ export class Difficult extends Component<IDifficult> {
     )[0];
     if (wordCard) {
       this.setState({
-        wordCard: wordCard
+        wordCard: wordCard,
+        difficulty: wordCard.difficulty
       });
     }
     this.setState({
@@ -40,51 +53,49 @@ export class Difficult extends Component<IDifficult> {
     });
   }
 
-  //   componentDidUpdate(prevProps: IDifficult) {
-  //     if (this.props.isDifficult !== prevProps.isDifficult) {
-  //       this.updateDifficult();
-  //     }
-  //   }
-
-  // updateDifficult() {
-  //   const { isDifficult } = this.props;
-  //   this.setState({
-  //     isDifficult: isDifficult
-  //   });
-  // }
-
   //   togleDifficult(idword: string) {
   //     this.reactLearnWordsAPI.postUserWord(idword);
   //   }
 
   togleDifficult() {
     const { allUsersWords, wordCard } = this.state;
+    let id = '';
+    if (wordCard._id) {
+      id = wordCard._id;
+    } else {
+      id = wordCard.id;
+    }
     console.log(wordCard.difficulty);
     if (!wordCard.difficulty) {
       wordCard.difficulty = 'hard';
       allUsersWords.push(wordCard);
-      this.reactLearnWordsAPI.postUserWord(wordCard.id);
+      this.reactLearnWordsAPI.postUserWord(id, 'hard');
+      this.setState({
+        difficulty: 'hard'
+      });
     } else {
-      const index = allUsersWords.findIndex(
-        (el) =>
-          el.id === wordCard.id ||
-          el._id === wordCard.id ||
-          el.id === wordCard._id ||
-          el._id === wordCard._id
-      );
+      const index = allUsersWords.findIndex((el) => el.id === id || el._id === id);
       if (wordCard.difficulty === 'hard') {
         delete wordCard.difficulty;
-        // todo delete from backend
+        this.reactLearnWordsAPI.deleteUserWord(id);
         allUsersWords.splice(index, 1);
+        this.setState({
+          difficulty: undefined
+        });
       } else if (wordCard.difficulty === 'learned') {
         wordCard.difficulty = 'hard';
-        // todo put from backend
+        this.reactLearnWordsAPI.putUserWord(id, 'hard');
         allUsersWords[index].difficulty = 'hard';
+        this.setState({
+          difficulty: 'hard'
+        });
       }
     }
+    console.log(allUsersWords);
   }
 
   render(): React.ReactNode {
+    console.log(this.state.wordCard.difficulty);
     const isAuthorized = this.context.isAuthorized;
     const difficulty = this.state.wordCard.difficulty;
     // console.log(this.state.wordCard);
