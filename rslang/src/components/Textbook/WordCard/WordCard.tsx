@@ -33,7 +33,7 @@ export class WordCard extends Component<IID> {
         wordTranslate: card.wordTranslate
       });
     });
-    this.updateDifficulty(id);
+    this.updateDifficulty();
   }
 
   updateCard() {
@@ -56,7 +56,7 @@ export class WordCard extends Component<IID> {
     });
   }
 
-  updateDifficulty(idword: string) {
+  updateDifficulty() {
     // this.reactLearnWordsAPI.getUserWord(idword).then((card) => {
     //   if (card.status === 200) {
     //     this.setState({

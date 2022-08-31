@@ -17,6 +17,16 @@ const navigationList: NavigationItem[] = [
   },
   {
     id: 3,
+    title: 'Аудиовызов',
+    link: '/audio-challenge'
+  },
+  {
+    id: 4,
+    title: 'Спринт',
+    link: '/sprint-game'
+  },
+  {
+    id: 5,
     title: 'Статистика',
     link: '/statistics'
   }

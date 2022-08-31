@@ -1,4 +1,5 @@
 .header {
+  height: var(--header-height);
   backdrop-filter: blur(8px);
   background-color: transparentize(#ffffff, 0.07);
 

@@ -1,0 +1,15 @@
+.word {
+  display: flex;
+  gap: var(--spacing);
+  align-items: center;
+  margin-bottom: 4px;
+
+  &AudioBtn {
+    opacity: 0.5;
+    transition: opacity 0.25s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
