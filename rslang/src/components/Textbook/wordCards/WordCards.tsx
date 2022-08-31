@@ -15,11 +15,28 @@ export class WordCards extends Component<IState> {
   componentDidMount() {
     this.updateCards();
     this.toggleAudio = this.toggleAudio.bind(this);
+    if (this.props.group === 6)
+      this.setState({
+        allUserWordsLength: this.props.allUsersWordsLength
+      });
   }
 
   componentDidUpdate(prevProps: IState) {
-    if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
+    if (
+      this.props.page !== prevProps.page ||
+      this.props.group !== prevProps.group ||
+      this.props.allUserWords !== prevProps.allUserWords
+    ) {
       this.updateCards();
+    }
+    if (this.props.group === 6) {
+      console.log(this.props.allUserWords.length);
+      console.log(prevProps.allUserWords.length);
+      if (this.props.allUsersWordsLength !== prevProps.allUsersWordsLength) {
+        this.setState({
+          allUserWordsLength: this.props.allUserWords.length
+        });
+      }
     }
   }
 
@@ -68,6 +85,7 @@ export class WordCards extends Component<IState> {
   }
 
   render() {
+    console.log(this.props.allUserWords.length);
     const cards = this.state.cards;
     if (!cards.length) {
       return;
@@ -75,11 +93,7 @@ export class WordCards extends Component<IState> {
     const elements = cards.map((item: IWordCard) => {
       return (
         <Grid item xs={12} sm={6} lg={4} key={item.image}>
-          <WordCard
-            id={item._id ? item._id : item.id}
-            func={this.toggleAudio}
-            color={this.props.color}
-          />
+          <WordCard id={item.id} func={this.toggleAudio} color={this.props.color} />
         </Grid>
       );
     });

@@ -63,7 +63,13 @@ export class PagionationInGroup extends Component<IProp> {
         )}
         <AllUsersWordsConsumer>
           {(allUserWords) => (
-            <WordCards group={group} page={page} color={color} allUserWords={allUserWords} />
+            <WordCards
+              group={group}
+              page={page}
+              color={color}
+              allUserWords={allUserWords}
+              allUsersWordsLength={allUserWords.length}
+            />
           )}
         </AllUsersWordsConsumer>
       </div>

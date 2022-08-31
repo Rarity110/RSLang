@@ -1,3 +1,11 @@
+interface IUserWord {
+  difficulty?: string;
+  optional?: {
+    total?: number;
+    wrong: number;
+  };
+}
+
 export interface IWordCard {
   id: string;
   _id?: string;
@@ -14,7 +22,7 @@ export interface IWordCard {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-  difficulty?: string;
+  userWord?: IUserWord;
   func?: TCallback;
 }
 
@@ -23,6 +31,7 @@ export interface IState {
   page: number;
   color: string;
   allUserWords: IWordCard[];
+  allUsersWordsLength?: number;
 }
 
 export type TCallback = (audioList: HTMLAudioElement[]) => void;
@@ -39,4 +48,10 @@ export interface IAudio {
   audioMeaning: string;
   audioExample: string;
   func: TCallback;
+}
+
+export interface IDifficult {
+  allUsersWords: IWordCard[];
+  wordCard: IWordCard;
+  // difficulty: string;
 }

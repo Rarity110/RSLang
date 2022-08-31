@@ -3,14 +3,9 @@ import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Button } from '@mui/material';
 import { AuthorizeContext } from '../../../auth-form/AuthorizeContext';
 import { ReactLearnWordsAPI } from '../../../API/getWords';
-import { IWordCard } from '../../consts';
+import { IWordCard, IDifficult } from '../../consts';
 
 export type TCallbackAsync = (id: string, allWords: IWordCard[]) => void;
-interface IDifficult {
-  allUsersWords: IWordCard[];
-  wordCard: IWordCard;
-  // difficulty: string;
-}
 
 export class Difficult extends Component<IDifficult> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
@@ -28,7 +23,7 @@ export class Difficult extends Component<IDifficult> {
   }
 
   componentDidUpdate(prevProps: IDifficult) {
-    if (this.props.wordCard !== prevProps.wordCard) {
+    if (this.props.wordCard.userWord?.difficulty !== prevProps.wordCard.userWord?.difficulty) {
       this.updateDifficult();
     }
   }
@@ -36,16 +31,13 @@ export class Difficult extends Component<IDifficult> {
   updateDifficult() {
     const allUsersWords = this.props.allUsersWords;
     const wordCard = this.props.allUsersWords.filter(
-      (wordCard) =>
-        wordCard._id === this.props.wordCard.id ||
-        wordCard.id === this.props.wordCard.id ||
-        wordCard._id === this.props.wordCard._id ||
-        wordCard.id === this.props.wordCard._id
+      (wordCard) => wordCard.id === this.props.wordCard.id
     )[0];
+    // console.log(wordCard);
     if (wordCard) {
       this.setState({
         wordCard: wordCard,
-        difficulty: wordCard.difficulty
+        difficulty: wordCard.userWord?.difficulty
       });
     }
     this.setState({
@@ -59,57 +51,51 @@ export class Difficult extends Component<IDifficult> {
 
   togleDifficult() {
     const { allUsersWords, wordCard } = this.state;
-    let id = '';
-    if (wordCard._id) {
-      id = wordCard._id;
-    } else {
-      id = wordCard.id;
-    }
-    console.log(wordCard.difficulty);
-    if (!wordCard.difficulty) {
-      wordCard.difficulty = 'hard';
+    const id = wordCard.id;
+    // console.log(wordCard.userWord?.difficulty);
+    if (!wordCard.userWord?.difficulty) {
+      wordCard.userWord = { difficulty: 'hard' };
       allUsersWords.push(wordCard);
       this.reactLearnWordsAPI.postUserWord(id, 'hard');
       this.setState({
         difficulty: 'hard'
       });
     } else {
-      const index = allUsersWords.findIndex((el) => el.id === id || el._id === id);
-      if (wordCard.difficulty === 'hard') {
-        delete wordCard.difficulty;
+      const index = allUsersWords.findIndex((el) => el.id === id);
+      if (wordCard.userWord.difficulty === 'hard') {
+        delete wordCard.userWord.difficulty;
         this.reactLearnWordsAPI.deleteUserWord(id);
         allUsersWords.splice(index, 1);
         this.setState({
           difficulty: undefined
         });
-      } else if (wordCard.difficulty === 'learned') {
-        wordCard.difficulty = 'hard';
+      } else if (wordCard.userWord.difficulty === 'learned') {
+        wordCard.userWord.difficulty = 'hard';
         this.reactLearnWordsAPI.putUserWord(id, 'hard');
-        allUsersWords[index].difficulty = 'hard';
+        allUsersWords[index].userWord = { difficulty: 'hard' };
         this.setState({
           difficulty: 'hard'
         });
       }
     }
-    console.log(allUsersWords);
+    // console.log(allUsersWords);
   }
 
   render(): React.ReactNode {
-    console.log(this.state.wordCard.difficulty);
     const isAuthorized = this.context.isAuthorized;
-    const difficulty = this.state.wordCard.difficulty;
+    const difficulty = this.state.wordCard.userWord?.difficulty;
     // console.log(this.state.wordCard);
     if (isAuthorized) {
-      if (difficulty !== 'hard' || !difficulty) {
+      if (difficulty === 'hard') {
         return (
           <Button variant="outlined" onClick={() => this.togleDifficult()}>
-            Добавить в сложные
+            <PriorityHighIcon style={{ color: 'red' }} />;
           </Button>
         );
       } else {
         return (
           <Button variant="outlined" onClick={() => this.togleDifficult()}>
-            <PriorityHighIcon style={{ color: 'red' }} />;
+            Добавить в сложные
           </Button>
         );
       }

@@ -30,6 +30,11 @@ async function getCountAllUserWords() {
       }
     }
   });
+  usersWords.forEach((el) => {
+    if (el._id) {
+      el.id = el._id;
+    }
+  });
   return usersWords;
 }
 
