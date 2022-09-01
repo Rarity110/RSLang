@@ -9,13 +9,13 @@ import { BookGroupName, BookGroupNameShort } from '../../../types/api';
 import classes from './AudioChallengeWelcome.module.scss';
 
 interface AudioChallengeWelcomeProps {
-  startParam: false | AudioChallengeStartParam;
+  bookParam: false | AudioChallengeStartParam;
   startHandler: (level: string) => void;
 }
 
 const levelList = [0, 1, 2, 3, 4, 5];
 
-const AudioChallengeWelcome = ({ startParam, startHandler }: AudioChallengeWelcomeProps) => {
+const AudioChallengeWelcome = ({ bookParam, startHandler }: AudioChallengeWelcomeProps) => {
   const [level, setLevel] = useState<string>('');
 
   const levelChangeHandler = (event: SelectChangeEvent) => {
@@ -55,7 +55,7 @@ const AudioChallengeWelcome = ({ startParam, startHandler }: AudioChallengeWelco
       </Box>
 
       <Box className={classes.welcomeGame}>
-        {startParam === false && (
+        {bookParam === false && (
           <Box className={classes.welcomeLevel}>
             <Typography color="text.secondary" gutterBottom>
               Выбери уровень сложности
@@ -72,11 +72,11 @@ const AudioChallengeWelcome = ({ startParam, startHandler }: AudioChallengeWelco
           </Box>
         )}
 
-        {startParam !== false && (
+        {bookParam !== false && (
           <Box className={classes.welcomeBookLevel}>
             <Typography color="text.secondary">Электронный учебник</Typography>
             <Typography color="text.secondary">
-              глава {BookGroupNameShort[startParam.group]} страница {startParam.page + 1}
+              глава {BookGroupNameShort[bookParam.group]} страница {bookParam.page + 1}
             </Typography>
           </Box>
         )}
@@ -86,7 +86,7 @@ const AudioChallengeWelcome = ({ startParam, startHandler }: AudioChallengeWelco
             variant="contained"
             size="large"
             className={classes.welcomeGoBtn}
-            disabled={startParam === false ? !level : false}
+            disabled={bookParam === false ? !level : false}
             onClick={goClickHandler}
             endIcon={<ArrowRightAltIcon />}
             fullWidth>

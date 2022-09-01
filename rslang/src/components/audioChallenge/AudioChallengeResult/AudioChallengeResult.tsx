@@ -21,7 +21,7 @@ const AudioChallengeResult = ({ words }: AudioChallengeREsultProps) => {
       </Typography>
 
       <Typography variant="h2" color="primary" gutterBottom>
-        {correctWords.length} из {words.length}
+        {(correctWords.length * 100) / words.length}%
       </Typography>
 
       <Grid container spacing={4} justifyContent="center">
@@ -29,6 +29,9 @@ const AudioChallengeResult = ({ words }: AudioChallengeREsultProps) => {
           <Paper className={classes.resultPanel}>
             <Box className={classes.resultPanelHeader}>
               <Typography>Верно</Typography>
+              <Typography>
+                {correctWords.length} из {words.length}
+              </Typography>
             </Box>
             {correctWords.length > 0 &&
               correctWords.map((word, i) => (
@@ -48,6 +51,9 @@ const AudioChallengeResult = ({ words }: AudioChallengeREsultProps) => {
           <Paper className={classes.resultPanel}>
             <Box className={classes.resultPanelHeader}>
               <Typography>Ошибки</Typography>
+              <Typography>
+                {incorrectWords.length} из {words.length}
+              </Typography>
             </Box>
             {incorrectWords.length > 0 &&
               incorrectWords.map((word, i) => (
