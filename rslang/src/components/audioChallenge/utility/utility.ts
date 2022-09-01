@@ -1,4 +1,4 @@
-import { AudioChallengeOption } from '../../../types/audioChallenge';
+import { AudioChallengeOption, AudioChallengeStartParam } from '../../../types/audioChallenge';
 import { WordItem } from '../../../types/api';
 
 const FALSY_OPTIONS_COUNT = 4;
@@ -47,4 +47,10 @@ export const getResultText = (isCorrect: boolean): string => {
   const maxIndex = isCorrect ? RESULT_TEXT_CORRECT.length - 1 : RESULT_TEXT_INCORRECT.length - 1;
   const randomIndex = Math.round(Math.random() * maxIndex);
   return isCorrect ? RESULT_TEXT_CORRECT[randomIndex] : RESULT_TEXT_INCORRECT[randomIndex];
+};
+
+export const getLocalStorageBookParams = (): AudioChallengeStartParam => {
+  const group = localStorage.getItem('group') !== null ? Number(localStorage.getItem('group')) : 0;
+  const page = localStorage.getItem('page') !== null ? Number(localStorage.getItem('page')) : 0;
+  return { group, page };
 };
