@@ -1,5 +1,14 @@
+interface IUserWord {
+  difficulty?: string;
+  optional?: {
+    total?: number;
+    wrong: number;
+  };
+}
+
 export interface IWordCard {
   id: string;
+  _id?: string;
   group: number;
   page: number;
   word: string;
@@ -13,35 +22,24 @@ export interface IWordCard {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-}
-
-// TODO refactor duble
-export interface IStateCard {
-  id: string;
-  word: string;
-  image: string;
-  audio: string;
-  audioMeaning: string;
-  audioExample: string;
-  textMeaning: string;
-  textExample: string;
-  transcription: string;
-  textExampleTranslate: string;
-  textMeaningTranslate: string;
-  wordTranslate: string;
-  func: TCallback;
+  userWord?: IUserWord;
+  func?: TCallback;
 }
 
 export interface IState {
   group: number;
   page: number;
+  color: string;
+  allUserWords: IWordCard[];
+  allUsersWordsLength?: number;
 }
 
-type TCallback = (audioList: HTMLAudioElement[]) => void;
+export type TCallback = (audioList: HTMLAudioElement[]) => void;
 
 export interface IID {
   id: string;
   func: TCallback;
+  color: string;
 }
 
 export interface IAudio {
@@ -50,4 +48,10 @@ export interface IAudio {
   audioMeaning: string;
   audioExample: string;
   func: TCallback;
+}
+
+export interface IDifficult {
+  allUsersWords: IWordCard[];
+  wordCard: IWordCard;
+  // difficulty: string;
 }

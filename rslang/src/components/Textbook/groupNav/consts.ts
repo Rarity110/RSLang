@@ -1,7 +1,7 @@
 export interface IGroup {
   num: number;
   abbr: string;
-  name: string;
+  // name: string;
   color: string;
 }
 
@@ -19,10 +19,14 @@ export interface ICards {
 }
 
 export const groupsName: IGroup[] = [
-  { num: 1, abbr: 'A1', name: 'Elementary', color: '#a8f081' },
-  { num: 2, abbr: 'A2', name: 'Pre-Intermediate', color: '#faf55a' },
-  { num: 3, abbr: 'B1', name: 'Intermediate', color: '#d0f0f7' },
-  { num: 4, abbr: 'B2', name: 'Upper-Intermediate', color: 'fcc9a2' },
-  { num: 5, abbr: 'C1', name: 'Advanced', color: '#d0f5de' },
-  { num: 6, abbr: 'C2', name: 'Proficiency', color: '#d1aeae' }
+  { num: 1, abbr: 'A1', color: '#b2a7fc' },
+  { num: 2, abbr: 'A2', color: '#29c1f0' },
+  { num: 3, abbr: 'B1', color: '#a1d450' },
+  { num: 4, abbr: 'B2', color: '#fae62f' },
+  { num: 5, abbr: 'C1', color: '#fa912f' },
+  { num: 6, abbr: 'C2', color: '#db4fc4' }
 ];
+
+const groups7: IGroup[] = [{ num: 7, abbr: 'Сложные слова', color: '#fc0516' }];
+
+export const groupsNameAuthorized: IGroup[] = groupsName.concat(groups7);

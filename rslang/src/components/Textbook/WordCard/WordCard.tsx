@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID, IStateCard } from '../consts';
+import { IID, IWordCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
+import { Difficult } from './Difficult/Difficult';
+import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+import { AllUsersWordsConsumer } from '../contextUserCard';
 
 export class WordCard extends Component<IID> {
+  static contextType = AuthorizeContext;
+  context!: React.ContextType<typeof AuthorizeContext>;
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
-  state = {} as IStateCard;
+  state = {} as IWordCard;
 
   componentDidMount() {
     const id = this.props.id;
@@ -28,6 +33,7 @@ export class WordCard extends Component<IID> {
         wordTranslate: card.wordTranslate
       });
     });
+    this.updateDifficulty();
   }
 
   updateCard() {
@@ -50,6 +56,20 @@ export class WordCard extends Component<IID> {
     });
   }
 
+  updateDifficulty() {
+    // this.reactLearnWordsAPI.getUserWord(idword).then((card) => {
+    //   if (card.status === 200) {
+    //     this.setState({
+    //       difficulty: card.data.difficulty
+    //     });
+    //   }
+    // });
+  }
+
+  // togleDifficult(idword: string, allWords: IWordCard[]) {
+  //   this.reactLearnWordsAPI.postUserWord(idword);
+  // }
+
   render() {
     const {
       id,
@@ -66,14 +86,17 @@ export class WordCard extends Component<IID> {
       wordTranslate
     } = this.state;
     if (!id) {
-      return <div>Loaded...</div>;
+      return <div></div>;
     }
     const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
     const audioSrc = `${URLBASE}/${audio}`;
     const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
     const audioExampleSrc = `${URLBASE}/${audioExample}`;
     return (
-      <Card className={classes.wordCard} key={id}>
+      <Card
+        className={classes.wordCard}
+        key={id}
+        style={{ border: `2px solid ${this.props.color}` }}>
         <CardMedia
           component="img"
           alt={word}
@@ -104,6 +127,9 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
+          <AllUsersWordsConsumer>
+            {(allUserWords) => <Difficult allUsersWords={allUserWords} wordCard={this.state} />}
+          </AllUsersWordsConsumer>
         </CardContent>
       </Card>
     );
