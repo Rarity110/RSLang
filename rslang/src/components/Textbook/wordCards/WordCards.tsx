@@ -3,9 +3,13 @@ import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
 import { IWordCard, IState } from '../consts';
+import { Context } from '../Context';
 
 export class WordCards extends Component<IState> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   state = {
     group: 0,
     page: 0,
@@ -85,7 +89,7 @@ export class WordCards extends Component<IState> {
   }
 
   render() {
-    console.log(this.props.allUserWords.length);
+    console.log(this.context);
     const cards = this.state.cards;
     if (!cards.length) {
       return;

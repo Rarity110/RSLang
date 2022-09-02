@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Button, Grid } from '@mui/material';
 import classes from './GroupItem.module.scss';
 import { IPropGroupItem } from './consts';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+import { Context } from '../Context';
 
 export class GroupItem extends Component<IPropGroupItem> {
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
 
   render() {
     const { num, abbr, color } = this.props.propsGroup;

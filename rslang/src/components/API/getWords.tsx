@@ -3,7 +3,7 @@
 export const URLBASE = 'http://localhost:8081';
 const userID = '630c74f3ff834f4fe0142bb7';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MTk0OTc0NSwiZXhwIjoxNjYxOTY0MTQ1fQ.RKWV_vFsqIUDhLCrFIEdJbskFj6uy6SCHxWkabmXSw0';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MjE1NDE2MiwiZXhwIjoxNjYyMTY4NTYyfQ.Oq6jkvbCez72Gy_LpTr-pFPa6AZR0mSmbhstXX2A5TU';
 
 export class ReactLearnWordsAPI {
   async getResourse(url: string, methodName: string) {

@@ -5,12 +5,13 @@ import classes from './WordCard.module.scss';
 import { IID, IWordCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
 import { AllUsersWordsConsumer } from '../contextUserCard';
+import { Context } from '../Context';
 
 export class WordCard extends Component<IID> {
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
   state = {} as IWordCard;
@@ -71,6 +72,7 @@ export class WordCard extends Component<IID> {
   // }
 
   render() {
+    console.log(this.context);
     const {
       id,
       word,

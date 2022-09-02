@@ -3,9 +3,10 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
 import classes from './PaginationInGroup.module.scss';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
 import { AllUsersWordsConsumer } from '../contextUserCard';
 import { IWordCard } from '../consts';
+import { Context } from '../Context';
 
 interface IProp {
   group: number;
@@ -14,8 +15,8 @@ interface IProp {
 }
 
 export class PagionationInGroup extends Component<IProp> {
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   state = {
     group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
     page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
@@ -52,8 +53,10 @@ export class PagionationInGroup extends Component<IProp> {
   };
 
   render() {
+    console.log(this.context);
     const { color } = this.props;
     const { page, group } = this.state;
+    // const { allUsersWords } = this.context;
     return (
       <div>
         {group !== 6 && (
