@@ -5,9 +5,10 @@ import AuthorizedPage from '../../pages/AuthorizedPage';
 import HomePage from '../../pages/HomePage';
 import StatisticsPage from '../../pages/StatisticsPage';
 import AudioChallengePage from '../../pages/AudioChallengePage';
-import classes from './App.module.scss';
 import { TextbookPage } from '../../pages/TextbookPage';
 import SprintGamePage from '../../pages/SprintGamePage';
+import NotFoundPage from '../../pages/NotFoundPage';
+import classes from './App.module.scss';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/audio-challenge/:mode" element={<AudioChallengePage />} />
           <Route path="/auth-form" element={<AuthorizedPage />} />
           <Route path="/sprint-game" element={<SprintGamePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </StyledEngineProvider>

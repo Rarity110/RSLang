@@ -1,0 +1,41 @@
+.page404 {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &Panel {
+    display: flex;
+    align-items: center;
+  }
+
+  &Text {
+    flex-basis: 55%;
+  }
+
+  &Img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 899px) {
+  .page404 {
+    &ImgWrap {
+      flex-basis: 45%;
+      flex-grow: 0;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .page404 {
+    &Text {
+      flex-basis: 100%;
+      text-align: center;
+    }
+
+    &ImgWrap {
+      display: none;
+    }
+  }
+}
