@@ -49,9 +49,3 @@ export interface IAudio {
   audioExample: string;
   func: TCallback;
 }
-
-export interface IDifficult {
-  allUsersWords: IWordCard[];
-  wordCard: IWordCard;
-  // difficulty: string;
-}

@@ -129,9 +129,7 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
-          <AllUsersWordsConsumer>
-            {(allUserWords) => <Difficult allUsersWords={allUserWords} wordCard={this.state} />}
-          </AllUsersWordsConsumer>
+          <Difficult wordCard={this.state} />
         </CardContent>
       </Card>
     );
