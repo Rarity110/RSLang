@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { AudioChallengeWord } from '../../../types/audioChallenge';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
@@ -8,9 +8,10 @@ import AudioChallengeResultWord from '../AudioChallengeResultWord/AudioChallenge
 
 interface AudioChallengeREsultProps {
   words: AudioChallengeWord[];
+  restartHandler: () => void;
 }
 
-const AudioChallengeResult = ({ words }: AudioChallengeREsultProps) => {
+const AudioChallengeResult = ({ words, restartHandler }: AudioChallengeREsultProps) => {
   const correctWords = words.filter((word) => word.result);
   const incorrectWords = words.filter((word) => !word.result);
 
@@ -69,6 +70,12 @@ const AudioChallengeResult = ({ words }: AudioChallengeREsultProps) => {
           </Paper>
         </Grid>
       </Grid>
+
+      <Box mt={4}>
+        <Button onClick={restartHandler} size="large" variant="contained">
+          Сыграть еще раз
+        </Button>
+      </Box>
     </Box>
   );
 };

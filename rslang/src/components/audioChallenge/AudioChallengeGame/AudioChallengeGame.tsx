@@ -5,9 +5,10 @@ import AudioChallengeResult from '../AudioChallengeResult/AudioChallengeResult';
 
 interface AudioChallengeGameProps {
   words: AudioChallengeWord[];
+  restartHandler: () => void;
 }
 
-const AudioChallengeGame = ({ words }: AudioChallengeGameProps) => {
+const AudioChallengeGame = ({ words, restartHandler }: AudioChallengeGameProps) => {
   const endIndex = words.length;
   const [currentIndex, setCurrenIndex] = useState(0);
   const [resultWords, setResultWords] = useState<AudioChallengeWord[]>([]);
@@ -34,7 +35,9 @@ const AudioChallengeGame = ({ words }: AudioChallengeGameProps) => {
         />
       )}
 
-      {currentIndex >= endIndex && <AudioChallengeResult words={resultWords} />}
+      {currentIndex >= endIndex && (
+        <AudioChallengeResult words={resultWords} restartHandler={restartHandler} />
+      )}
     </>
   );
 };

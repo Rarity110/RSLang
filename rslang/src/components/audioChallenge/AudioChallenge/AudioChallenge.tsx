@@ -74,11 +74,18 @@ const AudioChallenge = ({ mode }: AudioChallengeProps) => {
     }
   };
 
+  const restartHandler = () => {
+    setError('');
+    setStart(false);
+  };
+
   return (
     <Box className={classes.game}>
       <Container className={classes.gameContainer}>
         {!start && <AudioChallengeWelcome startHandler={startHandler} bookParam={bookParam} />}
-        {gameWords.length > 0 && start && <AudioChallengeGame words={gameWords} />}
+        {gameWords.length > 0 && start && (
+          <AudioChallengeGame words={gameWords} restartHandler={restartHandler} />
+        )}
         {error !== '' && (
           <Snackbar
             open
