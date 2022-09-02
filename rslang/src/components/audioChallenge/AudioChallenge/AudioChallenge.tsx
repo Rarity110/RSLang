@@ -45,6 +45,7 @@ const AudioChallenge = ({ mode }: AudioChallengeProps) => {
           // TODO сделать - получение сложных слов
         }
         // обычные главы
+        // TODO исключить выученные слова для авторизованного пользователя
         else {
           words = await getPageWords(group, page);
         }

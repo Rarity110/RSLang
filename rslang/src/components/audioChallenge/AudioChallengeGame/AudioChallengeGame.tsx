@@ -15,7 +15,8 @@ const AudioChallengeGame = ({ words, restartHandler }: AudioChallengeGameProps) 
 
   useEffect(() => {
     if (currentIndex === endIndex) {
-      // TODO тут должна быть запись результатов
+      // TODO запись результатов (выучено/не выучено слово)
+      // TODO запись результатов в статистику
     }
   }, [currentIndex]);
 
