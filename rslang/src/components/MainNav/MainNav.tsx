@@ -14,7 +14,9 @@ const MainNav = () => {
           className={({ isActive }) =>
             isActive ? classes.navItemActive : classes.navItemInactive
           }>
-          <Typography component="span">{item.title}</Typography>
+          <Typography component="span" className={classes.navText}>
+            {item.title}
+          </Typography>
         </NavLink>
       ))}
     </nav>
