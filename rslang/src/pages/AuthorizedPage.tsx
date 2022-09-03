@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { Box, Container } from '@mui/material';
 import Header from '../components/Header/Header';
 import { AuthForm } from '../components/auth-form';
-import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
+import { Context } from '../components/Textbook/Context';
 
 const AuthorizedPage = () => {
-  const { isAuthorized } = useContext(AuthorizeContext);
+  const { isAuthorized } = useContext(Context);
   return (
     <>
       <Header {...{ isAuthorized }} />

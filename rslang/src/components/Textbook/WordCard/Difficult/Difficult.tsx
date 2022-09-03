@@ -126,36 +126,16 @@ export class Difficult extends Component<IDifficult> {
     };
     const AddToLearned = () => {
       if (difficulty !== 'learned') {
-        return (
-          <DifficultyButton newDifficulty="learned" value="Добавить в изученные" />
-          // <Button variant="outlined" onClick={() => this.togleDifficult('learned')}>
-          //   Добавить в изученные
-          // </Button>
-        );
+        return <DifficultyButton newDifficulty="learned" value="Добавить в изученные" />;
       } else {
-        return (
-          <DifficultyButton newDifficulty="noLearned" value="Удалить из изученных" />
-          // <Button variant="outlined" onClick={() => this.togleDifficult('noLearned')}>
-          //   Удалить из изученных
-          // </Button>
-        );
+        return <DifficultyButton newDifficulty="noLearned" value="Удалить из изученных" />;
       }
     };
     const AddToHard = () => {
       if (difficulty !== 'hard') {
-        return (
-          <DifficultyButton newDifficulty="hard" value="Добавить в сложные" />
-          // <Button variant="outlined" onClick={() => this.togleDifficult('hard')}>
-          //   Добавить в сложные
-          // </Button>
-        );
+        return <DifficultyButton newDifficulty="hard" value="Добавить в сложные" />;
       } else {
-        return (
-          <DifficultyButton newDifficulty="noHard" value="Удалить из сложных" />
-          // <Button variant="outlined" onClick={() => this.togleDifficult('noHard')}>
-          //   Удалить из сложных
-          // </Button>
-        );
+        return <DifficultyButton newDifficulty="noHard" value="Удалить из сложных" />;
       }
     };
     if (isAuthorized) {
@@ -168,35 +148,6 @@ export class Difficult extends Component<IDifficult> {
           <DifficultyIcon />
         </div>
       );
-      // if (difficulty === 'hard') {
-      //   return (
-      //     <>
-      //       <Button variant="outlined" onClick={() => this.togleDifficult('noHard')}>
-      //         <PriorityHighIcon style={{ color: 'red' }} />;
-      //       </Button>
-      //       <AddToLearned />
-      //       <DifficultyIcon />
-      //     </>
-      //   );
-      // } else if (difficulty === 'learned') {
-      //   return (
-      //     <>
-      //       <AddToHard />
-      //       <Button variant="outlined" onClick={() => this.togleDifficult('noLearned')}>
-      //         <CheckIcon style={{ color: 'green' }} />;
-      //       </Button>
-      //       <DifficultyIcon />
-      //     </>
-      //   );
-      // } else {
-      //   return (
-      //     <>
-      //       <AddToHard />
-      //       <AddToLearned />
-      //       <DifficultyIcon />
-      //     </>
-      //   );
-      // }
     }
   }
 }

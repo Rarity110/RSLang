@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header/Header';
 import AudioChallenge from '../components/audioChallenge/AudioChallenge/AudioChallenge';
-import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
+import { Context } from '../components/Textbook/Context';
 
 const AudioChallengePage = () => {
-  const { isAuthorized } = useContext(AuthorizeContext);
+  const { isAuthorized } = useContext(Context);
 
   return (
     <>
