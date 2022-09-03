@@ -1,4 +1,4 @@
-import { AudioChallengeOption, AudioChallengeStartParam } from '../../../types/audioChallenge';
+import { AudioChallengeOption } from '../../../types/audioChallenge';
 import { WordItem } from '../../../types/api';
 import { PAGE_PER_GROUP } from '../../../consts/consts';
 
@@ -68,10 +68,4 @@ export const getResultText = (isCorrect: boolean): string => {
 
 export const getRandomPage = (): number => {
   return Math.floor(Math.random() * PAGE_PER_GROUP);
-};
-
-export const getLocalStorageBookParams = (): AudioChallengeStartParam => {
-  const group = localStorage.getItem('group') !== null ? Number(localStorage.getItem('group')) : 0;
-  const page = localStorage.getItem('page') !== null ? Number(localStorage.getItem('page')) : 0;
-  return { group, page };
 };

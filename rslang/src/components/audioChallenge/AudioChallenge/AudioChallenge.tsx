@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Alert, Box, Container, Snackbar } from '@mui/material';
 import AudioChallengeWelcome from '../AudioChallengeWelcome/AudioChallengeWelcome';
 import AudioChallengeGame from '../AudioChallengeGame/AudioChallengeGame';
-import { AudioChallengeStartParam, AudioChallengeWord } from '../../../types/audioChallenge';
-import {
-  arrayRandomSort,
-  getLocalStorageBookParams,
-  getRandomPage,
-  getWordsOptions
-} from '../utility/utility';
-import { ROUTE_PARAM_MODE_BOOK } from '../../../consts/consts';
-import classes from './AudioChallenge.module.scss';
+import { arrayRandomSort, getRandomPage, getWordsOptions } from '../utility/utility';
 import { getPageWords } from '../../API/api';
 import { WordItem } from '../../../types/api';
+import { GameRouteParam } from '../../../types/props';
+import { AudioChallengeWord } from '../../../types/audioChallenge';
+import classes from './AudioChallenge.module.scss';
 
-interface AudioChallengeProps {
-  mode: string | undefined;
-}
-
-const AudioChallenge = ({ mode }: AudioChallengeProps) => {
+const AudioChallenge = () => {
+  const location = useLocation();
   const [gameWords, setGameWords] = useState<AudioChallengeWord[]>([]);
   const [start, setStart] = useState<boolean>(false);
-  const [bookParam, setBookParam] = useState<false | AudioChallengeStartParam>(false);
+  const [bookParam, setBookParam] = useState<false | GameRouteParam>(false);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    if (mode === ROUTE_PARAM_MODE_BOOK) {
-      const params = getLocalStorageBookParams();
+    if (location.state) {
+      const params = location.state as GameRouteParam;
       setBookParam(params);
     }
   }, []);
@@ -77,6 +70,7 @@ const AudioChallenge = ({ mode }: AudioChallengeProps) => {
 
   const restartHandler = () => {
     setError('');
+    setBookParam(false);
     setStart(false);
   };
 

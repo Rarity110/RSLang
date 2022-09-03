@@ -20,8 +20,3 @@ export interface AudioChallengeProgress {
   current: number;
   total: number;
 }
-
-export interface AudioChallengeStartParam {
-  group: number;
-  page: number;
-}

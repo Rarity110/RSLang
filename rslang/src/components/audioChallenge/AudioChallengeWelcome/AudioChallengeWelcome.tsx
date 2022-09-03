@@ -4,12 +4,12 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import SchoolIcon from '@mui/icons-material/School';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import { AudioChallengeStartParam } from '../../../types/audioChallenge';
+import { GameRouteParam } from '../../../types/props';
 import { BookGroupName, BookGroupNameShort } from '../../../types/api';
 import classes from './AudioChallengeWelcome.module.scss';
 
 interface AudioChallengeWelcomeProps {
-  bookParam: false | AudioChallengeStartParam;
+  bookParam: false | GameRouteParam;
   startHandler: (level: string) => void;
 }
 
