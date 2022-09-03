@@ -18,7 +18,7 @@ const FAKE_TRANSLATE_OPTIONS = [
   'вопрос'
 ];
 
-const getRandomArrayUniqueIndexes = (length: number, count = FALSY_OPTIONS_COUNT) => {
+export const getRandomArrayUniqueIndexes = (length: number, count = FALSY_OPTIONS_COUNT) => {
   const result: number[] = [];
 
   while (result.length < count) {
