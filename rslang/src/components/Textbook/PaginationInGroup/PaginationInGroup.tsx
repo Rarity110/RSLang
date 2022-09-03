@@ -7,6 +7,7 @@ import classes from './PaginationInGroup.module.scss';
 // import { AllUsersWordsConsumer } from '../contextUserCard';
 import { IWordCard } from '../consts';
 import { Context } from '../Context';
+import { Link } from 'react-router-dom';
 
 interface IProp {
   group: number;
@@ -67,20 +68,34 @@ export class PagionationInGroup extends Component<IProp> {
     let className = classes.page;
     if (this.state.learned === true) className += '_learned';
     return (
-      <div className={className}>
-        {group !== 6 && (
-          <Stack spacing={2} className={classes.pagionationInGroup}>
-            <Pagination count={30} page={page + 1} onChange={this.updatePage} color={'secondary'} />
-          </Stack>
-        )}
-        <WordCards
-          group={group}
-          page={page}
-          color={color}
-          allUserWords={this.context.allUserWords}
-          funcLearned={this.updateLearned}
-        />
-      </div>
+      <>
+        <div className={className}>
+          {group !== 6 && (
+            <Stack spacing={2} className={classes.pagionationInGroup}>
+              <Link to="/audio-challenge" state={{ group: group, page: page }}>
+                Аудиовызов
+              </Link>
+              <Pagination
+                count={30}
+                page={page + 1}
+                onChange={this.updatePage}
+                color={'secondary'}
+              />
+              <Link to="/sprint-game" state={{ group: group, page: page }}>
+                Спринт
+              </Link>
+            </Stack>
+          )}
+
+          <WordCards
+            group={group}
+            page={page}
+            color={color}
+            allUserWords={this.context.allUserWords}
+            funcLearned={this.updateLearned}
+          />
+        </div>
+      </>
     );
   }
 }
