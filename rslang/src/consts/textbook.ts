@@ -1,21 +1,4 @@
-export interface IGroup {
-  num: number;
-  abbr: string;
-  color: string;
-}
-
-export type Callback = (num: number) => void;
-
-export interface IPropGroupItem {
-  propsGroup: IGroup;
-  groupActive: number;
-  onChangeGroupFunc: Callback;
-}
-
-export interface ICards {
-  group: number;
-  page: number;
-}
+import { IGroup } from '../types/props';
 
 export const groupsName: IGroup[] = [
   { num: 1, abbr: 'A1', color: '#21ff6f' },

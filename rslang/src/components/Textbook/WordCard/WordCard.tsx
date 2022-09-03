@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
 import classes from './WordCard.module.scss';
-import { IID, IWordCard } from '../consts';
+import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
 import { Context } from '../Context';
+
+export interface IID {
+  id: string;
+  funcAudio: (audioList: HTMLAudioElement[]) => void;
+  funcRender: () => void;
+  color: string;
+  allUserWords?: IWordCard[];
+}
 
 export class WordCard extends Component<IID> {
   static contextType = Context;
@@ -14,13 +22,13 @@ export class WordCard extends Component<IID> {
 
   state = {
     wordCard: {} as IWordCard,
-    allUsersWords: [] as IWordCard[]
+    allUserWords: [] as IWordCard[]
   };
 
   componentDidMount() {
     const id = this.props.id;
     this.setState({
-      allUsersWords: this.context.allUserWords
+      allUserWords: this.context.allUserWords
     });
     this.reactLearnWordsAPI.getWord(id).then((card) => {
       this.setState({
@@ -106,7 +114,7 @@ export class WordCard extends Component<IID> {
           </div>
           <Difficult
             wordCard={this.state.wordCard}
-            allUsersWords={this.context.allUserWords}
+            allUserWords={this.context.allUserWords}
             funcRender={this.props.funcRender}
           />
         </CardContent>

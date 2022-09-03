@@ -3,7 +3,7 @@
 export const URLBASE = 'http://localhost:8081';
 const userID = '630c74f3ff834f4fe0142bb7';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MjE5OTk1NSwiZXhwIjoxNjYyMjE0MzU1fQ.1SDxC4tlBWL-4UmwPvuJqizDfAJ71jpRPt4wAFNRolA';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MjIzNzgwNSwiZXhwIjoxNjYyMjUyMjA1fQ.mfGugqZpcwyqLY2BIDcmWd3Um1U0w4bOTO8fZcDnOwQ';
 
 export class ReactLearnWordsAPI {
   async getResourse(url: string, methodName: string) {
@@ -46,6 +46,7 @@ export class ReactLearnWordsAPI {
         result: response.json(),
         status: response.status
       };
+      return data;
     } catch {
       // return 'error';
     }

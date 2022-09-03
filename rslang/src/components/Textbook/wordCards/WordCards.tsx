@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
-import { IWordCard, IState } from '../consts';
+import { IWordCard } from '../../../types/props';
 import { Context } from '../Context';
+import { WORD_DIFFICULTY, WORDS_PER_PAGE } from '../../../consts/consts';
+
+interface IState {
+  group: number;
+  page: number;
+  color: string;
+  funcLearned: () => void;
+  allUserWords?: IWordCard[];
+  cards?: IWordCard[];
+}
 
 export class WordCards extends Component<IState> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
@@ -23,7 +33,11 @@ export class WordCards extends Component<IState> {
   }
 
   componentDidUpdate(prevProps: IState) {
-    if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
+    if (
+      this.props.page !== prevProps.page ||
+      this.props.group !== prevProps.group ||
+      this.props.cards !== prevProps.cards
+    ) {
       this.updateCards();
     }
   }
@@ -38,35 +52,48 @@ export class WordCards extends Component<IState> {
       const storageUserWords: string | null = localStorage.getItem('userWords');
       if (storageUserWords) {
         const hardWords = JSON.parse(storageUserWords).filter(
-          (wordCard: IWordCard) => wordCard.userWord?.difficulty === 'hard'
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === WORD_DIFFICULTY.hard
+        );
+        this.setState({
+          cards: hardWords
+        });
+      } else {
+        const hardWords = this.context.allUserWords.filter(
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === WORD_DIFFICULTY.hard
         );
         this.setState({
           cards: hardWords
         });
       }
     } else {
-      this.reactLearnWordsAPI.getWords(group, page).then((words) => {
-        this.setState({
-          cards: words
+      this.reactLearnWordsAPI
+        .getWords(group, page)
+        .then((words) => {
+          this.setState({
+            cards: words
+          });
+        })
+        .then(() => {
+          const usersCardsId = this.context.allUserWords.map((el) => {
+            if (
+              el.userWord?.difficulty === WORD_DIFFICULTY.hard ||
+              el.userWord?.difficulty === WORD_DIFFICULTY.learned
+            ) {
+              return el.id;
+            }
+          });
+          let countLearnedCards = 0;
+          this.state.cards.forEach((el) => {
+            if (usersCardsId.includes(el.id)) {
+              console.log(el.word);
+              countLearnedCards += 1;
+            }
+          });
+          console.log(countLearnedCards);
+          if (countLearnedCards === WORDS_PER_PAGE) {
+            this.props.funcLearned();
+          }
         });
-      });
-      // console.log(this.context);
-      ///
-      const usersCardsId = this.context.allUserWords.map((el) => {
-        if (el.userWord?.difficulty === 'hard' || el.userWord?.difficulty === 'learned') {
-          return el.id;
-        }
-      });
-      // console.log(usersCardsId);
-      // console.log(this.state);
-      this.state.cards.forEach((el) => console.log(el.id));
-      const learnedCards = this.state.cards.filter((el) => {
-        usersCardsId.includes(el.id);
-      });
-      // console.log(learnedCards);
-      if (learnedCards.length === 20) {
-        this.props.funcLearned();
-      }
     }
   }
 

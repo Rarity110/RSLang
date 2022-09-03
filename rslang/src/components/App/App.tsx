@@ -9,7 +9,7 @@ import { TextbookPage } from '../../pages/TextbookPage';
 import SprintGamePage from '../../pages/SprintGamePage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import classes from './App.module.scss';
-import { IWordCard } from '../Textbook/consts';
+import { IWordCard } from '../../types/props';
 import { Context } from '../Textbook/Context';
 import { ReactLearnWordsAPI } from '../API/getWords';
 
@@ -47,7 +47,7 @@ class App extends Component {
           allUserWords: JSON.parse(storageUserWords)
         });
       } else {
-        this.getAllUserWords();
+        this.getallUserWords();
       }
     } else {
       this.setState({
@@ -66,7 +66,7 @@ class App extends Component {
     }
   }
 
-  async getAllUserWords() {
+  async getallUserWords() {
     const usersWords: IWordCard[] = [];
     const wordsAtPages = 100;
     await this.reactLearnWordsAPI
@@ -101,7 +101,7 @@ class App extends Component {
       this.setState({
         isAuthorized: true
       });
-      this.getAllUserWords();
+      this.getallUserWords();
     } else {
       this.setState({
         isAuthorized: false,

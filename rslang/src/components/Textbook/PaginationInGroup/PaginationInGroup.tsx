@@ -3,16 +3,16 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
 import classes from './PaginationInGroup.module.scss';
-// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
-// import { AllUsersWordsConsumer } from '../contextUserCard';
-import { IWordCard } from '../consts';
+import { IWordCard } from '../../../types/props';
 import { Context } from '../Context';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 interface IProp {
   group: number;
   color: string;
-  allUsersWords: IWordCard[];
+  allUserWords: IWordCard[];
+  funcLearned: () => void;
 }
 
 export class PagionationInGroup extends Component<IProp> {
@@ -20,15 +20,13 @@ export class PagionationInGroup extends Component<IProp> {
   context!: React.ContextType<typeof Context>;
   state = {
     group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
-    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0,
-    learned: false
+    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
   };
 
   componentDidMount() {
     this.updateGroup();
     this.setState({
-      allUserWords: this.props.allUsersWords,
-      learned: false
+      allUserWords: this.props.allUserWords
     });
   }
 
@@ -36,7 +34,6 @@ export class PagionationInGroup extends Component<IProp> {
     if (this.props.group !== prevProps.group) {
       this.updateGroup();
     }
-    this.updateLearned = this.updateLearned.bind(this);
   }
 
   updateGroup() {
@@ -56,48 +53,48 @@ export class PagionationInGroup extends Component<IProp> {
     localStorage.setItem('page', pageActive);
   };
 
-  updateLearned() {
-    this.setState({
-      learned: true
-    });
-  }
-
   render() {
     const { color } = this.props;
     const { page, group } = this.state;
-    let className = classes.page;
-    if (this.state.learned === true) className += '_learned';
+    const className = classes.page;
+    const LinkGame = ({ to, value }: { to: string; value: string }) => {
+      return (
+        <Button variant="outlined">
+          <Link
+            to={to}
+            state={{ group: group, page: page }}
+            className={classes.paginationInGroup_link}>
+            {value}
+          </Link>
+        </Button>
+      );
+    };
     return (
       <>
         <div className={className}>
-          {group !== 6 && (
-            <Stack spacing={2} className={classes.pagionationInGroup}>
-              <Link to="/audio-challenge" state={{ group: group, page: page }}>
-                Аудиовызов
-              </Link>
-              <Pagination
-                count={30}
-                page={page + 1}
-                onChange={this.updatePage}
-                color={'secondary'}
-              />
-              <Link to="/sprint-game" state={{ group: group, page: page }}>
-                Спринт
-              </Link>
-            </Stack>
-          )}
-
-          <WordCards
-            group={group}
-            page={page}
-            color={color}
-            allUserWords={this.context.allUserWords}
-            funcLearned={this.updateLearned}
-          />
+          <div className={classes.pagination}>
+            <LinkGame to={'/audio-challenge'} value={'Тренировать слова в игре Аудиовызов'} />
+            {group !== 6 && (
+              <Stack spacing={2} className={classes.pagionationInGroup}>
+                <Pagination
+                  count={30}
+                  page={page + 1}
+                  onChange={this.updatePage}
+                  color={'secondary'}
+                />
+              </Stack>
+            )}
+            <LinkGame to={'/sprint-game'} value={'Тренировать слова в игре Спринт'} />
+          </div>
         </div>
+        <WordCards
+          group={group}
+          page={page}
+          color={color}
+          allUserWords={this.context.allUserWords}
+          funcLearned={this.props.funcLearned}
+        />
       </>
     );
   }
 }
-
-// style={{ backgroundColor: color }}
