@@ -109,6 +109,7 @@ class App extends Component {
       });
     }
   }
+
   render(): React.ReactNode {
     const { allUserWords, isAuthorized, authorize, logout } = this.state;
     return (
@@ -126,7 +127,6 @@ class App extends Component {
               <Route path="/textbook" element={<TextbookPage />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/audio-challenge" element={<AudioChallengePage />} />
-              <Route path="/audio-challenge/:mode" element={<AudioChallengePage />} />
               <Route path="/auth-form" element={<AuthorizedPage />} />
               <Route path="/sprint-game" element={<SprintGamePage />} />
               <Route path="*" element={<NotFoundPage />} />
