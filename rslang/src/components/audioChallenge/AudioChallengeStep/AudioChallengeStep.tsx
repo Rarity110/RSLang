@@ -24,12 +24,40 @@ const AudioChallengeStep = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [result, setResult] = useState<boolean | null>(null);
   const [complete, setComplete] = useState<boolean>(false);
+  const optionKeys = options.map((_, index) => `Digit${index + 1}`);
 
   useEffect(() => {
     setResult(null);
     setComplete(false);
     audioClickHandler();
   }, [wordObj]);
+
+  useEffect(() => {
+    const onKeypress = (e: KeyboardEvent) => {
+      const keyIndex = optionKeys.indexOf(e.code);
+      if (!complete && keyIndex !== -1) {
+        optionClickHandler(options[keyIndex].result);
+      }
+
+      if (!complete && e.code === 'Enter') {
+        optionClickHandler(false);
+      }
+
+      if (complete && e.code === 'Enter') {
+        nextClickHandler();
+      }
+
+      if (e.code === 'Space') {
+        audioClickHandler();
+      }
+    };
+
+    document.addEventListener('keypress', onKeypress);
+
+    return () => {
+      document.removeEventListener('keypress', onKeypress);
+    };
+  }, [complete]);
 
   const classNameStepResult = () => {
     if (result) return classes.stepResultCorrect;
@@ -68,6 +96,9 @@ const AudioChallengeStep = ({
             className={classes.stepAudioBtn}
             onClick={audioClickHandler}>
             <VolumeUpIcon fontSize="inherit" />
+            <Typography className={classes.stepAudioBtnPrefix} color="text.secondary">
+              Space
+            </Typography>
           </IconButton>
         )}
 
@@ -138,6 +169,9 @@ const AudioChallengeStep = ({
             }}
             fullWidth>
             Не знаю
+            <Typography className={classes.stepSkipPrefix} color="text.secondary">
+              Enter
+            </Typography>
           </Button>
         )}
         {complete && (
@@ -148,6 +182,9 @@ const AudioChallengeStep = ({
             endIcon={<ArrowRightAltIcon />}
             fullWidth>
             Далее
+            <Typography className={classes.stepSkipPrefixContrast} color="text.secondary">
+              Enter
+            </Typography>
           </Button>
         )}
       </Box>

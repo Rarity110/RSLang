@@ -5,6 +5,15 @@
   --bg-color-start: rgba(0, 0, 0, 0.035);
   --bg-color-end: rgba(255, 255, 255, 0);
 
+  %prefix {
+    position: absolute;
+    line-height: 16px;
+    background: rgba(0, 0, 0, 0.07);
+    border-radius: 4px;
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+  }
+
   padding: var(--spacing-x4) 0;
   min-height: calc(100vh - var(--header-height));
   display: flex;
@@ -47,6 +56,13 @@
       width: $h-element;
       height: $h-element;
       font-size: 96px;
+
+      &Prefix {
+        @extend %prefix;
+        right: 16px;
+        top: 24px;
+        font-size: 11px;
+      }
     }
 
     &Img {
@@ -68,6 +84,7 @@
   &Options {
     margin-bottom: var(--spacing-x2);
     min-width: 100%;
+    min-height: 64px;
     display: flex;
     gap: var(--spacing-x3);
     justify-content: center;
@@ -79,18 +96,12 @@
 
     &Prefix {
       $size: 16px;
-
-      position: absolute;
+      @extend %prefix;
       right: 4px;
       top: 4px;
       width: $size;
       height: $size;
-      line-height: $size;
       font-size: 12px;
-      background: rgba(0, 0, 0, 0.07);
-      border-radius: 4px;
-      opacity: 1;
-      transition: opacity 0.25s ease-in-out;
     }
 
     &:global(.Mui-disabled) > &Prefix {
@@ -116,6 +127,23 @@
 
   &Skip {
     min-width: 20%;
+
+    &Prefix {
+      @extend %prefix;
+      top: 4px;
+      right: 8px;
+      font-size: 11px;
+      text-transform: none;
+    }
+
+    &PrefixContrast {
+      @extend %prefix;
+      top: 4px;
+      right: 8px;
+      font-size: 11px;
+      text-transform: none;
+      color: rgba(255, 255, 255, 0.7);
+    }
   }
 }
 

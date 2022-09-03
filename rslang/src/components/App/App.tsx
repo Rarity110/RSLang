@@ -5,9 +5,10 @@ import AuthorizedPage from '../../pages/AuthorizedPage';
 import HomePage from '../../pages/HomePage';
 import StatisticsPage from '../../pages/StatisticsPage';
 import AudioChallengePage from '../../pages/AudioChallengePage';
-import classes from './App.module.scss';
 import { TextbookPage } from '../../pages/TextbookPage';
 import SprintGamePage from '../../pages/SprintGamePage';
+import NotFoundPage from '../../pages/NotFoundPage';
+import classes from './App.module.scss';
 import { IWordCard } from '../Textbook/consts';
 import { Context } from '../Textbook/Context';
 import { ReactLearnWordsAPI } from '../API/getWords';
@@ -125,8 +126,10 @@ class App extends Component {
               <Route path="/textbook" element={<TextbookPage />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/audio-challenge" element={<AudioChallengePage />} />
+              <Route path="/audio-challenge/:mode" element={<AudioChallengePage />} />
               <Route path="/auth-form" element={<AuthorizedPage />} />
               <Route path="/sprint-game" element={<SprintGamePage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
         </StyledEngineProvider>

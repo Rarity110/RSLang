@@ -12,16 +12,66 @@
   &Logo {
     font-weight: 600;
     letter-spacing: 0.02em;
+    user-select: none;
   }
 
   &UserBox {
     margin-left: auto;
+    max-width: 450px;
     display: flex;
     align-items: center;
     gap: var(--spacing-x2);
   }
 
+  &UserName {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex-shrink: 2;
+  }
+
   &LoginLink {
     text-decoration: none;
+  }
+
+  &LogoutBtn {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .header {
+    &UserBox {
+      max-width: 300px;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .header {
+    &UserBox {
+      max-width: 250px;
+    }
+
+    &Toolbar {
+      gap: var(--spacing-x2);
+    }
+  }
+}
+
+// md
+@media (max-width: 899px) {
+  .header {
+    &Nav {
+      order: -1;
+    }
+  }
+}
+
+@media (max-width: 479px) {
+  .header {
+    &Logo {
+      display: none;
+    }
   }
 }
