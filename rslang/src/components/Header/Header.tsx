@@ -5,7 +5,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import MainNav from '../MainNav/MainNav';
 import classes from './Header.module.scss';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import { deleteLoginFromLocalStorage, getLogin } from '../auth-form/localStorageFunctions';
+import { deleteLoginFromLocalStorage, getEmail } from '../auth-form/localStorageFunctions';
 
 interface HeaderProps {
   isAuthorized: boolean;
@@ -13,7 +13,7 @@ interface HeaderProps {
   withoutShadow?: boolean;
 }
 
-const loginName = getLogin();
+const authorizedEmail = getEmail();
 
 const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
   return (
@@ -41,7 +41,7 @@ const Header = ({ isAuthorized, withoutLogo, withoutShadow }: HeaderProps) => {
               <>
                 <Typography variant="body2" color="text.secondary">
                   Вы авторизованы как
-                  <b> {loginName} </b>
+                  <b> {authorizedEmail} </b>
                 </Typography>
                 <Button
                   onClick={deleteLoginFromLocalStorage}

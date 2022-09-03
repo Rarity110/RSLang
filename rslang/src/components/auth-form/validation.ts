@@ -11,11 +11,27 @@ export const loginValidation = {
   }
 };
 
+export const emailValidation = {
+  required: requiredField,
+  validate: (value: string) => {
+    const validAdress =
+      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (value.match(/[а-яА-Я]/)) {
+      return 'Адрес электронной почты не может содержать русские буквы';
+    }
+    if (!value.match(validAdress)) {
+      return 'Адрес электронной почты должен быть в формате example@house.com';
+    }
+
+    return true;
+  }
+};
+
 export const passwordValidation = {
   required: requiredField,
   validate: (value: string) => {
-    if (value.length < 6) {
-      return 'Пароль должен быть длинее 6 символов';
+    if (value.length < 8) {
+      return 'Пароль должен быть длинее 8 символов';
     }
 
     if (value.match(/[а-яА-Я]/)) {
