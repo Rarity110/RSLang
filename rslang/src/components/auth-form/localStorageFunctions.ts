@@ -17,7 +17,7 @@ export function deleteLoginFromLocalStorage() {
   document.location.reload();
 }
 
-export const getEmail = () => {
+export const getLogin = () => {
   const store = JSON.parse(localStorage.getItem(loginKey) || '{}');
   return store.email;
 };
