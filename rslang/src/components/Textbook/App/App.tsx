@@ -10,14 +10,14 @@ import {
 import { GroupItem } from '../groupNav/groupItem';
 import { PagionationInGroup } from '../PaginationInGroup/PaginationInGroup';
 import classes from './App.module.scss';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
 import { ReactLearnWordsAPI } from '../../API/getWords';
-import { AllUsersWordsConsumer } from '../contextUserCard';
+import { Context } from '../Context';
 
 export class App extends Component {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   state = {
     group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0
   };
@@ -39,6 +39,7 @@ export class App extends Component {
 
   render() {
     const groups: IGroup[] = !this.context.isAuthorized ? groupsName : groupsNameAuthorized;
+    const allUsersWords = this.context.allUserWords;
     let color = '';
     for (let i = 0; i < groups.length; i++) {
       if (groups[i].num === this.state.group + 1) {
@@ -58,15 +59,7 @@ export class App extends Component {
         <div key="groups" className={classes.textbookMainGroups}>
           {elements}
         </div>
-        <AllUsersWordsConsumer>
-          {(allUserWords) => (
-            <PagionationInGroup
-              group={this.state.group}
-              color={color}
-              allUsersWords={allUserWords}
-            />
-          )}
-        </AllUsersWordsConsumer>
+        <PagionationInGroup group={this.state.group} color={color} allUsersWords={allUsersWords} />
       </Container>
     );
   }

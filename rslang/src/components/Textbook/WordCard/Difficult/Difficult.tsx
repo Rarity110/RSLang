@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Button } from '@mui/material';
-import { AuthorizeContext } from '../../../auth-form/AuthorizeContext';
 import { ReactLearnWordsAPI } from '../../../API/getWords';
-import { IWordCard, IDifficult } from '../../consts';
+import { Context } from '../../Context';
+import CheckIcon from '@mui/icons-material/Check';
+import { IWordCard, TCallbackRender } from '../../consts';
+import { saveWordsInStorage } from '../../saveWordsInStorage';
+import classes from './Difficult.module.scss';
 
-export type TCallbackAsync = (id: string, allWords: IWordCard[]) => void;
+interface IDifficult {
+  wordCard: IWordCard;
+  allUsersWords?: IWordCard[];
+  funcRender: TCallbackRender;
+}
 
 export class Difficult extends Component<IDifficult> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
 
   state = {
-    allUsersWords: this.props.allUsersWords,
+    allUsersWords: [] as IWordCard[],
     wordCard: this.props.wordCard
-    // difficulty: this.props.wordCard.difficulty | undefined
   };
 
   componentDidMount() {
+    this.setState({
+      allUsersWords: this.context.allUserWords
+    });
     this.updateDifficult();
   }
 
@@ -26,79 +35,119 @@ export class Difficult extends Component<IDifficult> {
     if (this.props.wordCard.userWord?.difficulty !== prevProps.wordCard.userWord?.difficulty) {
       this.updateDifficult();
     }
+    if (this.props.allUsersWords !== prevProps.allUsersWords) {
+      this.setState({
+        allUsersWords: this.context.allUserWords
+      });
+      this.updateDifficult();
+    }
   }
 
   updateDifficult() {
-    const allUsersWords = this.props.allUsersWords;
-    const wordCard = this.props.allUsersWords.filter(
-      (wordCard) => wordCard.id === this.props.wordCard.id
+    const wordCard = this.context.allUserWords.filter(
+      (card) => card.id === this.props.wordCard.id
     )[0];
-    // console.log(wordCard);
     if (wordCard) {
       this.setState({
         wordCard: wordCard,
         difficulty: wordCard.userWord?.difficulty
       });
     }
-    this.setState({
-      allUsersWords: allUsersWords
-    });
   }
 
-  //   togleDifficult(idword: string) {
-  //     this.reactLearnWordsAPI.postUserWord(idword);
-  //   }
-
-  togleDifficult() {
+  addDifficulty(difficulty: string) {
     const { allUsersWords, wordCard } = this.state;
-    const id = wordCard.id;
-    // console.log(wordCard.userWord?.difficulty);
     if (!wordCard.userWord?.difficulty) {
-      wordCard.userWord = { difficulty: 'hard' };
+      wordCard.userWord = { difficulty: difficulty };
       allUsersWords.push(wordCard);
-      this.reactLearnWordsAPI.postUserWord(id, 'hard');
+      this.reactLearnWordsAPI.postUserWord(wordCard.id, difficulty);
       this.setState({
-        difficulty: 'hard'
+        difficulty: difficulty
       });
     } else {
-      const index = allUsersWords.findIndex((el) => el.id === id);
-      if (wordCard.userWord.difficulty === 'hard') {
+      const index = allUsersWords.findIndex((el) => el.id === wordCard.id);
+      if (wordCard.userWord.difficulty === difficulty) {
         delete wordCard.userWord.difficulty;
-        this.reactLearnWordsAPI.deleteUserWord(id);
+        this.reactLearnWordsAPI.deleteUserWord(wordCard.id);
         allUsersWords.splice(index, 1);
         this.setState({
           difficulty: undefined
         });
-      } else if (wordCard.userWord.difficulty === 'learned') {
-        wordCard.userWord.difficulty = 'hard';
-        this.reactLearnWordsAPI.putUserWord(id, 'hard');
-        allUsersWords[index].userWord = { difficulty: 'hard' };
+      } else {
+        wordCard.userWord.difficulty = difficulty;
+        this.reactLearnWordsAPI.putUserWord(wordCard.id, difficulty);
+        allUsersWords[index].userWord = { difficulty: difficulty };
         this.setState({
-          difficulty: 'hard'
+          difficulty: difficulty
         });
       }
     }
-    // console.log(allUsersWords);
+  }
+
+  removeDifficulty() {
+    const { allUsersWords, wordCard } = this.state;
+    const index = allUsersWords.findIndex((el) => el.id === wordCard.id);
+    delete wordCard.userWord?.difficulty;
+    this.reactLearnWordsAPI.deleteUserWord(wordCard.id);
+    allUsersWords.splice(index, 1);
+    this.setState({
+      difficulty: undefined
+    });
+  }
+
+  togleDifficult(difficulty: string) {
+    if (difficulty === 'hard' || difficulty === 'learned') this.addDifficulty(difficulty);
+    if (difficulty === 'noHard' || difficulty === 'noLearned') this.removeDifficulty();
+    saveWordsInStorage(this.context.allUserWords);
+    this.props.funcRender();
   }
 
   render(): React.ReactNode {
     const isAuthorized = this.context.isAuthorized;
     const difficulty = this.state.wordCard.userWord?.difficulty;
-    // console.log(this.state.wordCard);
-    if (isAuthorized) {
+    const DifficultyIcon = () => {
       if (difficulty === 'hard') {
-        return (
-          <Button variant="outlined" onClick={() => this.togleDifficult()}>
-            <PriorityHighIcon style={{ color: 'red' }} />;
-          </Button>
-        );
+        return <PriorityHighIcon style={{ color: 'red' }} className={classes.difficulty_icon} />;
+      } else if (difficulty === 'learned') {
+        return <CheckIcon style={{ color: 'green' }} className={classes.difficulty_icon} />;
       } else {
-        return (
-          <Button variant="outlined" onClick={() => this.togleDifficult()}>
-            Добавить в сложные
-          </Button>
-        );
+        return <div></div>;
       }
+    };
+    const DifficultyButton = (props: { newDifficulty: string; value: string }) => {
+      return (
+        <Button
+          variant="outlined"
+          className={classes.difficulty_buttons_button}
+          onClick={() => this.togleDifficult(props.newDifficulty)}>
+          {props.value}
+        </Button>
+      );
+    };
+    const AddToLearned = () => {
+      if (difficulty !== 'learned') {
+        return <DifficultyButton newDifficulty="learned" value="Добавить в изученные" />;
+      } else {
+        return <DifficultyButton newDifficulty="noLearned" value="Удалить из изученных" />;
+      }
+    };
+    const AddToHard = () => {
+      if (difficulty !== 'hard') {
+        return <DifficultyButton newDifficulty="hard" value="Добавить в сложные" />;
+      } else {
+        return <DifficultyButton newDifficulty="noHard" value="Удалить из сложных" />;
+      }
+    };
+    if (isAuthorized) {
+      return (
+        <div className={classes.difficulty}>
+          <div className={classes.difficulty_buttons}>
+            <AddToHard />
+            <AddToLearned />
+          </div>
+          <DifficultyIcon />
+        </div>
+      );
     }
   }
 }

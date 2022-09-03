@@ -13,7 +13,7 @@ export class AudioCard extends Component<IAudio> {
   render() {
     return (
       <div className={classes.sound}>
-        <VolumeDownSharpIcon onClick={() => this.props.func(this.audioList)} />
+        <VolumeDownSharpIcon onClick={() => this.props.funcAudio(this.audioList)} />
       </div>
     );
   }

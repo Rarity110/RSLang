@@ -23,23 +23,27 @@ export interface IWordCard {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   userWord?: IUserWord;
-  func?: TCallback;
+  funcAudio?: TCallbackAudio;
+  funcRender: TCallbackRender;
 }
 
 export interface IState {
   group: number;
   page: number;
   color: string;
-  allUserWords: IWordCard[];
-  allUsersWordsLength?: number;
+  funcLearned: () => void;
+  allUserWords?: IWordCard[];
 }
 
-export type TCallback = (audioList: HTMLAudioElement[]) => void;
+export type TCallbackAudio = (audioList: HTMLAudioElement[]) => void;
+export type TCallbackRender = () => void;
 
 export interface IID {
   id: string;
-  func: TCallback;
+  funcAudio: TCallbackAudio;
+  funcRender: TCallbackRender;
   color: string;
+  allUserWords?: IWordCard[];
 }
 
 export interface IAudio {
@@ -47,11 +51,5 @@ export interface IAudio {
   audio: string;
   audioMeaning: string;
   audioExample: string;
-  func: TCallback;
-}
-
-export interface IDifficult {
-  allUsersWords: IWordCard[];
-  wordCard: IWordCard;
-  // difficulty: string;
+  funcAudio: TCallbackAudio;
 }
