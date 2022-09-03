@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
 import classes from './PaginationInGroup.module.scss';
 // import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
-import { AllUsersWordsConsumer } from '../contextUserCard';
+// import { AllUsersWordsConsumer } from '../contextUserCard';
 import { IWordCard } from '../consts';
 import { Context } from '../Context';
 
@@ -64,17 +64,12 @@ export class PagionationInGroup extends Component<IProp> {
             <Pagination count={30} page={page + 1} onChange={this.updatePage} />
           </Stack>
         )}
-        <AllUsersWordsConsumer>
-          {(allUserWords) => (
-            <WordCards
-              group={group}
-              page={page}
-              color={color}
-              allUserWords={allUserWords}
-              allUsersWordsLength={allUserWords.length}
-            />
-          )}
-        </AllUsersWordsConsumer>
+        <WordCards
+          group={group}
+          page={page}
+          color={color}
+          allUserWords={this.context.allUserWords}
+        />
       </div>
     );
   }

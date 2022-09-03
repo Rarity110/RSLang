@@ -91,7 +91,7 @@ export class WordCard extends Component<IID> {
             audio={audioSrc}
             audioMeaning={audioMeaningSrc}
             audioExample={audioExampleSrc}
-            func={this.props.func}
+            funcAudio={this.props.funcAudio}
           />
           <div className={classes.text}>
             <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
@@ -105,7 +105,11 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
-          <Difficult wordCard={this.state.wordCard} allUsersWords={this.context.allUserWords} />
+          <Difficult
+            wordCard={this.state.wordCard}
+            allUsersWords={this.context.allUserWords}
+            funcRender={this.props.funcRender}
+          />
         </CardContent>
       </Card>
     );

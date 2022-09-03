@@ -19,28 +19,12 @@ export class WordCards extends Component<IState> {
   componentDidMount() {
     this.updateCards();
     this.toggleAudio = this.toggleAudio.bind(this);
-    if (this.props.group === 6)
-      this.setState({
-        allUserWordsLength: this.props.allUsersWordsLength
-      });
+    this.changeCards = this.changeCards.bind(this);
   }
 
   componentDidUpdate(prevProps: IState) {
-    if (
-      this.props.page !== prevProps.page ||
-      this.props.group !== prevProps.group ||
-      this.props.allUserWords !== prevProps.allUserWords
-    ) {
+    if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
       this.updateCards();
-    }
-    if (this.props.group === 6) {
-      console.log(this.props.allUserWords.length);
-      console.log(prevProps.allUserWords.length);
-      if (this.props.allUsersWordsLength !== prevProps.allUsersWordsLength) {
-        this.setState({
-          allUserWordsLength: this.props.allUserWords.length
-        });
-      }
     }
   }
 
@@ -51,9 +35,12 @@ export class WordCards extends Component<IState> {
       group: group
     });
     if (group === 6) {
-      this.setState({
-        cards: this.props.allUserWords
-      });
+      const storageUserWords: string | null = localStorage.getItem('userWords');
+      if (storageUserWords) {
+        this.setState({
+          cards: JSON.parse(storageUserWords)
+        });
+      }
     } else {
       this.reactLearnWordsAPI.getWords(group, page).then((words) => {
         this.setState({
@@ -88,8 +75,14 @@ export class WordCards extends Component<IState> {
     }
   }
 
+  changeCards() {
+    if (this.state.group === 6) {
+      this.updateCards();
+    }
+  }
+
   render() {
-    // console.log(this.context);
+    console.log(this.context);
     const cards = this.state.cards;
     if (!cards.length) {
       return;
@@ -97,7 +90,12 @@ export class WordCards extends Component<IState> {
     const elements = cards.map((item: IWordCard) => {
       return (
         <Grid item xs={12} sm={6} lg={4} key={item.image}>
-          <WordCard id={item.id} func={this.toggleAudio} color={this.props.color} />
+          <WordCard
+            id={item.id}
+            funcAudio={this.toggleAudio}
+            funcRender={this.changeCards}
+            color={this.props.color}
+          />
         </Grid>
       );
     });
