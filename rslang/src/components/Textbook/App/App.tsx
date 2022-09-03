@@ -12,7 +12,6 @@ import { PagionationInGroup } from '../PaginationInGroup/PaginationInGroup';
 import classes from './App.module.scss';
 // import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
 import { ReactLearnWordsAPI } from '../../API/getWords';
-import { AllUsersWordsConsumer } from '../contextUserCard';
 import { Context } from '../Context';
 
 export class App extends Component {

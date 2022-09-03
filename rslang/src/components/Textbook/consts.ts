@@ -31,6 +31,7 @@ export interface IState {
   group: number;
   page: number;
   color: string;
+  funcLearned: () => void;
   allUserWords?: IWordCard[];
 }
 

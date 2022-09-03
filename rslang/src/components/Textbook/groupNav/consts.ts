@@ -1,7 +1,6 @@
 export interface IGroup {
   num: number;
   abbr: string;
-  // name: string;
   color: string;
 }
 

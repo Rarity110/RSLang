@@ -50,6 +50,23 @@ export class WordCards extends Component<IState> {
           cards: words
         });
       });
+      // console.log(this.context);
+      ///
+      const usersCardsId = this.context.allUserWords.map((el) => {
+        if (el.userWord?.difficulty === 'hard' || el.userWord?.difficulty === 'learned') {
+          return el.id;
+        }
+      });
+      // console.log(usersCardsId);
+      // console.log(this.state);
+      this.state.cards.forEach((el) => console.log(el.id));
+      const learnedCards = this.state.cards.filter((el) => {
+        usersCardsId.includes(el.id);
+      });
+      // console.log(learnedCards);
+      if (learnedCards.length === 20) {
+        this.props.funcLearned();
+      }
     }
   }
 
