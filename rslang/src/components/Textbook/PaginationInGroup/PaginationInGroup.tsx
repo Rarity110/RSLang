@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
 import classes from './PaginationInGroup.module.scss';
 import { IWordCard } from '../../../types/props';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
@@ -12,7 +12,8 @@ interface IProp {
   group: number;
   color: string;
   allUserWords: IWordCard[];
-  funcLearned: () => void;
+  funcLearned: (learned: boolean) => void;
+  learnedPage: boolean;
 }
 
 export class PagionationInGroup extends Component<IProp> {
@@ -20,13 +21,15 @@ export class PagionationInGroup extends Component<IProp> {
   context!: React.ContextType<typeof Context>;
   state = {
     group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
-    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
+    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0,
+    learnedPage: this.props.learnedPage
   };
 
   componentDidMount() {
     this.updateGroup();
     this.setState({
-      allUserWords: this.props.allUserWords
+      allUserWords: this.props.allUserWords,
+      learnedPage: this.props.learnedPage
     });
   }
 
@@ -34,13 +37,17 @@ export class PagionationInGroup extends Component<IProp> {
     if (this.props.group !== prevProps.group) {
       this.updateGroup();
     }
+    if (this.props.learnedPage !== prevProps.learnedPage) {
+      this.setState({
+        learnedPage: this.props.learnedPage
+      });
+    }
   }
 
   updateGroup() {
     const { group } = this.props;
     this.setState({
       group: group,
-      // page: 0
       page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
     });
   }
@@ -57,13 +64,18 @@ export class PagionationInGroup extends Component<IProp> {
     const { color } = this.props;
     const { page, group } = this.state;
     const className = classes.page;
+    let classNameLink = classes.paginationInGroup_link;
+    let nameLinkSprint = 'Тренировать слова в игре Спринт';
+    let nameLinkAudio = 'Тренировать слова в игре Аудиовызов';
+    if (this.props.learnedPage) {
+      classNameLink = classes.paginationInGroup_link_disabled;
+      nameLinkSprint = 'Все слова на странице знакомы';
+      nameLinkAudio = 'Игры доступны по ссылкам в меню';
+    }
     const LinkGame = ({ to, value }: { to: string; value: string }) => {
       return (
         <Button variant="outlined">
-          <Link
-            to={to}
-            state={{ group: group, page: page }}
-            className={classes.paginationInGroup_link}>
+          <Link to={to} state={{ group: group, page: page }} className={classNameLink}>
             {value}
           </Link>
         </Button>
@@ -73,18 +85,19 @@ export class PagionationInGroup extends Component<IProp> {
       <>
         <div className={className}>
           <div className={classes.pagination}>
-            <LinkGame to={'/audio-challenge'} value={'Тренировать слова в игре Аудиовызов'} />
+            <LinkGame to={'/audio-challenge'} value={nameLinkAudio} />
             {group !== 6 && (
               <Stack spacing={2} className={classes.pagionationInGroup}>
                 <Pagination
                   count={30}
                   page={page + 1}
                   onChange={this.updatePage}
-                  color={'secondary'}
+                  // eslint-disable-next-line prettier/prettier, quotes
+                  color={this.props.learnedPage ? "secondary" : "standard"}
                 />
               </Stack>
             )}
-            <LinkGame to={'/sprint-game'} value={'Тренировать слова в игре Спринт'} />
+            <LinkGame to={'/sprint-game'} value={nameLinkSprint} />
           </div>
         </div>
         <WordCards

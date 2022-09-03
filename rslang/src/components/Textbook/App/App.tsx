@@ -6,7 +6,7 @@ import { GroupItem } from '../groupNav/groupItem';
 import { PagionationInGroup } from '../PaginationInGroup/PaginationInGroup';
 import classes from './App.module.scss';
 import { ReactLearnWordsAPI } from '../../API/getWords';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
 
 export class App extends Component {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
@@ -35,9 +35,9 @@ export class App extends Component {
     localStorage.setItem('page', '0');
   }
 
-  updateLearned() {
+  updateLearned(learned: boolean) {
     this.setState({
-      learned: true
+      learned: learned
     });
   }
 
@@ -64,15 +64,18 @@ export class App extends Component {
     });
     return (
       <Container className={className}>
-        <div key="groups" className={classes.textbookMainGroups}>
-          {elements}
+        <div>
+          <div key="groups" className={classes.textbookMainGroups}>
+            {elements}
+          </div>
+          <PagionationInGroup
+            group={this.state.group}
+            color={color}
+            allUserWords={allUserWords}
+            funcLearned={this.updateLearned}
+            learnedPage={this.state.learned}
+          />
         </div>
-        <PagionationInGroup
-          group={this.state.group}
-          color={color}
-          allUserWords={allUserWords}
-          funcLearned={this.updateLearned}
-        />
       </Container>
     );
   }

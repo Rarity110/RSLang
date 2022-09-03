@@ -5,7 +5,7 @@ import classes from './WordCard.module.scss';
 import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
 
 export interface IID {
   id: string;
@@ -13,6 +13,7 @@ export interface IID {
   funcRender: () => void;
   color: string;
   allUserWords?: IWordCard[];
+  funcCheckLearnedPage: () => void;
 }
 
 export class WordCard extends Component<IID> {
@@ -116,6 +117,7 @@ export class WordCard extends Component<IID> {
             wordCard={this.state.wordCard}
             allUserWords={this.context.allUserWords}
             funcRender={this.props.funcRender}
+            funcCheckLearnedPage={this.props.funcCheckLearnedPage}
           />
         </CardContent>
       </Card>

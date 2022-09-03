@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Grid } from '@mui/material';
 import classes from './GroupItem.module.scss';
 import { IPropGroupItem } from '../../../types/props';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
 
 export class GroupItem extends Component<IPropGroupItem> {
   static contextType = Context;

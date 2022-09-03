@@ -14,6 +14,14 @@
             width: 150px;
             text-decoration: none;
             font-size: 0.675rem;
+
+            &_disabled{
+                width: 150px;
+                text-decoration: none;
+                font-size: 0.675rem;
+                pointer-events: none;
+                cursor: none;
+            }
         }
     }
 

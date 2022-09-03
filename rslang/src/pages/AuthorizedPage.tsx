@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 import Header from '../components/Header/Header';
 import { AuthForm } from '../components/auth-form';
 // import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
-import { Context } from '../components/Textbook/Context';
+import { Context } from '../components/App/Context';
 
 const AuthorizedPage = () => {
   const { isAuthorized } = useContext(Context);

@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import CheckIcon from '@mui/icons-material/Check';
 import { ReactLearnWordsAPI } from '../../../API/getWords';
-import { Context } from '../../Context';
+import { Context } from '../../../App/Context';
 import { IWordCard } from '../../../../types/props';
 import { WORD_DIFFICULTY } from '../../../../consts/consts';
 import { saveWordsInStorage, changeDifficulty } from '../../../changeDifficulty';
@@ -13,6 +13,7 @@ interface IDifficult {
   wordCard: IWordCard;
   allUserWords?: IWordCard[];
   funcRender: () => void;
+  funcCheckLearnedPage: () => void;
 }
 
 export class Difficult extends Component<IDifficult> {
@@ -76,6 +77,7 @@ export class Difficult extends Component<IDifficult> {
   togleDifficult(difficulty: string) {
     this.changeDifficultyTextbook(difficulty);
     this.props.funcRender();
+    this.props.funcCheckLearnedPage();
   }
 
   render(): React.ReactNode {

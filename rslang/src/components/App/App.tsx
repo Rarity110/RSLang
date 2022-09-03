@@ -10,7 +10,7 @@ import SprintGamePage from '../../pages/SprintGamePage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import classes from './App.module.scss';
 import { IWordCard } from '../../types/props';
-import { Context } from '../Textbook/Context';
+import { Context } from './Context';
 import { ReactLearnWordsAPI } from '../API/getWords';
 
 interface IContext {

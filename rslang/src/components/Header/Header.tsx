@@ -16,7 +16,7 @@ import classes from './Header.module.scss';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { deleteLoginFromLocalStorage, getLogin } from '../auth-form/localStorageFunctions';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Context } from '../Textbook/Context';
+// import { Context } from '../App/Context';
 
 interface HeaderProps {
   isAuthorized: boolean;

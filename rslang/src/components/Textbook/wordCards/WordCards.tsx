@@ -3,16 +3,17 @@ import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
 import { IWordCard } from '../../../types/props';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
 import { WORD_DIFFICULTY, WORDS_PER_PAGE } from '../../../consts/consts';
 
 interface IState {
   group: number;
   page: number;
   color: string;
-  funcLearned: () => void;
+  funcLearned: (kearned: boolean) => void;
   allUserWords?: IWordCard[];
   cards?: IWordCard[];
+  countLearnedCards?: number;
 }
 
 export class WordCards extends Component<IState> {
@@ -23,20 +24,23 @@ export class WordCards extends Component<IState> {
   state = {
     group: 0,
     page: 0,
-    cards: [] as IWordCard[]
+    cards: [] as IWordCard[],
+    countLearnedCards: 0
   };
 
   componentDidMount() {
     this.updateCards();
     this.toggleAudio = this.toggleAudio.bind(this);
     this.changeCards = this.changeCards.bind(this);
+    this.updateCards = this.updateCards.bind(this);
   }
 
   componentDidUpdate(prevProps: IState) {
     if (
       this.props.page !== prevProps.page ||
       this.props.group !== prevProps.group ||
-      this.props.cards !== prevProps.cards
+      this.props.cards !== prevProps.cards ||
+      this.props.countLearnedCards !== prevProps.countLearnedCards
     ) {
       this.updateCards();
     }
@@ -66,34 +70,33 @@ export class WordCards extends Component<IState> {
         });
       }
     } else {
-      this.reactLearnWordsAPI
-        .getWords(group, page)
-        .then((words) => {
-          this.setState({
-            cards: words
-          });
-        })
-        .then(() => {
-          const usersCardsId = this.context.allUserWords.map((el) => {
-            if (
-              el.userWord?.difficulty === WORD_DIFFICULTY.hard ||
-              el.userWord?.difficulty === WORD_DIFFICULTY.learned
-            ) {
-              return el.id;
-            }
-          });
-          let countLearnedCards = 0;
-          this.state.cards.forEach((el) => {
-            if (usersCardsId.includes(el.id)) {
-              console.log(el.word);
-              countLearnedCards += 1;
-            }
-          });
-          console.log(countLearnedCards);
-          if (countLearnedCards === WORDS_PER_PAGE) {
-            this.props.funcLearned();
+      this.reactLearnWordsAPI.getWords(group, page).then((words) => {
+        this.setState({
+          cards: words
+        });
+        let countLearnedCards = 0;
+        const usersCardsId = this.context.allUserWords.map((el) => {
+          if (
+            el.userWord?.difficulty === WORD_DIFFICULTY.hard ||
+            el.userWord?.difficulty === WORD_DIFFICULTY.learned
+          ) {
+            return el.id;
           }
         });
+        words.forEach((el: IWordCard) => {
+          if (usersCardsId.includes(el.id)) {
+            countLearnedCards += 1;
+          }
+        });
+        this.setState({
+          countLearnedCards: countLearnedCards
+        });
+        if (countLearnedCards === WORDS_PER_PAGE) {
+          this.props.funcLearned(true);
+        } else {
+          this.props.funcLearned(false);
+        }
+      });
     }
   }
 
@@ -141,6 +144,7 @@ export class WordCards extends Component<IState> {
             funcAudio={this.toggleAudio}
             funcRender={this.changeCards}
             color={this.props.color}
+            funcCheckLearnedPage={this.updateCards}
           />
         </Grid>
       );
