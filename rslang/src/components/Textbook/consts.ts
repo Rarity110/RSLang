@@ -40,6 +40,7 @@ export interface IID {
   id: string;
   func: TCallback;
   color: string;
+  allUserWords?: IWordCard[];
 }
 
 export interface IAudio {

@@ -89,7 +89,7 @@ export class WordCards extends Component<IState> {
   }
 
   render() {
-    console.log(this.context);
+    // console.log(this.context);
     const cards = this.state.cards;
     if (!cards.length) {
       return;

@@ -27,14 +27,21 @@ export class TextbookPage extends Component {
   };
 
   componentDidMount() {
-    const storage: string | null = localStorage.getItem('loginRSLang');
-    if (storage) {
+    const storageLogin: string | null = localStorage.getItem('loginRSLang');
+    if (storageLogin) {
       this.setState({
         isAuthorized: true,
         authorize: () => this.emptyObj,
         logout: () => this.setAuthorize(false)
       });
-      this.getAllUserWords();
+      const storageUserWords: string | null = localStorage.getItem('userWords');
+      if (storageUserWords) {
+        this.setState({
+          allUserWords: JSON.parse(storageUserWords)
+        });
+      } else {
+        this.getAllUserWords();
+      }
     } else {
       this.setState({
         isAuthorized: false,
@@ -79,6 +86,7 @@ export class TextbookPage extends Component {
         this.setState({
           allUserWords: usersWords
         });
+        window.localStorage.setItem('userWords', JSON.stringify(usersWords));
       });
   }
 
@@ -98,7 +106,7 @@ export class TextbookPage extends Component {
 
   render() {
     const { allUserWords, isAuthorized, authorize, logout } = this.state;
-    console.log(isAuthorized, allUserWords);
+    // console.log(isAuthorized, allUserWords);
     return (
       <Context.Provider
         value={{
@@ -113,62 +121,3 @@ export class TextbookPage extends Component {
     );
   }
 }
-
-// import React, { Component } from 'react';
-// import Header from '../components/Header/Header';
-// import { App } from '../components/Textbook/App/App';
-// // import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
-// import { ReactLearnWordsAPI } from '../components/API/getWords';
-// import { IWordCard } from '../components/Textbook/consts';
-// import { Context } from '../components/Textbook/Context';
-
-// export class TextbookPage extends Component {
-//   static contextType = Context;
-//   context!: React.ContextType<typeof Context>;
-//   reactLearnWordsAPI = new ReactLearnWordsAPI();
-//   state = {
-//     allUsersWords: []
-//   };
-
-//   componentDidMount() {
-//     this.getCountAllUserWords();
-//   }
-
-//   async getUserWordsByPage(numberPage: number, allUsersWords: IWordCard[], wordsAtPages: number) {
-//     const result = await this.reactLearnWordsAPI.getUserWordsByPage(numberPage, wordsAtPages);
-//     if (result) {
-//       result.words.forEach((el: IWordCard) => allUsersWords.push(el));
-//     }
-//   }
-
-//   async getCountAllUserWords() {
-//     const wordsAtPages = 100;
-//     const allUsersWords: IWordCard[] = [];
-//     await this.reactLearnWordsAPI.getUserWordsByPage(0, wordsAtPages).then((value) => {
-//       if (value) {
-//         const countPages = Math.ceil(value.countPages / wordsAtPages);
-//         if (countPages === 1) {
-//           value.words.forEach((el: IWordCard) => allUsersWords.push(el));
-//         } else {
-//           for (let i = 0; i < countPages; i++) {
-//             this.getUserWordsByPage(i, allUsersWords, wordsAtPages);
-//           }
-//         }
-//       }
-//       this.setState({
-//         allUsersWords: allUsersWords
-//       });
-//     });
-//   }
-
-//   render() {
-//     const isAuthorized = this.context.isAuthorized;
-//     console.log(this.context);
-//     return (
-//       <>
-//         <Header {...{ isAuthorized }} />
-//         <App />
-//       </>
-//     );
-//   }
-// }

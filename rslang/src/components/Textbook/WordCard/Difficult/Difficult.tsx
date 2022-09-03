@@ -5,6 +5,7 @@ import { ReactLearnWordsAPI } from '../../../API/getWords';
 import { Context } from '../../Context';
 import CheckIcon from '@mui/icons-material/Check';
 import { IWordCard } from '../../consts';
+import { saveWordsInStorage } from '../../saveWordsInStorage';
 
 interface IDifficult {
   wordCard: IWordCard;
@@ -22,6 +23,7 @@ export class Difficult extends Component<IDifficult> {
   };
 
   componentDidMount() {
+    console.log(this.context);
     this.setState({
       allUsersWords: this.context.allUserWords
     });
@@ -32,13 +34,21 @@ export class Difficult extends Component<IDifficult> {
     if (this.props.wordCard.userWord?.difficulty !== prevProps.wordCard.userWord?.difficulty) {
       this.updateDifficult();
     }
+    if (this.props.allUsersWords !== prevProps.allUsersWords) {
+      this.setState({
+        allUsersWords: this.context.allUserWords
+      });
+      this.updateDifficult();
+    }
   }
 
   updateDifficult() {
     const wordCard = this.context.allUserWords.filter(
       (card) => card.id === this.props.wordCard.id
     )[0];
+    console.log(this.context);
     if (wordCard) {
+      console.log(wordCard.userWord?.difficulty, wordCard.word);
       this.setState({
         wordCard: wordCard,
         difficulty: wordCard.userWord?.difficulty
@@ -46,7 +56,7 @@ export class Difficult extends Component<IDifficult> {
     }
   }
 
-  addDifficulte(difficulty: string) {
+  addDifficulty(difficulty: string) {
     const { allUsersWords, wordCard } = this.state;
     if (!wordCard.userWord?.difficulty) {
       wordCard.userWord = { difficulty: difficulty };
@@ -55,6 +65,7 @@ export class Difficult extends Component<IDifficult> {
       this.setState({
         difficulty: difficulty
       });
+      console.log(this.context);
     } else {
       const index = allUsersWords.findIndex((el) => el.id === wordCard.id);
       if (wordCard.userWord.difficulty === difficulty) {
@@ -87,14 +98,15 @@ export class Difficult extends Component<IDifficult> {
   }
 
   togleDifficult(difficulty: string) {
-    if (difficulty === 'hard' || difficulty === 'learned') this.addDifficulte(difficulty);
+    if (difficulty === 'hard' || difficulty === 'learned') this.addDifficulty(difficulty);
     if (difficulty === 'noHard' || difficulty === 'noLearned') this.removeDifficulty();
+    saveWordsInStorage(this.context.allUserWords);
   }
 
   render(): React.ReactNode {
-    console.log(this.context);
     const isAuthorized = this.context.isAuthorized;
     const difficulty = this.state.wordCard.userWord?.difficulty;
+    console.log(this.state.wordCard.word, difficulty);
     const AddToLearned = () => {
       return (
         <Button variant="outlined" onClick={() => this.togleDifficult('learned')}>
