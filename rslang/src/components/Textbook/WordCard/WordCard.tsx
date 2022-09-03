@@ -5,70 +5,47 @@ import classes from './WordCard.module.scss';
 import { IID, IWordCard } from '../consts';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
-import { AllUsersWordsConsumer } from '../contextUserCard';
+import { Context } from '../Context';
 
 export class WordCard extends Component<IID> {
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   reactLearnWordsAPI = new ReactLearnWordsAPI();
 
-  state = {} as IWordCard;
+  state = {
+    wordCard: {} as IWordCard,
+    allUsersWords: [] as IWordCard[]
+  };
 
   componentDidMount() {
     const id = this.props.id;
+    this.setState({
+      allUsersWords: this.context.allUserWords
+    });
     this.reactLearnWordsAPI.getWord(id).then((card) => {
       this.setState({
-        id: card.id,
-        word: card.word,
-        image: card.image as string,
-        audio: card.audio,
-        audioMeaning: card.audioMeaning,
-        audioExample: card.audioExample,
-        textMeaning: card.textMeaning,
-        textExample: card.textExample,
-        transcription: card.transcription,
-        textExampleTranslate: card.textExampleTranslate,
-        textMeaningTranslate: card.textMeaningTranslate,
-        wordTranslate: card.wordTranslate
+        wordCard: card
       });
     });
-    this.updateDifficulty();
+    this.updateCard();
   }
 
   updateCard() {
-    const id = this.props.id;
-    this.reactLearnWordsAPI.getWord(id).then((card) => {
+    const wordCard = this.context.allUserWords.filter(
+      (card) => card.id === this.state.wordCard.id
+    )[0];
+    if (wordCard) {
       this.setState({
-        id: card.id,
-        word: card.word,
-        image: card.image as string,
-        audio: card.audio,
-        audioMeaning: card.audioMeaning,
-        audioExample: card.audioExample,
-        textMeaning: card.textMeaning,
-        textExample: card.textExample,
-        transcription: card.transcription,
-        textExampleTranslate: card.textExampleTranslate,
-        textMeaningTranslate: card.textMeaningTranslate,
-        wordTranslate: card.wordTranslate
+        wordCard: wordCard
       });
-    });
+    } else {
+      this.reactLearnWordsAPI.getWord(this.props.id).then((card) => {
+        this.setState({
+          wordCard: card
+        });
+      });
+    }
   }
-
-  updateDifficulty() {
-    // this.reactLearnWordsAPI.getUserWord(idword).then((card) => {
-    //   if (card.status === 200) {
-    //     this.setState({
-    //       difficulty: card.data.difficulty
-    //     });
-    //   }
-    // });
-  }
-
-  // togleDifficult(idword: string, allWords: IWordCard[]) {
-  //   this.reactLearnWordsAPI.postUserWord(idword);
-  // }
 
   render() {
     const {
@@ -84,7 +61,7 @@ export class WordCard extends Component<IID> {
       textExampleTranslate,
       textMeaningTranslate,
       wordTranslate
-    } = this.state;
+    } = this.state.wordCard;
     if (!id) {
       return <div></div>;
     }
@@ -113,7 +90,7 @@ export class WordCard extends Component<IID> {
             audio={audioSrc}
             audioMeaning={audioMeaningSrc}
             audioExample={audioExampleSrc}
-            func={this.props.func}
+            funcAudio={this.props.funcAudio}
           />
           <div className={classes.text}>
             <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
@@ -127,9 +104,11 @@ export class WordCard extends Component<IID> {
               {textExampleTranslate}
             </Typography>
           </div>
-          <AllUsersWordsConsumer>
-            {(allUserWords) => <Difficult allUsersWords={allUserWords} wordCard={this.state} />}
-          </AllUsersWordsConsumer>
+          <Difficult
+            wordCard={this.state.wordCard}
+            allUsersWords={this.context.allUserWords}
+            funcRender={this.props.funcRender}
+          />
         </CardContent>
       </Card>
     );

@@ -3,3 +3,12 @@
     flex-direction: row;
     justify-content: center;
 }
+
+.page {
+    // background-color: blue;
+
+    &_learned {
+        background-color: blue;
+    }
+}
+

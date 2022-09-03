@@ -3,9 +3,10 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { WordCards } from '../wordCards/WordCards';
 import classes from './PaginationInGroup.module.scss';
-import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
-import { AllUsersWordsConsumer } from '../contextUserCard';
+// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
+// import { AllUsersWordsConsumer } from '../contextUserCard';
 import { IWordCard } from '../consts';
+import { Context } from '../Context';
 
 interface IProp {
   group: number;
@@ -14,17 +15,19 @@ interface IProp {
 }
 
 export class PagionationInGroup extends Component<IProp> {
-  static contextType = AuthorizeContext;
-  context!: React.ContextType<typeof AuthorizeContext>;
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   state = {
     group: localStorage.getItem('group') ? Number(localStorage.getItem('group')) : 0,
-    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0
+    page: localStorage.getItem('page') ? Number(localStorage.getItem('page')) : 0,
+    learned: false
   };
 
   componentDidMount() {
     this.updateGroup();
     this.setState({
-      allUserWords: this.props.allUsersWords
+      allUserWords: this.props.allUsersWords,
+      learned: false
     });
   }
 
@@ -32,6 +35,7 @@ export class PagionationInGroup extends Component<IProp> {
     if (this.props.group !== prevProps.group) {
       this.updateGroup();
     }
+    this.updateLearned = this.updateLearned.bind(this);
   }
 
   updateGroup() {
@@ -51,27 +55,31 @@ export class PagionationInGroup extends Component<IProp> {
     localStorage.setItem('page', pageActive);
   };
 
+  updateLearned() {
+    this.setState({
+      learned: true
+    });
+  }
+
   render() {
     const { color } = this.props;
     const { page, group } = this.state;
+    let className = classes.page;
+    if (this.state.learned === true) className += '_learned';
     return (
-      <div>
+      <div className={className}>
         {group !== 6 && (
           <Stack spacing={2} className={classes.pagionationInGroup}>
-            <Pagination count={30} page={page + 1} onChange={this.updatePage} />
+            <Pagination count={30} page={page + 1} onChange={this.updatePage} color={'secondary'} />
           </Stack>
         )}
-        <AllUsersWordsConsumer>
-          {(allUserWords) => (
-            <WordCards
-              group={group}
-              page={page}
-              color={color}
-              allUserWords={allUserWords}
-              allUsersWordsLength={allUserWords.length}
-            />
-          )}
-        </AllUsersWordsConsumer>
+        <WordCards
+          group={group}
+          page={page}
+          color={color}
+          allUserWords={this.context.allUserWords}
+          funcLearned={this.updateLearned}
+        />
       </div>
     );
   }

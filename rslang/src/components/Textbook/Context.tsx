@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { StyledEngineProvider } from '@mui/material/styles';
-import AuthorizedPage from '../../pages/AuthorizedPage';
-import HomePage from '../../pages/HomePage';
-import StatisticsPage from '../../pages/StatisticsPage';
-import AudioChallengePage from '../../pages/AudioChallengePage';
-import { TextbookPage } from '../../pages/TextbookPage';
-import SprintGamePage from '../../pages/SprintGamePage';
-import NotFoundPage from '../../pages/NotFoundPage';
-import classes from './App.module.scss';
-import { IWordCard } from '../Textbook/consts';
-import { Context } from '../Textbook/Context';
+import { IWordCard } from './consts';
 import { ReactLearnWordsAPI } from '../API/getWords';
 
 interface IContext {
@@ -20,35 +9,39 @@ interface IContext {
   logout: () => void;
 }
 
-class App extends Component {
-  static contextType = Context;
-  context!: React.ContextType<typeof Context>;
+type Props = {
+  children: React.ReactNode;
+};
+
+const emptyObj = {} as IContext;
+
+export const Context = React.createContext({
+  allUserWords: [] as IWordCard[],
+  isAuthorized: false,
+  authorize: () => emptyObj,
+  logout: () => emptyObj
+});
+
+class MyContextProvider extends Component<Props> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
   emptyObj = {} as IContext;
 
   state = {
     allUserWords: [] as IWordCard[],
     isAuthorized: false,
-    authorize: () => this.emptyObj,
-    logout: () => this.emptyObj
+    authorize: () => emptyObj,
+    logout: () => emptyObj
   };
 
   componentDidMount() {
-    const storageLogin: string | null = localStorage.getItem('loginRSLang');
-    if (storageLogin) {
+    const storage: string | null = localStorage.getItem('loginRSLang');
+    if (storage) {
       this.setState({
         isAuthorized: true,
         authorize: () => this.emptyObj,
         logout: () => this.setAuthorize(false)
       });
-      const storageUserWords: string | null = localStorage.getItem('userWords');
-      if (storageUserWords) {
-        this.setState({
-          allUserWords: JSON.parse(storageUserWords)
-        });
-      } else {
-        this.getAllUserWords();
-      }
+      this.getAllUserWords();
     } else {
       this.setState({
         isAuthorized: false,
@@ -57,6 +50,7 @@ class App extends Component {
         logout: () => this.emptyObj
       });
     }
+    // this.updateContext;
   }
 
   async getUserWordsByPage(numberPage: number, usersWords: IWordCard[], wordsAtPages: number) {
@@ -92,7 +86,6 @@ class App extends Component {
         this.setState({
           allUserWords: usersWords
         });
-        window.localStorage.setItem('userWords', JSON.stringify(usersWords));
       });
   }
 
@@ -109,6 +102,14 @@ class App extends Component {
       });
     }
   }
+
+  //   updateContext() {
+  //     const myContext = React.createContext<IContext>(this.state);
+  //     this.setState({
+  //       context: myContext
+  //     });
+  //   }
+
   render(): React.ReactNode {
     const { allUserWords, isAuthorized, authorize, logout } = this.state;
     return (
@@ -119,23 +120,8 @@ class App extends Component {
           authorize: authorize,
           logout: logout
         }}>
-        <StyledEngineProvider injectFirst>
-          <div className={classes.page}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/textbook" element={<TextbookPage />} />
-              <Route path="/statistics" element={<StatisticsPage />} />
-              <Route path="/audio-challenge" element={<AudioChallengePage />} />
-              <Route path="/audio-challenge/:mode" element={<AudioChallengePage />} />
-              <Route path="/auth-form" element={<AuthorizedPage />} />
-              <Route path="/sprint-game" element={<SprintGamePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </div>
-        </StyledEngineProvider>
+        {this.props.children}
       </Context.Provider>
     );
   }
 }
-
-export default App;

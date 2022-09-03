@@ -3,9 +3,13 @@ import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
 import { IWordCard, IState } from '../consts';
+import { Context } from '../Context';
 
 export class WordCards extends Component<IState> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   state = {
     group: 0,
     page: 0,
@@ -15,28 +19,12 @@ export class WordCards extends Component<IState> {
   componentDidMount() {
     this.updateCards();
     this.toggleAudio = this.toggleAudio.bind(this);
-    if (this.props.group === 6)
-      this.setState({
-        allUserWordsLength: this.props.allUsersWordsLength
-      });
+    this.changeCards = this.changeCards.bind(this);
   }
 
   componentDidUpdate(prevProps: IState) {
-    if (
-      this.props.page !== prevProps.page ||
-      this.props.group !== prevProps.group ||
-      this.props.allUserWords !== prevProps.allUserWords
-    ) {
+    if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
       this.updateCards();
-    }
-    if (this.props.group === 6) {
-      console.log(this.props.allUserWords.length);
-      console.log(prevProps.allUserWords.length);
-      if (this.props.allUsersWordsLength !== prevProps.allUsersWordsLength) {
-        this.setState({
-          allUserWordsLength: this.props.allUserWords.length
-        });
-      }
     }
   }
 
@@ -47,15 +35,38 @@ export class WordCards extends Component<IState> {
       group: group
     });
     if (group === 6) {
-      this.setState({
-        cards: this.props.allUserWords
-      });
+      const storageUserWords: string | null = localStorage.getItem('userWords');
+      if (storageUserWords) {
+        const hardWords = JSON.parse(storageUserWords).filter(
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === 'hard'
+        );
+        this.setState({
+          cards: hardWords
+        });
+      }
     } else {
       this.reactLearnWordsAPI.getWords(group, page).then((words) => {
         this.setState({
           cards: words
         });
       });
+      // console.log(this.context);
+      ///
+      const usersCardsId = this.context.allUserWords.map((el) => {
+        if (el.userWord?.difficulty === 'hard' || el.userWord?.difficulty === 'learned') {
+          return el.id;
+        }
+      });
+      // console.log(usersCardsId);
+      // console.log(this.state);
+      this.state.cards.forEach((el) => console.log(el.id));
+      const learnedCards = this.state.cards.filter((el) => {
+        usersCardsId.includes(el.id);
+      });
+      // console.log(learnedCards);
+      if (learnedCards.length === 20) {
+        this.props.funcLearned();
+      }
     }
   }
 
@@ -84,8 +95,13 @@ export class WordCards extends Component<IState> {
     }
   }
 
+  changeCards() {
+    if (this.state.group === 6) {
+      this.updateCards();
+    }
+  }
+
   render() {
-    console.log(this.props.allUserWords.length);
     const cards = this.state.cards;
     if (!cards.length) {
       return;
@@ -93,7 +109,12 @@ export class WordCards extends Component<IState> {
     const elements = cards.map((item: IWordCard) => {
       return (
         <Grid item xs={12} sm={6} lg={4} key={item.image}>
-          <WordCard id={item.id} func={this.toggleAudio} color={this.props.color} />
+          <WordCard
+            id={item.id}
+            funcAudio={this.toggleAudio}
+            funcRender={this.changeCards}
+            color={this.props.color}
+          />
         </Grid>
       );
     });
