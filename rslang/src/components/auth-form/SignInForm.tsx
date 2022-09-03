@@ -15,9 +15,13 @@ export interface ISignInForm {
 }
 
 const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
-  await loginUser({ email: data.email, password: data.password });
-  saveInLocalStorage(data);
-  window.location.href = '/';
+  try {
+    await loginUser({ email: data.email, password: data.password });
+    saveInLocalStorage(data);
+    window.location.href = '/';
+  } catch {
+    alert('Просим Вас проверить правильность ввода эл.почты и пароля!');
+  }
 };
 
 export const SignInForm = () => {
