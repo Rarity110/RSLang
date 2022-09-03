@@ -48,7 +48,6 @@ export class WordCard extends Component<IID> {
   }
 
   render() {
-    // console.log(this.context);
     const {
       id,
       word,

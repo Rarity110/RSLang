@@ -37,8 +37,11 @@ export class WordCards extends Component<IState> {
     if (group === 6) {
       const storageUserWords: string | null = localStorage.getItem('userWords');
       if (storageUserWords) {
+        const hardWords = JSON.parse(storageUserWords).filter(
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === 'hard'
+        );
         this.setState({
-          cards: JSON.parse(storageUserWords)
+          cards: hardWords
         });
       }
     } else {
@@ -82,7 +85,6 @@ export class WordCards extends Component<IState> {
   }
 
   render() {
-    console.log(this.context);
     const cards = this.state.cards;
     if (!cards.length) {
       return;

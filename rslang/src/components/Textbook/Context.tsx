@@ -112,7 +112,6 @@ class MyContextProvider extends Component<Props> {
 
   render(): React.ReactNode {
     const { allUserWords, isAuthorized, authorize, logout } = this.state;
-    console.log(isAuthorized, allUserWords);
     return (
       <Context.Provider
         value={{

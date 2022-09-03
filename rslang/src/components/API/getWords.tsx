@@ -74,7 +74,8 @@ export class ReactLearnWordsAPI {
       },
     });
     if (res.status !== 200) {
-      console.log('no');
+      throw new Error();
+      
     } else {
       const data = await res.json();
       return {countPages: data[0].totalCount[0].count, words: data[0].paginatedResults};

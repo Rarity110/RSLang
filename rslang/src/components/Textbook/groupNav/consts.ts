@@ -19,11 +19,11 @@ export interface ICards {
 }
 
 export const groupsName: IGroup[] = [
-  { num: 1, abbr: 'A1', color: '#b2a7fc' },
-  { num: 2, abbr: 'A2', color: '#29c1f0' },
-  { num: 3, abbr: 'B1', color: '#a1d450' },
-  { num: 4, abbr: 'B2', color: '#fae62f' },
-  { num: 5, abbr: 'C1', color: '#fa912f' },
+  { num: 1, abbr: 'A1', color: '#21ff6f' },
+  { num: 2, abbr: 'A2', color: '#21ff6f' },
+  { num: 3, abbr: 'B1', color: '#ffff21' },
+  { num: 4, abbr: 'B2', color: '#ffda21' },
+  { num: 5, abbr: 'C1', color: '#ff8521' },
   { num: 6, abbr: 'C2', color: '#db4fc4' }
 ];
 

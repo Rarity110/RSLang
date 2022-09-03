@@ -53,10 +53,8 @@ export class PagionationInGroup extends Component<IProp> {
   };
 
   render() {
-    // console.log(this.context);
     const { color } = this.props;
     const { page, group } = this.state;
-    // const { allUsersWords } = this.context;
     return (
       <div>
         {group !== 6 && (

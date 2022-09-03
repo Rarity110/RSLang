@@ -50,7 +50,6 @@ export class TextbookPage extends Component {
         logout: () => this.emptyObj
       });
     }
-    // this.updateContext;
   }
 
   async getUserWordsByPage(numberPage: number, usersWords: IWordCard[], wordsAtPages: number) {
@@ -106,7 +105,6 @@ export class TextbookPage extends Component {
 
   render() {
     const { allUserWords, isAuthorized, authorize, logout } = this.state;
-    // console.log(isAuthorized, allUserWords);
     return (
       <Context.Provider
         value={{
