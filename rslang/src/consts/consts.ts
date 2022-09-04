@@ -1,5 +1,5 @@
 // API
-export const BASEURL_API = 'http://localhost:8081';
+export const BASEURL_API = 'http://localhost:8081'; // 'https://rarity-rslang.herokuapp.com'
 export const PAGE_PER_GROUP = 30;
 
 export const WORDS_PER_PAGE = 20;

@@ -1,9 +1,12 @@
 /* eslint-disable prettier/prettier */
-// const URLBASE = 'https://rarity-rslang.herokuapp.com';
-export const URLBASE = 'http://localhost:8081';
-const userID = '630c74f3ff834f4fe0142bb7';
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMGM3NGYzZmY4MzRmNGZlMDE0MmJiNyIsImlhdCI6MTY2MjIzNzgwNSwiZXhwIjoxNjYyMjUyMjA1fQ.mfGugqZpcwyqLY2BIDcmWd3Um1U0w4bOTO8fZcDnOwQ';
+import { BASEURL_API } from '../../consts/consts';
+let userID = '';
+let token = '';
+if (localStorage.getItem('userMetaRSLang')) {
+  const storage: string = localStorage.getItem('userMetaRSLang') as string;
+  userID = JSON.parse(storage).userID;
+  token = JSON.parse(storage).token;
+}
 
 export class ReactLearnWordsAPI {
   async getResourse(url: string, methodName: string) {
@@ -17,20 +20,20 @@ export class ReactLearnWordsAPI {
   }
 
   async getWords(group: number, page: number) {
-    const url = `${URLBASE}/words?group=${group}&page=${page}`;
+    const url = `${BASEURL_API}/words?group=${group}&page=${page}`;
     const res = await this.getResourse(url, 'GET');
     return res;
   }
 
   async getWord(id: string) {
-    const url = `${URLBASE}/words/${id}`;
+    const url = `${BASEURL_API}/words/${id}`;
     const res = await this.getResourse(url, 'GET');
     return res;
   }
 
   async postUserWord(idword: string, difficulty: string) {
     try {
-      const url = `${URLBASE}/users/${userID}/words/${idword}`;
+      const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -53,7 +56,7 @@ export class ReactLearnWordsAPI {
   };
 
   async getUserWord(idword: string) {
-    const url = `${URLBASE}/users/${userID}/words/${idword}`;
+    const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
     const res = await fetch(url, {
       method: 'GET',
       headers: {
@@ -66,7 +69,7 @@ export class ReactLearnWordsAPI {
   }
 
   async getUserWordsByPage(page: number, wordsPerPage: number) {
-    const url = `${URLBASE}/users/${userID}/aggregatedWords?page=${page}&wordsPerPage=${wordsPerPage}&filter={"$and":[{"userWord.difficulty":"hard"}]}`;
+    const url = `${BASEURL_API}/users/${userID}/aggregatedWords?page=${page}&wordsPerPage=${wordsPerPage}&filter={"$and":[{"userWord.difficulty":"hard"}]}`;
     const res = await fetch(url, {
       method: 'GET',
       headers: {
@@ -85,7 +88,7 @@ export class ReactLearnWordsAPI {
 
   // слово перестало быть изученным либо сложным
   async deleteUserWord(idword: string) {
-    const url = `${URLBASE}/users/${userID}/words/${idword}`;
+    const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
     const res = await fetch(url, {
       method: 'DELETE',
       headers: {
@@ -98,7 +101,7 @@ export class ReactLearnWordsAPI {
 
   // слово было сложным стало изученным и наоборот
   async putUserWord(idword: string, difficulty: string) {
-    const url = `${URLBASE}/users/${userID}/words/${idword}`;
+    const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
     const res = await fetch(url, {
       method: 'PUT',
       headers: {

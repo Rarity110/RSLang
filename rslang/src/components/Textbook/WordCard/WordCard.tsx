@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
+import { ReactLearnWordsAPI } from '../../API/getWords';
+import { BASEURL_API } from '../../../consts/consts';
 import classes from './WordCard.module.scss';
 import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
@@ -75,9 +76,9 @@ export class WordCard extends Component<IID> {
       return <div></div>;
     }
     const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
-    const audioSrc = `${URLBASE}/${audio}`;
-    const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
-    const audioExampleSrc = `${URLBASE}/${audioExample}`;
+    const audioSrc = `${BASEURL_API}/${audio}`;
+    const audioMeaningSrc = `${BASEURL_API}/${audioMeaning}`;
+    const audioExampleSrc = `${BASEURL_API}/${audioExample}`;
     return (
       <Card
         className={classes.wordCard}
@@ -87,7 +88,7 @@ export class WordCard extends Component<IID> {
           component="img"
           alt={word}
           height="140"
-          src={`${URLBASE}/${image}`}
+          src={`${BASEURL_API}/${image}`}
           className={classes.wordCardCardImg}
         />
         <CardContent>
