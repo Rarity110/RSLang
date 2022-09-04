@@ -1,17 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Alert, Box, Container, Snackbar } from '@mui/material';
 import AudioChallengeWelcome from '../AudioChallengeWelcome/AudioChallengeWelcome';
 import AudioChallengeGame from '../AudioChallengeGame/AudioChallengeGame';
-import { arrayRandomSort, getRandomPage, getWordsOptions } from '../utility/utility';
+import {
+  arrayRandomSort,
+  getRandomArrayUniqueIndexes,
+  getRandomPage,
+  getWordsOptions
+} from '../utility/utility';
 import { getPageWords } from '../../API/api';
 import { WordItem } from '../../../types/api';
 import { GameRouteParam } from '../../../types/props';
 import { AudioChallengeWord } from '../../../types/audioChallenge';
+import { Context } from '../../Textbook/Context';
 import classes from './AudioChallenge.module.scss';
+
+const MAX_GAME_WORDS = 20;
 
 const AudioChallenge = () => {
   const location = useLocation();
+  const { allUserWords } = useContext(Context);
   const [gameWords, setGameWords] = useState<AudioChallengeWord[]>([]);
   const [start, setStart] = useState<boolean>(false);
   const [bookParam, setBookParam] = useState<false | GameRouteParam>(false);
@@ -35,12 +44,35 @@ const AudioChallenge = () => {
         const { group, page } = bookParam;
         // сложные слова
         if (group === 6) {
-          // TODO сделать - получение сложных слов
+          const hardWords = allUserWords.filter((word) => word.userWord?.difficulty === 'hard');
+
+          if (hardWords.length === 0) {
+            setError('Нет не изученных сложных слов');
+            return;
+          }
+
+          if (hardWords.length > MAX_GAME_WORDS) {
+            const hardIndexes = getRandomArrayUniqueIndexes(hardWords.length, MAX_GAME_WORDS);
+            words = hardIndexes.map((index) => hardWords[index]);
+          } else {
+            words = hardWords;
+          }
         }
         // обычные главы
-        // TODO исключить выученные слова для авторизованного пользователя
         else {
-          words = await getPageWords(group, page);
+          const pageWords = await getPageWords(group, page);
+          const learnWordIds = allUserWords
+            .filter((word) => word.userWord?.difficulty === 'learned')
+            .map((word) => word.id);
+          const pageWordsWithoutLearned = pageWords.filter(
+            (word) => !learnWordIds.includes(word.id)
+          );
+
+          if (pageWordsWithoutLearned.length === 0) {
+            setError('На этой странице нет не изученных слов');
+            return;
+          }
+          words = pageWordsWithoutLearned;
         }
       }
       // из меню
