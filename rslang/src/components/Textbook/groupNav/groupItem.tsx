@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Grid } from '@mui/material';
 import classes from './GroupItem.module.scss';
-import { IPropGroupItem } from './consts';
-// import { AuthorizeContext } from '../../auth-form/AuthorizeContext';
-import { Context } from '../Context';
+import { IPropGroupItem } from '../../../types/props';
+import { Context } from '../../App/Context';
 
 export class GroupItem extends Component<IPropGroupItem> {
   static contextType = Context;
@@ -25,11 +24,7 @@ export class GroupItem extends Component<IPropGroupItem> {
         className={classname}
         style={{ color: color, width: width }}
         onClick={() => this.props.onChangeGroupFunc(num)}>
-        <Grid className={classes.groupsGroupName}>
-          {abbr}
-          {/* <div className={classes.groupsGroupAbbr}>{abbr}</div> */}
-          {/* <div className={classes.groupsGroupName}>{name}</div> */}
-        </Grid>
+        <Grid className={classes.groupsGroupName}>{abbr}</Grid>
       </Button>
     );
   }

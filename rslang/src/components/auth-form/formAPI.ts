@@ -1,14 +1,14 @@
-import { URLBASE } from '../API/getWords';
+import { BASEURL_API } from '../../consts/consts';
 import { saveMetaInLocalStorage } from './localStorageFunctions';
 
 type JSONValue = string | number | boolean | JSONObject;
 
-interface JSONObject {
+export interface JSONObject {
   [x: string]: JSONValue;
 }
 
 export const createUser = async (user: JSONObject) => {
-  const rawResponse = await fetch(URLBASE + '/users', {
+  const rawResponse = await fetch(BASEURL_API + '/users', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -22,7 +22,7 @@ export const createUser = async (user: JSONObject) => {
 };
 
 export const loginUser = async (user: JSONObject) => {
-  const rawResponse = await fetch(URLBASE + '/signin', {
+  const rawResponse = await fetch(BASEURL_API + '/signin', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

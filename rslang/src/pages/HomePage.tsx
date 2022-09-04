@@ -5,7 +5,7 @@ import AboutApp from '../components/home/AboutApp/AboutApp';
 import AboutDevTeam from '../components/home/AboutDevTeam/AboutDevTeam';
 import Footer from '../components/Footer/Footer';
 // import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
-import { Context } from '../components/Textbook/Context';
+import { Context } from '../components/App/Context';
 
 const HomePage = () => {
   const { isAuthorized } = useContext(Context);

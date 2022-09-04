@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import { Grid } from '@mui/material';
 import { ReactLearnWordsAPI } from '../../API/getWords';
 import { WordCard } from '../WordCard/WordCard';
-import { IWordCard, IState } from '../consts';
-import { Context } from '../Context';
+import { IWordCard } from '../../../types/props';
+import { Context } from '../../App/Context';
+import { WORD_DIFFICULTY, WORDS_PER_PAGE } from '../../../consts/consts';
+
+interface IState {
+  group: number;
+  page: number;
+  color: string;
+  funcLearned: (kearned: boolean) => void;
+  allUserWords?: IWordCard[];
+  cards?: IWordCard[];
+  countLearnedCards?: number;
+}
 
 export class WordCards extends Component<IState> {
   reactLearnWordsAPI = new ReactLearnWordsAPI();
@@ -13,17 +24,24 @@ export class WordCards extends Component<IState> {
   state = {
     group: 0,
     page: 0,
-    cards: [] as IWordCard[]
+    cards: [] as IWordCard[],
+    countLearnedCards: 0
   };
 
   componentDidMount() {
     this.updateCards();
     this.toggleAudio = this.toggleAudio.bind(this);
     this.changeCards = this.changeCards.bind(this);
+    this.updateCards = this.updateCards.bind(this);
   }
 
   componentDidUpdate(prevProps: IState) {
-    if (this.props.page !== prevProps.page || this.props.group !== prevProps.group) {
+    if (
+      this.props.page !== prevProps.page ||
+      this.props.group !== prevProps.group ||
+      this.props.cards !== prevProps.cards ||
+      this.props.countLearnedCards !== prevProps.countLearnedCards
+    ) {
       this.updateCards();
     }
   }
@@ -38,7 +56,14 @@ export class WordCards extends Component<IState> {
       const storageUserWords: string | null = localStorage.getItem('userWords');
       if (storageUserWords) {
         const hardWords = JSON.parse(storageUserWords).filter(
-          (wordCard: IWordCard) => wordCard.userWord?.difficulty === 'hard'
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === WORD_DIFFICULTY.hard
+        );
+        this.setState({
+          cards: hardWords
+        });
+      } else {
+        const hardWords = this.context.allUserWords.filter(
+          (wordCard: IWordCard) => wordCard.userWord?.difficulty === WORD_DIFFICULTY.hard
         );
         this.setState({
           cards: hardWords
@@ -49,24 +74,29 @@ export class WordCards extends Component<IState> {
         this.setState({
           cards: words
         });
-      });
-      // console.log(this.context);
-      ///
-      const usersCardsId = this.context.allUserWords.map((el) => {
-        if (el.userWord?.difficulty === 'hard' || el.userWord?.difficulty === 'learned') {
-          return el.id;
+        let countLearnedCards = 0;
+        const usersCardsId = this.context.allUserWords.map((el) => {
+          if (
+            el.userWord?.difficulty === WORD_DIFFICULTY.hard ||
+            el.userWord?.difficulty === WORD_DIFFICULTY.learned
+          ) {
+            return el.id;
+          }
+        });
+        words.forEach((el: IWordCard) => {
+          if (usersCardsId.includes(el.id)) {
+            countLearnedCards += 1;
+          }
+        });
+        this.setState({
+          countLearnedCards: countLearnedCards
+        });
+        if (countLearnedCards === WORDS_PER_PAGE) {
+          this.props.funcLearned(true);
+        } else {
+          this.props.funcLearned(false);
         }
       });
-      // console.log(usersCardsId);
-      // console.log(this.state);
-      this.state.cards.forEach((el) => console.log(el.id));
-      const learnedCards = this.state.cards.filter((el) => {
-        usersCardsId.includes(el.id);
-      });
-      // console.log(learnedCards);
-      if (learnedCards.length === 20) {
-        this.props.funcLearned();
-      }
     }
   }
 
@@ -114,6 +144,7 @@ export class WordCards extends Component<IState> {
             funcAudio={this.toggleAudio}
             funcRender={this.changeCards}
             color={this.props.color}
+            funcCheckLearnedPage={this.updateCards}
           />
         </Grid>
       );
