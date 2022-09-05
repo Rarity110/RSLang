@@ -4,7 +4,6 @@ import StartSection from '../components/home/StartSection/StartSection';
 import AboutApp from '../components/home/AboutApp/AboutApp';
 import AboutDevTeam from '../components/home/AboutDevTeam/AboutDevTeam';
 import Footer from '../components/Footer/Footer';
-// import { AuthorizeContext } from '../components/auth-form/AuthorizeContext';
 import { Context } from '../components/App/Context';
 
 const HomePage = () => {

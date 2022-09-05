@@ -7,6 +7,7 @@ import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
 import { Context } from '../../App/Context';
+import { WordStat } from './WordStat/WordStat';
 
 export interface IID {
   id: string;
@@ -58,7 +59,6 @@ export class WordCard extends Component<IID> {
   }
 
   render() {
-    // console.log(this.context);
     const {
       id,
       word,
@@ -103,15 +103,15 @@ export class WordCard extends Component<IID> {
             audioExample={audioExampleSrc}
             funcAudio={this.props.funcAudio}
           />
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
-            <Typography variant="body2" color="text.secondary" height={'60px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textMeaningTranslate}
             </Typography>
           </div>
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textExample }} />
-            <Typography variant="body2" color="text.secondary" height={'50px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textExampleTranslate}
             </Typography>
           </div>
@@ -121,6 +121,7 @@ export class WordCard extends Component<IID> {
             funcRender={this.props.funcRender}
             funcCheckLearnedPage={this.props.funcCheckLearnedPage}
           />
+          <WordStat wordCard={this.state.wordCard} />
         </CardContent>
       </Card>
     );

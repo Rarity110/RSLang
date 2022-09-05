@@ -1,0 +1,51 @@
+.wordStat {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.5px solid #531a8980;
+    border-radius: 4px;
+    margin: 40px 0px auto auto ;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+            font-weight: 500;
+            font-size: 0.875rem;
+            line-height: 1.75;
+            letter-spacing: 0.02857em;
+            color:#541a8b;
+
+    &Total {
+        font-size: 0.675rem;
+        text-transform: uppercase;
+    }
+
+    &Points {
+        margin-top: 5px;
+
+        &Point {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            font-size: 0.675rem;
+
+            &Correct {
+                color: green;
+                margin-left: 3px;
+            }
+
+            &Incorrect {
+                color: red;
+                margin-left: 3px;
+            }
+        }
+    }
+}
+
+@media (max-width: 700px) {
+    .wordStat {
+        width: 80%;
+    }
+}
+
+
+
+
