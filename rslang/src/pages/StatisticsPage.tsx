@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Alert, AlertTitle, Box, Container, Link as MuiLink, Typography } from '@mui/material';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import Statistics from '../components/Statistics/Statistics';
 import { Context } from '../components/App/Context';
 
 const StatisticsPage = () => {
@@ -28,7 +29,7 @@ const StatisticsPage = () => {
           </Container>
         )}
 
-        {/*{isAuthorized && (<Statistics />)}*/}
+        {isAuthorized && <Statistics />}
       </Box>
 
       <Footer />
