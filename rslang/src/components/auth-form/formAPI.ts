@@ -18,7 +18,7 @@ export const createUser = async (user: JSONObject) => {
   });
   const content = await rawResponse.json();
 
-  // console.log(content);
+  console.log(content);
 };
 
 export const loginUser = async (user: JSONObject) => {
