@@ -42,9 +42,7 @@ export class WordCard extends Component<IID> {
   }
 
   updateCard() {
-    const wordCard = this.context.allUserWords.filter(
-      (card) => card.id === this.state.wordCard.id
-    )[0];
+    const wordCard = this.context.allUserWords.filter((card) => card.id === this.props.id)[0];
     if (wordCard) {
       this.setState({
         wordCard: wordCard

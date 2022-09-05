@@ -33,5 +33,5 @@ export const loginUser = async (user: JSONObject) => {
   const content = await rawResponse.json();
   saveMetaInLocalStorage(content);
 
-  console.log(content);
+  // console.log(content);
 };
