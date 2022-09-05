@@ -1,7 +1,8 @@
 import { ISignInForm } from './SignInForm';
 
-const loginKey = 'loginRSLang';
+export const loginKey = 'loginRSLang';
 const metaKey = 'userMetaRSLang';
+export const metaKeyWords = 'userWords';
 
 export function saveInLocalStorage(data: ISignInForm) {
   window.localStorage.setItem(loginKey, JSON.stringify(data));
@@ -14,6 +15,7 @@ export function saveMetaInLocalStorage(data: ISignInForm) {
 export function deleteLoginFromLocalStorage() {
   window.localStorage.removeItem(loginKey);
   window.localStorage.removeItem(metaKey);
+  window.localStorage.removeItem(metaKeyWords);
   document.location.reload();
 }
 

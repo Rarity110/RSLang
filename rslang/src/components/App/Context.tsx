@@ -1,7 +1,7 @@
 import React from 'react';
 import { IWordCard } from '../../types/props';
 
-interface IContext {
+export interface IContext {
   allUserWords: IWordCard[];
   isAuthorized: boolean;
   authorize: () => void;
