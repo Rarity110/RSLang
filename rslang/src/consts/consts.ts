@@ -10,3 +10,8 @@ export const WORD_DIFFICULTY = {
   learned: 'learned',
   normal: 'normal'
 };
+
+export const LEARNED_WORD_CONDITION = {
+  hard: 5,
+  normal: 3
+};
