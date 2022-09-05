@@ -1,8 +1,8 @@
 const rightAnswerSound = new Audio(
-  'http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/pause.wav'
+  'https://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/pause.wav'
 );
 const wrongAnswerSound = new Audio(
-  'http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg'
+  'https://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg'
 );
 
 export const rightAnswerPlay = () => {
