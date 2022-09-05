@@ -137,9 +137,6 @@ export class ReactLearnWordsAPI {
   // слово было сложным стало изученным и наоборот
   async putUserWord(idword: string, difficulty: string, optional: undefined | IUserWordOptional) {
     try {
-      console.log(
-        `Слово пришло в putUserWord на обновление: difficulty ${difficulty}, optional: ${optional}`
-      );
       const { userID, token } = getUser();
       const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
       const res = await fetch(url, {
