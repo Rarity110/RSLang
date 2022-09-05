@@ -59,7 +59,6 @@ export class WordCard extends Component<IID> {
   }
 
   render() {
-    // console.log(this.context);
     const {
       id,
       word,
@@ -104,15 +103,15 @@ export class WordCard extends Component<IID> {
             audioExample={audioExampleSrc}
             funcAudio={this.props.funcAudio}
           />
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
-            <Typography variant="body2" color="text.secondary" height={'60px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textMeaningTranslate}
             </Typography>
           </div>
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textExample }} />
-            <Typography variant="body2" color="text.secondary" height={'50px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textExampleTranslate}
             </Typography>
           </div>
