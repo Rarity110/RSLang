@@ -7,6 +7,7 @@ import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
 import { Context } from '../../App/Context';
+import { WordStat } from './WordStat/WordStat';
 
 export interface IID {
   id: string;
@@ -121,6 +122,7 @@ export class WordCard extends Component<IID> {
             funcRender={this.props.funcRender}
             funcCheckLearnedPage={this.props.funcCheckLearnedPage}
           />
+          <WordStat wordCard={this.state.wordCard} />
         </CardContent>
       </Card>
     );
