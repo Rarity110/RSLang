@@ -31,10 +31,10 @@
   max-width: 360px;
 }
 
-.btn-close-form {
-  position: absolute;
-  top: -56px;
-  right: -56px;
+.btn-close-formRegister {
+  position: relative;
+  top: -27rem;
+  right: -20rem;
   border: 2px solid rgb(180, 184, 193);
   border-radius: 100%;
   width: 3rem;
@@ -45,7 +45,22 @@
   background-color: #fff;
 }
 
-.btn-close-form:hover {
+.btn-close-formLogin {
+  position: relative;
+  top: -25rem;
+  right: -20rem;
+  border: 2px solid rgb(180, 184, 193);
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
+  color: rgb(180, 184, 193);
+  cursor: pointer;
+  font-size: 1.2rem;
+  background-color: #fff;
+}
+
+.btn-close-formLogin:hover,
+.btn-close-formRegister:hover {
   color: #fff;
   background-color: rgb(13, 85, 255);
   border: #fff;

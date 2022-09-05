@@ -2,7 +2,7 @@ import React from 'react';
 import SpatialAudioOffIcon from '@mui/icons-material/SpatialAudioOff';
 import classes from './SprintGame.module.scss';
 import { Button } from '@mui/material';
-import { URL } from './gameApi';
+import { BASEURL_API } from '../../consts/consts';
 
 interface IResWordProps {
   audio: string | undefined;
@@ -11,7 +11,7 @@ interface IResWordProps {
 }
 
 export const ResWordCard: React.FC<IResWordProps> = (props) => {
-  const audio = new Audio(URL + '/' + props.audio);
+  const audio = new Audio(BASEURL_API + '/' + props.audio);
 
   const start = () => {
     audio.play();

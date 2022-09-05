@@ -20,7 +20,7 @@ const onRegister: SubmitHandler<IRegisterInForm> = async (data) => {
     await createUser({ login: data.login, email: data.email, password: data.password });
     await loginUser({ email: data.email, password: data.password });
     saveInLocalStorage(data);
-    window.location.href = '/';
+    window.location.href = '/RSLang';
   } catch {
     alert('Извините, такой пользователь уже зарегистрирован');
   }
@@ -59,6 +59,7 @@ export const RegisterForm = () => {
               className="auth-form__input"
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
+              defaultValue={''}
               value={field.value}
               error={!!errors.email?.message}
               helperText={errors.email?.message}
@@ -113,8 +114,9 @@ export const RegisterForm = () => {
           Зарегистрироваться
         </Button>
       </form>
+
       <Link href="/">
-        <button className="btn-close-form">X</button>
+        <button className="btn-close-formRegister">X</button>
       </Link>
     </div>
   );

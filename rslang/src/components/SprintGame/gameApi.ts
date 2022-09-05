@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:8081';
+import { BASEURL_API } from '../../consts/consts';
 
 async function getResourse(url: string, methodName: string) {
   const res = await fetch(url, {
@@ -10,8 +10,12 @@ async function getResourse(url: string, methodName: string) {
   return await res.json();
 }
 
-export async function getWords(group: number, page: number) {
-  const url = `${URL}/words?group=${group}&page=${page}`;
-  const res = await getResourse(url, 'GET');
-  return res;
+export async function getWords(group?: number, page?: number) {
+  const url = `${BASEURL_API}/words?group=${group}&page=${page}`;
+  try {
+    const res = await getResourse(url, 'GET');
+    return res;
+  } catch (err) {
+    console.log(`${err} textbook level don't be chosen`);
+  }
 }
