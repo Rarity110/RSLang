@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AudioChallengeWord, AudioChallengeWordResult } from '../../../types/audioChallenge';
 import AudioChallengeStep from '../AudioChallengeStep/AudioChallengeStep';
 import AudioChallengeResult from '../AudioChallengeResult/AudioChallengeResult';
-import { updateWordAfterGame } from '../../../utility/games';
+import { updateStatisticAfterGame, updateWordAfterGame } from '../../../utility/games';
 import { Context } from '../../App/Context';
 
 interface AudioChallengeGameProps {
@@ -12,7 +12,7 @@ interface AudioChallengeGameProps {
 
 const AudioChallengeGame = ({ words, restartHandler }: AudioChallengeGameProps) => {
   const endIndex = words.length;
-  const { allUserWords } = useContext(Context);
+  const { allUserWords, isAuthorized } = useContext(Context);
   const [currentIndex, setCurrenIndex] = useState(0);
   const [resultWords, setResultWords] = useState<AudioChallengeWord[]>([]);
   const [sendResult, setSendResult] = useState<boolean>(false);
@@ -39,11 +39,30 @@ const AudioChallengeGame = ({ words, restartHandler }: AudioChallengeGameProps) 
         resultTotal.newCount += item.isNew ? 1 : 0;
       });
 
-      // console.log(resultTotal);
-      // TODO запись результатов в статистику
+      const correct = resultWords.filter((w) => w.result).length;
+      const rowCorrect = Math.max(
+        ...resultWords.reduce(
+          (acc: number[], word) => {
+            if (word.result) {
+              acc[acc.length - 1] += 1;
+            } else {
+              acc.push(0);
+            }
+            return acc;
+          },
+          [0]
+        )
+      );
+
+      await updateStatisticAfterGame('audio', resultTotal.learnedCount, {
+        correct,
+        incorrect: resultWords.length - correct,
+        rowCorrect,
+        newWords: resultTotal.newCount
+      });
     };
 
-    if (currentIndex === endIndex && !sendResult) {
+    if (currentIndex === endIndex && !sendResult && isAuthorized) {
       setSendResult(true);
       setResult().catch(console.error);
     }

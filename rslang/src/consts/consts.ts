@@ -15,3 +15,6 @@ export const LEARNED_WORD_CONDITION = {
   hard: 5,
   normal: 3
 };
+
+export const STORAGE_KEY_USER_INFO = 'userMetaRSLang';
+export const STORAGE_KEY_USER_WORDS = 'userWords';
