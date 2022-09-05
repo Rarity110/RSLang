@@ -1,5 +1,5 @@
-import { BASEURL_API } from '../../consts/consts';
 import { saveMetaInLocalStorage } from './localStorageFunctions';
+import { BASEURL_API } from '../../consts/consts';
 
 type JSONValue = string | number | boolean | JSONObject;
 

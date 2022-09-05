@@ -1,29 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
-// interface IKeyTarget {
-//   key: string;
-// }
+interface IKeyTarget {
+  code: string | number;
+}
 
-// export const useKeyPress = (keyTarget: string) => {
-//   const [isKeyPressed, setIsKeyPressed] = useState(false);
+export const useKeyPress = (keyTarget: string | number) => {
+  let isKeyPressed = false;
 
-//   const downHandler = ({ key }: IKeyTarget) => {
-//     if (key === keyTarget) setIsKeyPressed(true);
-//   };
+  const downHandler = ({ code }: IKeyTarget) => {
+    if (code === keyTarget) isKeyPressed = true;
+  };
 
-//   const upHandler = ({ key }: IKeyTarget) => {
-//     if (key === keyTarget) setIsKeyPressed(false);
-//   };
+  const upHandler = ({ code }: IKeyTarget) => {
+    if (code === keyTarget) isKeyPressed = false;
+  };
 
-//   useEffect(() => {
-//     window.addEventListener('keydown', downHandler);
-//     window.addEventListener('keyup', upHandler);
+  useEffect(() => {
+    window.addEventListener('keydown', downHandler);
+    window.addEventListener('keyup', upHandler);
 
-//     return () => {
-//       window.removeEventListener('keydown', downHandler);
-//       window.removeEventListener('keyup', upHandler);
-//     };
-//   }, []);
+    return () => {
+      window.removeEventListener('keydown', downHandler);
+      window.removeEventListener('keyup', upHandler);
+    };
+  }, []);
 
-//   return isKeyPressed;
-// };
+  return isKeyPressed;
+};

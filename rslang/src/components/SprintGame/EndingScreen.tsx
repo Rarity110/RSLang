@@ -19,6 +19,7 @@ export const EndingScreen: React.FC<IEndingScreenProps> = (props) => {
     props.resultPlus.splice(0, props.resultPlus.length);
     props.resultMinus.splice(0, props.resultMinus.length);
     props.setScore('0');
+    window.location.reload();
   }
 
   return (

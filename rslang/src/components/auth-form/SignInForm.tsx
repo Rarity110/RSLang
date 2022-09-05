@@ -55,6 +55,7 @@ export const SignInForm = () => {
               className="auth-form__input"
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
+              defaultValue={''}
               value={field.value}
               error={!!errors.email?.message}
               helperText={errors.email?.message}
@@ -92,7 +93,7 @@ export const SignInForm = () => {
         </Button>
       </form>
       <Link href="/">
-        <button className="btn-close-form">X</button>
+        <button className="btn-close-formLogin">X</button>
       </Link>
     </div>
   );
