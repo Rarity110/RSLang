@@ -6,12 +6,12 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import classes from './AudioChallengeResult.module.scss';
 import AudioChallengeResultWord from '../AudioChallengeResultWord/AudioChallengeResultWord';
 
-interface AudioChallengeREsultProps {
+interface AudioChallengeResultProps {
   words: AudioChallengeWord[];
   restartHandler: () => void;
 }
 
-const AudioChallengeResult = ({ words, restartHandler }: AudioChallengeREsultProps) => {
+const AudioChallengeResult = ({ words, restartHandler }: AudioChallengeResultProps) => {
   const correctWords = words.filter((word) => word.result);
   const incorrectWords = words.filter((word) => !word.result);
 
@@ -22,7 +22,7 @@ const AudioChallengeResult = ({ words, restartHandler }: AudioChallengeREsultPro
       </Typography>
 
       <Typography variant="h2" color="primary" gutterBottom>
-        {(correctWords.length * 100) / words.length}%
+        {((correctWords.length * 100) / words.length).toFixed(1)}%
       </Typography>
 
       <Grid container spacing={4} justifyContent="center">
