@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.b377c4de.css",
-    "main.js": "/static/js/main.9531ab95.js",
-    "static/media/developer-daria.png": "/static/media/developer-daria.77bc3956b909af13964d.png",
-    "static/media/home-base.png": "/static/media/home-base.99199f31253f10c90731.png",
-    "static/media/home-time.png": "/static/media/home-time.635f069d5fe8233ba94c.png",
-    "static/media/404-base.png": "/static/media/404-base.14852434eec35708e98b.png",
-    "static/media/home-online.png": "/static/media/home-online.ff6e48130c8b5e8bcc00.png",
-    "static/media/home-game.png": "/static/media/home-game.fe0a6a1ed4bbaa9ceb7e.png",
-    "static/media/home-meaning.png": "/static/media/home-meaning.c56fe4b62be623709ba2.png",
-    "static/media/home-statistics.png": "/static/media/home-statistics.5e025e01014e862fdfdb.png",
-    "static/media/home-gradual.png": "/static/media/home-gradual.20c58e0fb6da89119d1f.png",
-    "static/media/logo-rsschool.svg": "/static/media/logo-rsschool.f794ca6d2ee2d31039360f5c2bb88b65.svg",
-    "index.html": "/index.html",
-    "main.b377c4de.css.map": "/static/css/main.b377c4de.css.map",
-    "main.9531ab95.js.map": "/static/js/main.9531ab95.js.map"
+    "main.css": "./static/css/main.b377c4de.css",
+    "main.js": "./static/js/main.88092dc5.js",
+    "static/media/developer-daria.png": "./static/media/developer-daria.77bc3956b909af13964d.png",
+    "static/media/home-base.png": "./static/media/home-base.99199f31253f10c90731.png",
+    "static/media/home-time.png": "./static/media/home-time.635f069d5fe8233ba94c.png",
+    "static/media/404-base.png": "./static/media/404-base.14852434eec35708e98b.png",
+    "static/media/home-online.png": "./static/media/home-online.ff6e48130c8b5e8bcc00.png",
+    "static/media/home-game.png": "./static/media/home-game.fe0a6a1ed4bbaa9ceb7e.png",
+    "static/media/home-meaning.png": "./static/media/home-meaning.c56fe4b62be623709ba2.png",
+    "static/media/home-statistics.png": "./static/media/home-statistics.5e025e01014e862fdfdb.png",
+    "static/media/home-gradual.png": "./static/media/home-gradual.20c58e0fb6da89119d1f.png",
+    "static/media/logo-rsschool.svg": "./static/media/logo-rsschool.f794ca6d2ee2d31039360f5c2bb88b65.svg",
+    "index.html": "./index.html",
+    "main.b377c4de.css.map": "./static/css/main.b377c4de.css.map",
+    "main.88092dc5.js.map": "./static/js/main.88092dc5.js.map"
   },
   "entrypoints": [
     "static/css/main.b377c4de.css",
-    "static/js/main.9531ab95.js"
+    "static/js/main.88092dc5.js"
   ]
 }
