@@ -9,7 +9,7 @@ export interface IUserWordOptional {
   rowCorrect: number;
 }
 
-interface IUserWord {
+export interface IUserWord {
   difficulty?: string;
   optional?: IUserWordOptional;
 }
@@ -45,4 +45,9 @@ export interface IPropGroupItem {
   propsGroup: IGroup;
   groupActive: number;
   onChangeGroupFunc: (num: number) => void;
+}
+
+export interface IWordGameResult {
+  isLearned: boolean;
+  isNew: boolean;
 }
