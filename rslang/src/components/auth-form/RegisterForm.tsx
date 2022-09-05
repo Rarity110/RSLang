@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useForm, Controller, SubmitHandler, useFormState } from 'react-hook-form';
@@ -7,6 +7,8 @@ import { emailValidation, loginValidation, passwordValidation } from './validati
 import { saveInLocalStorage } from './localStorageFunctions';
 import React from 'react';
 import { createUser, loginUser } from './formAPI';
+export const deployUrl = 'https://rarity110.github.io/RSLang/#/auth-form';
+import { Link } from 'react-router-dom';
 // import { AuthorizeContext } from './AuthorizeContext';
 
 export interface IRegisterInForm {
@@ -16,11 +18,13 @@ export interface IRegisterInForm {
 }
 
 const onRegister: SubmitHandler<IRegisterInForm> = async (data) => {
+  const currentUrl = location.href;
   try {
     await createUser({ login: data.login, email: data.email, password: data.password });
     await loginUser({ email: data.email, password: data.password });
     saveInLocalStorage(data);
-    window.location.href = '/RSLang';
+    if (currentUrl == deployUrl) window.location.href = 'https://rarity110.github.io/RSLang/#/';
+    if (currentUrl !== deployUrl) window.location.href = '/';
   } catch {
     alert('Извините, такой пользователь уже зарегистрирован');
   }
@@ -77,6 +81,7 @@ export const RegisterForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
+              defaultValue={''}
               onChange={(e) => field.onChange(e)}
               value={field.value}
               error={!!errors.login?.message}
@@ -96,6 +101,7 @@ export const RegisterForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
+              defaultValue={''}
               onChange={(e) => field.onChange(e)}
               value={field.value}
               error={!!errors.password?.message}
@@ -115,7 +121,7 @@ export const RegisterForm = () => {
         </Button>
       </form>
 
-      <Link href="/">
+      <Link to="/">
         <button className="btn-close-formRegister">X</button>
       </Link>
     </div>
