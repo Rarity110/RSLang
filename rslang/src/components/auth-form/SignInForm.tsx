@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useForm, Controller, SubmitHandler, useFormState } from 'react-hook-form';
@@ -7,6 +7,8 @@ import { emailValidation, passwordValidation } from './validation';
 import { saveInLocalStorage } from './localStorageFunctions';
 import React from 'react';
 import { loginUser } from './formAPI';
+import { deployUrl } from './RegisterForm';
+import { Link } from 'react-router-dom';
 
 export interface ISignInForm {
   login: string;
@@ -15,10 +17,12 @@ export interface ISignInForm {
 }
 
 const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
+  const currentUrl = location.href;
   try {
     await loginUser({ email: data.email, password: data.password });
     saveInLocalStorage(data);
-    window.location.href = '/';
+    if (currentUrl == deployUrl) window.location.href = 'https://rarity110.github.io/RSLang/#/';
+    if (currentUrl !== deployUrl) window.location.href = '/';
   } catch {
     alert('Просим Вас проверить правильность ввода эл.почты и пароля!');
   }
@@ -74,6 +78,7 @@ export const SignInForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
+              defaultValue={''}
               onChange={(e) => field.onChange(e)}
               value={field.value}
               error={!!errors.password?.message}
@@ -92,7 +97,7 @@ export const SignInForm = () => {
           Войти
         </Button>
       </form>
-      <Link href="/">
+      <Link to="/">
         <button className="btn-close-formLogin">X</button>
       </Link>
     </div>
