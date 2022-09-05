@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { BASEURL_API } from '../../consts/consts';
+import { IUserWordOptional } from '../../types/props';
 
 const getUser = () => {
   let userID = '';
@@ -8,8 +9,8 @@ const getUser = () => {
     const storage: string = localStorage.getItem('userMetaRSLang') as string;
     userID = JSON.parse(storage).userId;
     token = JSON.parse(storage).token;
-  };
-  return {userID: userID, token: token};
+  }
+  return { userID: userID, token: token };
 };
 
 export class ReactLearnWordsAPI {
@@ -25,7 +26,7 @@ export class ReactLearnWordsAPI {
     } catch (error) {
       console.log(error);
     }
-    
+
   }
 
   async getWords(group: number, page: number) {
@@ -48,7 +49,7 @@ export class ReactLearnWordsAPI {
     }
   }
 
-  async postUserWord(idword: string, difficulty: string) {
+  async postUserWord(idword: string, difficulty: string, optional: undefined | IUserWordOptional) {
     try {
       const { userID, token } = getUser();
       const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
@@ -60,7 +61,7 @@ export class ReactLearnWordsAPI {
         },
         body: JSON.stringify({
           difficulty: difficulty,
-          optional: {total: 0, wrong: 0}
+          optional: optional
         })
       });
       const data = {
@@ -80,8 +81,8 @@ export class ReactLearnWordsAPI {
       const res = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+          'Authorization': `Bearer ${token}`
+        }
       });
       const status = res.status;
       const data = status === 200 ? await res.json() : res;
@@ -99,15 +100,15 @@ export class ReactLearnWordsAPI {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+          'Authorization': `Bearer ${token}`
+        }
       });
       if (res.status !== 200) {
         throw new Error();
       } else {
         const data = await res.json();
         if (data[0].paginatedResults.length) {
-          return {countPages: data[0].totalCount[0].count, words: data[0].paginatedResults};
+          return { countPages: data[0].totalCount[0].count, words: data[0].paginatedResults };
         }
       }
     } catch (error) {
@@ -123,8 +124,8 @@ export class ReactLearnWordsAPI {
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+          'Authorization': `Bearer ${token}`
+        }
       });
       const status = res.status;
       return { status };
@@ -134,18 +135,22 @@ export class ReactLearnWordsAPI {
   }
 
   // слово было сложным стало изученным и наоборот
-  async putUserWord(idword: string, difficulty: string) {
+  async putUserWord(idword: string, difficulty: string, optional: undefined | IUserWordOptional) {
     try {
+      console.log(
+        `Слово пришло в putUserWord на обновление: difficulty ${difficulty}, optional: ${optional}`
+      );
       const { userID, token } = getUser();
       const url = `${BASEURL_API}/users/${userID}/words/${idword}`;
       const res = await fetch(url, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           difficulty: difficulty,
-          optional: {total: 0, wrong: 0}
+          optional: optional
         })
       });
       const status = res.status;

@@ -3,6 +3,17 @@ export interface GameRouteParam {
   page: number;
 }
 
+export interface IUserWordOptional {
+  correct: number;
+  incorrect: number;
+  rowCorrect: number;
+}
+
+interface IUserWord {
+  difficulty?: string;
+  optional?: IUserWordOptional;
+}
+
 export interface IGroup {
   readonly num: number;
   readonly abbr: string;
@@ -25,13 +36,7 @@ export interface IWordCard {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-  userWord?: {
-    difficulty?: string;
-    optional?: {
-      total?: number;
-      wrong?: number;
-    };
-  };
+  userWord?: IUserWord;
   funcAudio?: (audioList: HTMLAudioElement[]) => void;
   funcRender?: () => void;
 }
