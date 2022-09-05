@@ -94,7 +94,7 @@ export class ReactLearnWordsAPI {
   async getUserWordsByPage(page: number, wordsPerPage: number) {
     try {
       const { userID, token } = getUser();
-      const url = `${BASEURL_API}/users/${userID}/aggregatedWords?page=${page}&wordsPerPage=${wordsPerPage}`;
+      const url = `${BASEURL_API}/users/${userID}/aggregatedWords?page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[{"userWord.difficulty":"hard"},{"userWord.difficulty":"learned"},{"userWord.difficulty":"normal"}]}`;
       const res = await fetch(url, {
         method: 'GET',
         headers: {

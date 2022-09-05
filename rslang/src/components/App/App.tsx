@@ -10,9 +10,17 @@ import SprintGamePage from '../../pages/SprintGamePage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import classes from './App.module.scss';
 import { IWordCard } from '../../types/props';
-import { Context, IContext } from './Context';
+import { Context } from './Context';
 import { ReactLearnWordsAPI } from '../API/getWords';
 import { metaKeyWords, loginKey } from '../auth-form/localStorageFunctions';
+import { COUNT_ALL_WORDS } from '../../consts/consts';
+
+interface IContext {
+  allUserWords: IWordCard[];
+  isAuthorized: boolean;
+  authorize: () => void;
+  logout: () => void;
+}
 
 class App extends Component {
   static contextType = Context;
@@ -30,12 +38,6 @@ class App extends Component {
   componentDidMount() {
     this.updateState();
   }
-
-  // componentDidUpdate(prevProps: boolean) {
-  //   if (this.props.isAuthorized !== prevProps.wordCard.userWord?.difficulty) {
-  //     this.updateDifficult();
-  //   }
-  // }
 
   updateState() {
     const storageLogin: string | null = localStorage.getItem(loginKey);
@@ -63,47 +65,21 @@ class App extends Component {
     }
   }
 
-  async getUserWordsByPage(numberPage: number, usersWords: IWordCard[], wordsAtPages: number) {
-    const result = await this.reactLearnWordsAPI.getUserWordsByPage(numberPage, wordsAtPages);
-    if (result) {
-      result.words.forEach((el: IWordCard) => usersWords.push(el));
-      window.localStorage.setItem(metaKeyWords, JSON.stringify(usersWords));
-    }
-  }
-
   async getallUserWords() {
     const usersWords: IWordCard[] = [];
-    const wordsAtPages = 100;
     await this.reactLearnWordsAPI
-      .getUserWordsByPage(0, wordsAtPages)
+      .getUserWordsByPage(0, COUNT_ALL_WORDS)
       .then((value) => {
-        if (value) {
-          const countPages = Math.ceil(value.countPages / wordsAtPages);
-          if (countPages === 1) {
-            value.words.forEach((el: IWordCard) => {
-              console.log(el);
-              if (el._id) {
-                console.log(el._id);
-                el.id = el._id;
-              }
-              usersWords.push(el);
-            });
-          } else {
-            for (let i = 0; i < countPages; i++) {
-              this.getUserWordsByPage(i, usersWords, wordsAtPages);
+        if (value?.words) {
+          value.words.forEach((el: IWordCard) => {
+            if (el._id) {
+              el.id = el._id;
             }
-          }
+            usersWords.push(el);
+          });
         }
       })
       .then(() => {
-        usersWords.forEach((el) => {
-          if (el._id) {
-            el.id = el._id;
-          }
-        });
-      })
-      .then(() => {
-        // console.log(usersWords);
         this.setState({
           allUserWords: usersWords
         });
