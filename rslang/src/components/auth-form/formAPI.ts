@@ -3,7 +3,7 @@ import { BASEURL_API } from '../../consts/consts';
 
 type JSONValue = string | number | boolean | JSONObject;
 
-interface JSONObject {
+export interface JSONObject {
   [x: string]: JSONValue;
 }
 

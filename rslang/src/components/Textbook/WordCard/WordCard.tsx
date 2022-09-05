@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { ReactLearnWordsAPI, URLBASE } from '../../API/getWords';
+import { ReactLearnWordsAPI } from '../../API/getWords';
+import { BASEURL_API } from '../../../consts/consts';
 import classes from './WordCard.module.scss';
-import { IID, IWordCard } from '../consts';
+import { IWordCard } from '../../../types/props';
 import { AudioCard } from './AudioCard/AudioCard';
 import { Difficult } from './Difficult/Difficult';
-import { Context } from '../Context';
+import { Context } from '../../App/Context';
+import { WordStat } from './WordStat/WordStat';
+
+export interface IID {
+  id: string;
+  funcAudio: (audioList: HTMLAudioElement[]) => void;
+  funcRender: () => void;
+  color: string;
+  allUserWords?: IWordCard[];
+  funcCheckLearnedPage: () => void;
+}
 
 export class WordCard extends Component<IID> {
   static contextType = Context;
@@ -14,13 +25,13 @@ export class WordCard extends Component<IID> {
 
   state = {
     wordCard: {} as IWordCard,
-    allUsersWords: [] as IWordCard[]
+    allUserWords: [] as IWordCard[]
   };
 
   componentDidMount() {
     const id = this.props.id;
     this.setState({
-      allUsersWords: this.context.allUserWords
+      allUserWords: this.context.allUserWords
     });
     this.reactLearnWordsAPI.getWord(id).then((card) => {
       this.setState({
@@ -66,9 +77,9 @@ export class WordCard extends Component<IID> {
       return <div></div>;
     }
     const wordAndTranscriptionAndTranslate = `${word} - ${transcription} - ${wordTranslate}`;
-    const audioSrc = `${URLBASE}/${audio}`;
-    const audioMeaningSrc = `${URLBASE}/${audioMeaning}`;
-    const audioExampleSrc = `${URLBASE}/${audioExample}`;
+    const audioSrc = `${BASEURL_API}/${audio}`;
+    const audioMeaningSrc = `${BASEURL_API}/${audioMeaning}`;
+    const audioExampleSrc = `${BASEURL_API}/${audioExample}`;
     return (
       <Card
         className={classes.wordCard}
@@ -78,7 +89,7 @@ export class WordCard extends Component<IID> {
           component="img"
           alt={word}
           height="140"
-          src={`${URLBASE}/${image}`}
+          src={`${BASEURL_API}/${image}`}
           className={classes.wordCardCardImg}
         />
         <CardContent>
@@ -92,23 +103,25 @@ export class WordCard extends Component<IID> {
             audioExample={audioExampleSrc}
             funcAudio={this.props.funcAudio}
           />
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textMeaning }} />
-            <Typography variant="body2" color="text.secondary" height={'60px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textMeaningTranslate}
             </Typography>
           </div>
-          <div className={classes.text}>
+          <div className={classes.Text}>
             <div dangerouslySetInnerHTML={{ __html: textExample }} />
-            <Typography variant="body2" color="text.secondary" height={'50px'}>
+            <Typography variant="body2" color="text.secondary" className={classes.TextPoint}>
               {textExampleTranslate}
             </Typography>
           </div>
           <Difficult
             wordCard={this.state.wordCard}
-            allUsersWords={this.context.allUserWords}
+            allUserWords={this.context.allUserWords}
             funcRender={this.props.funcRender}
+            funcCheckLearnedPage={this.props.funcCheckLearnedPage}
           />
+          <WordStat wordCard={this.state.wordCard} />
         </CardContent>
       </Card>
     );

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import navigationList from '../../consts/navigationList';
-import { Context } from '../Textbook/Context';
+import { Context } from '../App/Context';
 import classes from './MainNav.module.scss';
 
 const MainNav = () => {

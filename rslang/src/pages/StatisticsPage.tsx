@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Alert, AlertTitle, Box, Container, Link as MuiLink, Typography } from '@mui/material';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import { Context } from '../components/Textbook/Context';
+import { Context } from '../components/App/Context';
 
 const StatisticsPage = () => {
   const { isAuthorized } = useContext(Context);

@@ -6,6 +6,7 @@
         border-bottom-left-radius: 0;
         height: 45px;
         text-align: center;
+        background-color: white;
         
         &Active {
             border: 2px solid rgba(25, 118, 210, 0.5);
@@ -13,6 +14,7 @@
             border-bottom: none;
             width: 20%;
             font-weight: bold;
+            background-color: white;
 
             &:hover{
                 border-bottom: none;
@@ -30,6 +32,7 @@
     .groups {
 
         &Group {
+            min-width: 50px;
     
             &Name{
                 font-size: 10px;

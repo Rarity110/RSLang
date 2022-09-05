@@ -13,7 +13,7 @@ import { getPageWords } from '../../API/api';
 import { WordItem } from '../../../types/api';
 import { GameRouteParam } from '../../../types/props';
 import { AudioChallengeWord } from '../../../types/audioChallenge';
-import { Context } from '../../Textbook/Context';
+import { Context } from '../../App/Context';
 import classes from './AudioChallenge.module.scss';
 
 const MAX_GAME_WORDS = 20;

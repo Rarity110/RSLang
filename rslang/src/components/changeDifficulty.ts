@@ -1,36 +1,41 @@
 import { ReactLearnWordsAPI } from './API/getWords';
-import { IWordCard } from './Textbook/consts';
-import { saveWordsInStorage } from './Textbook/saveWordsInStorage';
+import { IUserWordOptional, IWordCard } from '../types/props';
+import { WORD_DIFFICULTY } from '../consts/consts';
+
+export function saveWordsInStorage(usersWords: IWordCard[]) {
+  window.localStorage.setItem('userWords', JSON.stringify(usersWords));
+}
 
 const reactLearnWordsAPI = new ReactLearnWordsAPI();
 
 export function changeDifficulty(
   difficulty: string,
-  allUsersWords: IWordCard[],
+  allUserWords: IWordCard[],
   wordCard: IWordCard
 ) {
-  if (difficulty === 'hard' || difficulty === 'learned') {
+  const optional: undefined | IUserWordOptional = wordCard.userWord?.optional;
+  if (difficulty === WORD_DIFFICULTY.hard || difficulty === WORD_DIFFICULTY.learned) {
     if (wordCard.userWord?.difficulty) {
-      const index = allUsersWords.findIndex((el) => el.id === wordCard.id);
+      const index = allUserWords.findIndex((el) => el.id === wordCard.id);
       wordCard.userWord.difficulty = difficulty;
-      reactLearnWordsAPI.putUserWord(wordCard.id, difficulty);
-      allUsersWords[index].userWord = { difficulty: difficulty };
+      reactLearnWordsAPI.putUserWord(wordCard.id, difficulty, optional);
+      allUserWords[index].userWord = { difficulty, optional };
     } else {
-      wordCard.userWord = { difficulty: difficulty };
-      allUsersWords.push(wordCard);
-      reactLearnWordsAPI.postUserWord(wordCard.id, difficulty);
+      wordCard.userWord = { difficulty };
+      allUserWords.push(wordCard);
+      reactLearnWordsAPI.postUserWord(wordCard.id, difficulty, optional);
     }
   } else {
-    const index = allUsersWords.findIndex((el) => el.id === wordCard.id);
+    const index = allUserWords.findIndex((el) => el.id === wordCard.id);
     if (wordCard.userWord?.optional) {
       wordCard.userWord.difficulty = difficulty;
-      reactLearnWordsAPI.putUserWord(wordCard.id, difficulty);
-      allUsersWords[index].userWord = { difficulty: difficulty };
+      reactLearnWordsAPI.putUserWord(wordCard.id, difficulty, optional);
+      allUserWords[index].userWord = { difficulty, optional };
     } else {
       delete wordCard.userWord?.difficulty;
       reactLearnWordsAPI.deleteUserWord(wordCard.id);
-      allUsersWords.splice(index, 1);
+      allUserWords.splice(index, 1);
     }
   }
-  saveWordsInStorage(allUsersWords);
+  saveWordsInStorage(allUserWords);
 }
