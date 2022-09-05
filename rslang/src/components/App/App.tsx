@@ -10,15 +10,9 @@ import SprintGamePage from '../../pages/SprintGamePage';
 import NotFoundPage from '../../pages/NotFoundPage';
 import classes from './App.module.scss';
 import { IWordCard } from '../../types/props';
-import { Context } from './Context';
+import { Context, IContext } from './Context';
 import { ReactLearnWordsAPI } from '../API/getWords';
-
-interface IContext {
-  allUserWords: IWordCard[];
-  isAuthorized: boolean;
-  authorize: () => void;
-  logout: () => void;
-}
+import { metaKeyWords, loginKey } from '../auth-form/localStorageFunctions';
 
 class App extends Component {
   static contextType = Context;
@@ -34,14 +28,24 @@ class App extends Component {
   };
 
   componentDidMount() {
-    const storageLogin: string | null = localStorage.getItem('loginRSLang');
+    this.updateState();
+  }
+
+  // componentDidUpdate(prevProps: boolean) {
+  //   if (this.props.isAuthorized !== prevProps.wordCard.userWord?.difficulty) {
+  //     this.updateDifficult();
+  //   }
+  // }
+
+  updateState() {
+    const storageLogin: string | null = localStorage.getItem(loginKey);
     if (storageLogin) {
       this.setState({
         isAuthorized: true,
         authorize: () => this.emptyObj,
         logout: () => this.setAuthorize(false)
       });
-      const storageUserWords: string | null = localStorage.getItem('userWords');
+      const storageUserWords: string | null = localStorage.getItem(metaKeyWords);
       if (storageUserWords) {
         this.setState({
           allUserWords: JSON.parse(storageUserWords)
@@ -63,6 +67,7 @@ class App extends Component {
     const result = await this.reactLearnWordsAPI.getUserWordsByPage(numberPage, wordsAtPages);
     if (result) {
       result.words.forEach((el: IWordCard) => usersWords.push(el));
+      window.localStorage.setItem(metaKeyWords, JSON.stringify(usersWords));
     }
   }
 
@@ -75,7 +80,14 @@ class App extends Component {
         if (value) {
           const countPages = Math.ceil(value.countPages / wordsAtPages);
           if (countPages === 1) {
-            value.words.forEach((el: IWordCard) => usersWords.push(el));
+            value.words.forEach((el: IWordCard) => {
+              console.log(el);
+              if (el._id) {
+                console.log(el._id);
+                el.id = el._id;
+              }
+              usersWords.push(el);
+            });
           } else {
             for (let i = 0; i < countPages; i++) {
               this.getUserWordsByPage(i, usersWords, wordsAtPages);
@@ -89,10 +101,13 @@ class App extends Component {
             el.id = el._id;
           }
         });
+      })
+      .then(() => {
+        // console.log(usersWords);
         this.setState({
           allUserWords: usersWords
         });
-        window.localStorage.setItem('userWords', JSON.stringify(usersWords));
+        window.localStorage.setItem(metaKeyWords, JSON.stringify(usersWords));
       });
   }
 
