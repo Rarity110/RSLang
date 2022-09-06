@@ -9,7 +9,6 @@ import React from 'react';
 import { createUser, loginUser } from './formAPI';
 export const deployUrl = 'https://rarity110.github.io/RSLang/#/auth-form';
 import { Link } from 'react-router-dom';
-// import { AuthorizeContext } from './AuthorizeContext';
 
 export interface IRegisterInForm {
   login: string;
@@ -18,13 +17,11 @@ export interface IRegisterInForm {
 }
 
 const onRegister: SubmitHandler<IRegisterInForm> = async (data) => {
-  const currentUrl = location.href;
   try {
     await createUser({ login: data.login, email: data.email, password: data.password });
     await loginUser({ email: data.email, password: data.password });
     saveInLocalStorage(data);
-    if (currentUrl == deployUrl) window.location.href = 'https://rarity110.github.io/RSLang/#/';
-    if (currentUrl !== deployUrl) window.location.href = '/';
+    window.location.reload();
   } catch {
     alert('Извините, такой пользователь уже зарегистрирован');
   }
@@ -35,8 +32,6 @@ export const RegisterForm = () => {
   const { errors } = useFormState({
     control
   });
-
-  // const { authorize } = useContext(AuthorizeContext);
 
   return (
     <div className="auth-form">
@@ -63,8 +58,7 @@ export const RegisterForm = () => {
               className="auth-form__input"
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
-              defaultValue={''}
-              value={field.value}
+              value={field.value || ''}
               error={!!errors.email?.message}
               helperText={errors.email?.message}
             />
@@ -81,9 +75,8 @@ export const RegisterForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
-              defaultValue={''}
               onChange={(e) => field.onChange(e)}
-              value={field.value}
+              value={field.value || ''}
               error={!!errors.login?.message}
               helperText={errors.login?.message}
             />
@@ -101,9 +94,8 @@ export const RegisterForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
-              defaultValue={''}
               onChange={(e) => field.onChange(e)}
-              value={field.value}
+              value={field.value || ''}
               error={!!errors.password?.message}
               helperText={errors.password?.message}
             />

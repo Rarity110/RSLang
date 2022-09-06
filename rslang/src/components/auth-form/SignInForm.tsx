@@ -7,7 +7,6 @@ import { emailValidation, passwordValidation } from './validation';
 import { saveInLocalStorage } from './localStorageFunctions';
 import React from 'react';
 import { loginUser } from './formAPI';
-import { deployUrl } from './RegisterForm';
 import { Link } from 'react-router-dom';
 
 export interface ISignInForm {
@@ -17,12 +16,10 @@ export interface ISignInForm {
 }
 
 const onSubmit: SubmitHandler<ISignInForm> = async (data) => {
-  const currentUrl = location.href;
   try {
     await loginUser({ email: data.email, password: data.password });
     saveInLocalStorage(data);
-    if (currentUrl == deployUrl) window.location.href = 'https://rarity110.github.io/RSLang/#/';
-    if (currentUrl !== deployUrl) window.location.href = '/';
+    window.location.reload();
   } catch {
     alert('Просим Вас проверить правильность ввода эл.почты и пароля!');
   }
@@ -59,8 +56,7 @@ export const SignInForm = () => {
               className="auth-form__input"
               fullWidth={true}
               onChange={(e) => field.onChange(e)}
-              defaultValue={''}
-              value={field.value}
+              value={field.value || ''}
               error={!!errors.email?.message}
               helperText={errors.email?.message}
             />
@@ -78,9 +74,8 @@ export const SignInForm = () => {
               margin="normal"
               className="auth-form__input"
               fullWidth={true}
-              defaultValue={''}
               onChange={(e) => field.onChange(e)}
-              value={field.value}
+              value={field.value || ''}
               error={!!errors.password?.message}
               helperText={errors.password?.message}
             />
