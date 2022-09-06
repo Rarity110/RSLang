@@ -1,7 +1,9 @@
 import { ReactLearnWordsAPI } from '../components/API/getWords';
 import { IUserWordOptional, IWordCard, IUserWord, IWordGameResult } from '../types/props';
 import { LEARNED_WORD_CONDITION, WORD_DIFFICULTY } from '../consts/consts';
-import { setWordsInStorage } from './utility';
+import { getDay, setWordsInStorage } from './utility';
+import { DayStatistics, GameStatistics, OptionalStatistics } from '../types/api';
+import { getStatistics, setStatistics } from '../components/API/api';
 
 const reactLearnWordsAPI = new ReactLearnWordsAPI();
 
@@ -76,4 +78,63 @@ export const updateWordAfterGame = async (
 
   setWordsInStorage(allUserWords);
   return resultInfo;
+};
+
+export const updateStatisticAfterGame = async (
+  game: 'audio' | 'sprint',
+  learnedCount: number,
+  results: GameStatistics
+) => {
+  const day = getDay(new Date());
+  let todayStatistic: DayStatistics;
+  const templateDayStatistic: DayStatistics = {
+    learnWords: learnedCount,
+    audio: {
+      correct: 0,
+      incorrect: 0,
+      rowCorrect: 0,
+      newWords: 0
+    },
+    sprint: {
+      correct: 0,
+      incorrect: 0,
+      rowCorrect: 0,
+      newWords: 0
+    }
+  };
+  const allStatisticsOld = await getStatistics();
+  const statisticOld = allStatisticsOld?.optional;
+
+  let dayStaticsicOld: undefined | DayStatistics = undefined;
+
+  if (statisticOld) {
+    dayStaticsicOld = statisticOld[day];
+  }
+  // если уже есть статистика за текущий день - модифицируем
+  if (dayStaticsicOld) {
+    todayStatistic = {
+      ...dayStaticsicOld, // копируем данные по второй игре
+      learnWords: learnedCount + dayStaticsicOld.learnWords,
+      [game]: {
+        correct: dayStaticsicOld[game].correct + results.correct,
+        incorrect: dayStaticsicOld[game].incorrect + results.incorrect,
+        rowCorrect: Math.max(dayStaticsicOld[game].rowCorrect, results.rowCorrect),
+        newWords: dayStaticsicOld[game].newWords + results.newWords
+      }
+    };
+  }
+  // если нет статистики за текущий день
+  else {
+    todayStatistic = {
+      ...templateDayStatistic,
+      [game]: results
+    };
+  }
+
+  const statisticNew: OptionalStatistics = {
+    ...statisticOld,
+    [day]: todayStatistic
+  };
+
+  await setStatistics(statisticNew);
 };

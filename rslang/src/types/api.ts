@@ -34,3 +34,26 @@ export interface WordItem {
   textMeaningTranslate: string;
   wordTranslate: string;
 }
+
+export interface GameStatistics {
+  correct: number;
+  incorrect: number;
+  rowCorrect: number;
+  newWords: number;
+}
+
+export interface DayStatistics {
+  learnWords: number;
+  audio: GameStatistics;
+  sprint: GameStatistics;
+}
+
+export interface OptionalStatistics {
+  [key: string]: DayStatistics;
+}
+
+export interface AllStatistics {
+  id?: string;
+  learnedWords?: number;
+  optional?: OptionalStatistics;
+}

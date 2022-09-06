@@ -1,17 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { BASEURL_API } from '../../consts/consts';
 import { IUserWordOptional } from '../../types/props';
-
-const getUser = () => {
-  let userID = '';
-  let token = '';
-  if (localStorage.getItem('userMetaRSLang')) {
-    const storage: string = localStorage.getItem('userMetaRSLang') as string;
-    userID = JSON.parse(storage).userId;
-    token = JSON.parse(storage).token;
-  }
-  return { userID: userID, token: token };
-};
+import { getUser } from '../../utility/utility';
 
 export class ReactLearnWordsAPI {
   async getResourse(url: string, methodName: string) {
