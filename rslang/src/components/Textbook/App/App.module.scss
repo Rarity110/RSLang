@@ -1,0 +1,19 @@
+.textbookMain {
+
+    &Learned{
+        background-color: #d1d9f1;
+    }
+
+    &Groups{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        height: 60px;
+        align-items: flex-end;
+        padding-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    
+}

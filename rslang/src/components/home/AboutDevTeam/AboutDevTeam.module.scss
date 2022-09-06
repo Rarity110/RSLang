@@ -1,0 +1,10 @@
+.aboutDev {
+  &Title {
+    margin-bottom: var(--spacing-x2);
+    text-align: center;
+  }
+
+  &Divider {
+    margin-top: var(--spacing-x4);
+  }
+}

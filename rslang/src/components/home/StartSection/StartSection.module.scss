@@ -1,0 +1,46 @@
+.start {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-x2);
+
+  &Text {
+    flex-basis: 480px;
+    flex-shrink: 0;
+  }
+
+  &Title {
+    margin-bottom: var(--spacing-x4);
+    letter-spacing: 0.02em;
+  }
+
+  &Lead {
+    margin-bottom: var(--spacing);
+    font-weight: 600;
+  }
+
+  &ImgWrap {
+  }
+
+  &Img {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .start {
+    flex-direction: column;
+
+    &Text {
+      max-width: 570px;
+      flex-basis: auto;
+      order: 2;
+      text-align: center;
+    }
+
+    &ImgWrap {
+      margin-bottom: var(--spacing);
+      max-width: 400px;
+      order: 1;
+    }
+  }
+}

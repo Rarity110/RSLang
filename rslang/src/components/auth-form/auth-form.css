@@ -1,0 +1,73 @@
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.auth-form {
+  width: 35rem;
+  height: 35rem;
+  padding: 20px;
+  display: flex;
+  border: 0.1rem solid #1976d2;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* position: relative; */
+  /* top: max(15%, 128px); */
+  /* left: 50%; */
+  max-width: calc(100% - 128px);
+  /* transform: translateX(-50%) translateY(10%); */
+}
+
+.auth-form__subtitle {
+  color: rgb(180, 184, 193);
+}
+
+.auth-form__form {
+  max-width: 360px;
+}
+
+.btn-close-formRegister {
+  position: relative;
+  top: -27rem;
+  right: -20rem;
+  border: 2px solid rgb(180, 184, 193);
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
+  color: rgb(180, 184, 193);
+  cursor: pointer;
+  font-size: 1.2rem;
+  background-color: #fff;
+}
+
+.btn-close-formLogin {
+  position: relative;
+  top: -25rem;
+  right: -20rem;
+  border: 2px solid rgb(180, 184, 193);
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
+  color: rgb(180, 184, 193);
+  cursor: pointer;
+  font-size: 1.2rem;
+  background-color: #fff;
+}
+
+.btn-close-formLogin:hover,
+.btn-close-formRegister:hover {
+  color: #fff;
+  background-color: rgb(13, 85, 255);
+  border: #fff;
+}
+
+.formChangeBtn {
+  width: 20rem;
+  position: relative;
+  top: -5rem;
+}
