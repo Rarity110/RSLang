@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "./static/css/main.036a39d4.css",
-    "main.js": "./static/js/main.65a95aeb.js",
-    "static/media/developer-daria.png": "./static/media/developer-daria.77bc3956b909af13964d.png",
-    "static/media/home-base.png": "./static/media/home-base.99199f31253f10c90731.png",
-    "static/media/home-time.png": "./static/media/home-time.635f069d5fe8233ba94c.png",
-    "static/media/404-base.png": "./static/media/404-base.14852434eec35708e98b.png",
-    "static/media/home-online.png": "./static/media/home-online.ff6e48130c8b5e8bcc00.png",
-    "static/media/home-game.png": "./static/media/home-game.fe0a6a1ed4bbaa9ceb7e.png",
-    "static/media/home-meaning.png": "./static/media/home-meaning.c56fe4b62be623709ba2.png",
-    "static/media/home-statistics.png": "./static/media/home-statistics.5e025e01014e862fdfdb.png",
-    "static/media/home-gradual.png": "./static/media/home-gradual.20c58e0fb6da89119d1f.png",
-    "static/media/logo-rsschool.svg": "./static/media/logo-rsschool.c8d3dbfa4253ea82d27bbfbfc7979638.svg",
-    "index.html": "./index.html",
-    "main.036a39d4.css.map": "./static/css/main.036a39d4.css.map",
-    "main.65a95aeb.js.map": "./static/js/main.65a95aeb.js.map"
+    "main.css": "/RSLang/static/css/main.036a39d4.css",
+    "main.js": "/RSLang/static/js/main.9206588c.js",
+    "static/media/developer-daria.png": "/RSLang/static/media/developer-daria.77bc3956b909af13964d.png",
+    "static/media/home-base.png": "/RSLang/static/media/home-base.99199f31253f10c90731.png",
+    "static/media/home-time.png": "/RSLang/static/media/home-time.635f069d5fe8233ba94c.png",
+    "static/media/404-base.png": "/RSLang/static/media/404-base.14852434eec35708e98b.png",
+    "static/media/home-online.png": "/RSLang/static/media/home-online.ff6e48130c8b5e8bcc00.png",
+    "static/media/home-game.png": "/RSLang/static/media/home-game.fe0a6a1ed4bbaa9ceb7e.png",
+    "static/media/home-meaning.png": "/RSLang/static/media/home-meaning.c56fe4b62be623709ba2.png",
+    "static/media/home-statistics.png": "/RSLang/static/media/home-statistics.5e025e01014e862fdfdb.png",
+    "static/media/home-gradual.png": "/RSLang/static/media/home-gradual.20c58e0fb6da89119d1f.png",
+    "static/media/logo-rsschool.svg": "/RSLang/static/media/logo-rsschool.c8d3dbfa4253ea82d27bbfbfc7979638.svg",
+    "index.html": "/RSLang/index.html",
+    "main.036a39d4.css.map": "/RSLang/static/css/main.036a39d4.css.map",
+    "main.9206588c.js.map": "/RSLang/static/js/main.9206588c.js.map"
   },
   "entrypoints": [
     "static/css/main.036a39d4.css",
-    "static/js/main.65a95aeb.js"
+    "static/js/main.9206588c.js"
   ]
 }
