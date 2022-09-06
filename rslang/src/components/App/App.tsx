@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { StyledEngineProvider } from '@mui/material/styles';
 import AuthorizedPage from '../../pages/AuthorizedPage';
 import HomePage from '../../pages/HomePage';
@@ -118,7 +118,12 @@ class App extends Component {
               <Route path="/textbook" element={<TextbookPage />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/audio-challenge" element={<AudioChallengePage />} />
-              <Route path="/auth-form" element={<AuthorizedPage />} />
+              <Route
+                path="/auth-form"
+                element={
+                  localStorage.getItem('loginRSLang') ? <Navigate to="/" /> : <AuthorizedPage />
+                }
+              />
               <Route path="/sprint-game" element={<SprintGamePage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
