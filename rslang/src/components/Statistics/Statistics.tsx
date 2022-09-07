@@ -71,13 +71,15 @@ const Statistics = () => {
                       Процент правильных ответов
                     </Typography>
                     <Typography variant="body1" color="primary" fontWeight="bold">
-                      {(stats.audio.correct * 100) / (stats.audio.correct + stats.audio.incorrect)}
+                      {(stats.audio.correct * 100) /
+                        (stats.audio.correct + stats.audio.incorrect) || 0}
                     </Typography>
                   </Box>
                   <LinearProgress
                     variant="determinate"
                     value={
-                      (stats.audio.correct * 100) / (stats.audio.correct + stats.audio.incorrect)
+                      (stats.audio.correct * 100) / (stats.audio.correct + stats.audio.incorrect) ||
+                      0
                     }
                   />
                 </>
