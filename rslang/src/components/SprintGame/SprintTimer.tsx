@@ -7,7 +7,7 @@ interface IEndingScreenProps {
 }
 
 export const Timer: React.FC<IEndingScreenProps> = (props) => {
-  const [timeLeft, setTimeleft] = useState(60);
+  const [timeLeft, setTimeleft] = useState(30);
   const [isCounting, setIsCounting] = useState(true);
 
   const minutes = getPadTime(Math.floor(timeLeft / 60));

@@ -14,8 +14,6 @@ import { BASEURL_API } from '../../consts/consts';
 export let pageReducer = 1;
 
 const pagesCount = 29;
-export const plusArr: (IWord | undefined)[] = [];
-export const minusArr: (IWord | undefined)[] = [];
 
 interface ISprintProps {
   page?: number;
@@ -36,6 +34,9 @@ export const SprintGame: React.FC<ISprintProps> = () => {
   const location = useLocation();
   const { group, page } = (location.state as ISprintProps) || {};
   const [textbookWordsArr, setTextbookWordsArr] = useState<IWord[]>();
+  const [plusArr] = useState<(IWord | undefined)[]>([]);
+  const [minusArr] = useState<(IWord | undefined)[]>([]);
+  const [correctRowAnswerArr] = useState<number[]>([]);
 
   async function getTextbookWords(group: number, page: number, pageReducer?: number) {
     if (pageReducer !== undefined) {
@@ -107,7 +108,9 @@ export const SprintGame: React.FC<ISprintProps> = () => {
       }
       rightAnswerPlay();
       plusArr.push(words);
+      correctRowAnswerArr.push(1);
     } else {
+      correctRowAnswerArr.push(0);
       setModificator('1');
       wrongAnswerPlay();
       minusArr.push(words);
@@ -161,6 +164,7 @@ export const SprintGame: React.FC<ISprintProps> = () => {
           setScore={setScoreAfterEnding}
           resultPlus={plusArr}
           resultMinus={minusArr}
+          correctRowAnswerArr={correctRowAnswerArr}
           changeEndScreen={changeEndingScreener}
           changeStartScreen={changeGreetingScreener}></EndingScreen>
       )}
