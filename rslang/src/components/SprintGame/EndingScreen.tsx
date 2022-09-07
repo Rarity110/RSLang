@@ -34,12 +34,22 @@ export const EndingScreen: React.FC<IEndingScreenProps> = (props) => {
         newCount: 0
       };
 
-      const resultArrayPromise = props.resultPlus.map(async (word) => {
+      const resultPlusArrayPromise = props.resultPlus.map(async (word) => {
         if (word) return updateWordAfterGame(allUserWords, word, true);
       });
 
-      const resultsArray = await Promise.all(resultArrayPromise);
-      resultsArray.map((item) => {
+      const resultsPlusArray = await Promise.all(resultPlusArrayPromise);
+      resultsPlusArray.map((item) => {
+        resultTotal.learnedCount += item?.isLearned ? 1 : 0;
+        resultTotal.newCount += item?.isNew ? 1 : 0;
+      });
+
+      const resultMinusArrayPromise = props.resultMinus.map(async (word) => {
+        if (word) return updateWordAfterGame(allUserWords, word, false);
+      });
+
+      const resultsMinusArray = await Promise.all(resultMinusArrayPromise);
+      resultsMinusArray.map((item) => {
         resultTotal.learnedCount += item?.isLearned ? 1 : 0;
         resultTotal.newCount += item?.isNew ? 1 : 0;
       });

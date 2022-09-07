@@ -11,7 +11,7 @@ import { GreetingScreen } from './GreetingScreen';
 import { EndingScreen } from './EndingScreen';
 import { useLocation } from 'react-router-dom';
 import { BASEURL_API } from '../../consts/consts';
-export let pageReducer = 1;
+// export let pageReducer = 1;
 
 const pagesCount = 29;
 
@@ -37,6 +37,7 @@ export const SprintGame: React.FC<ISprintProps> = () => {
   const [plusArr] = useState<(IWord | undefined)[]>([]);
   const [minusArr] = useState<(IWord | undefined)[]>([]);
   const [correctRowAnswerArr] = useState<number[]>([]);
+  const [pageReducer, setPageReducer] = useState<number>(1);
 
   async function getTextbookWords(group: number, page: number, pageReducer?: number) {
     if (pageReducer !== undefined) {
@@ -63,12 +64,20 @@ export const SprintGame: React.FC<ISprintProps> = () => {
     }
     if (randomWordIndex) {
       textbookWordsArr?.splice(randomWordIndex, 1);
+      // console.log(textbookWordsArr);
     }
-    if (textbookWordsArr?.length === 3 && page !== undefined && page !== 0 && group !== undefined) {
+    if (
+      textbookWordsArr &&
+      textbookWordsArr.length < 3 &&
+      page !== undefined &&
+      page !== 0 &&
+      group !== undefined
+    ) {
       getTextbookWords(group, page - pageReducer);
-      pageReducer++;
+      // pageReducer++;
+      setPageReducer(pageReducer + 1);
     }
-    if (textbookWordsArr?.length === 3 && page && page - pageReducer === -2) {
+    if (textbookWordsArr && textbookWordsArr.length < 3 && page === 0) {
       setEndingScreen(true);
     }
   }
@@ -125,7 +134,8 @@ export const SprintGame: React.FC<ISprintProps> = () => {
       getTextbookWords(group, page);
       useTextbookWords();
     }
-    pageReducer = 1;
+    // pageReducer = 1;
+    setPageReducer(1);
   }, []);
 
   const audio = new Audio(BASEURL_API + '/' + words?.audio);
