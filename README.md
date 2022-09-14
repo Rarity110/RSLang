@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# RSLang
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+RSLang is an application for learning popular English words\
+Created as part of the [JS/Front-end course](https://rs.school/js/) (Rolling Scopes School)\
+This is the final project for a team of three students
 
-## Available Scripts
+- [Task description](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/stage-2/rs-lang/rslang.md)
+- [Deploy](https://rarity110.github.io/RSLang/#/)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- `npm install` (install the dependencies)
+- `npm start` (runs the app on [http://localhost:3000](http://localhost:3000))
+- `npm run build` (builds the app for production to the `build` folder)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
-### `npm test`
+## Tech stack & Libraries
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Typescript](https://www.typescriptlang.org/) — is a strongly typed programming language that builds on JavaScript
+- [React](https://reactjs.org/) — is a declarative, efficient, and flexible JavaScript library for building user
+  interfaces
+- [React Router](https://reactrouter.com/) — is a fully-featured client and server-side routing library for React
+- [React Hook Form](https://react-hook-form.com/) — is an library that implements performant, flexible and extensible
+  forms with easy-to-use validation
+- [SASS](https://sass-lang.com/) — is a stylesheet language that’s compiled to CSS
+- [ESLint](https://eslint.org/) — is a tool that helps make JavaScript code more consistent and avoid bugs
+- [Prettier](https://prettier.io/) — is an opinionated code formatter
+- [Material UI](https://mui.com/material-ui/getting-started/overview/) — is an open-source React component library that
+  implements Google's Material Design.
 
-### `npm run build`
+## Backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Github](https://github.com/Rarity110/react-rslang-be)
+- [Deploy](https://rarity-rslang.herokuapp.com/)
+- [Swagger](https://rarity-rslang.herokuapp.com/doc/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Development team
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Rarity110](https://github.com/Rarity110)
+- [ipipka](https://github.com/ipipka)
+- [AVBr0](https://github.com/AVBr0)
